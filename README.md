@@ -4,8 +4,11 @@
 
 # `zsleep`
 
+I'm working on it right now. Seems to be nearly finished.
+So it works, but there may be some bugs left to be fixed?
+
 > [!NOTE]
-> This Documentation is **pure TODO**!
+> This Documentation is **maximum TODO**!
 
 <br><br>
 
