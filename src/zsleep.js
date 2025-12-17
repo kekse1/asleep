@@ -18,8 +18,7 @@ const	VERSION = '1.0.0';
  */
 
 //
-const	DEFAULT_NULL = '-/-',
-	DEFAULT_LONG = true,
+const	DEFAULT_LONG = true,
 	DEFAULT_MILLISEC = true,
 	DEFAULT_SEP = ', ',
 	DEFAULT_PREC = 2;
@@ -195,7 +194,7 @@ Reflect.defineProperty(Math.time, 'render', { value: (_value, _millisec = DEFAUL
 	}
 	else if(typeof _value !== 'number')
 	{
-		return DEFAULT_NULL;
+		return '-/-';
 	}
 	
 	const	orig = _value, append = (_value, _unit) => {
