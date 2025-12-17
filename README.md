@@ -12,7 +12,7 @@
 ## Source Code
 **ZERO** dependencies.
 
-...
+* [Version v**1.0.0**](src/zsleep.js)
 
 <br><br><br>
 
