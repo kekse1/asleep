@@ -13,7 +13,8 @@ So it works, but there may be some bugs left to be fixed?
 <br><br>
 
 ## Example screenshot
-There's more. Also a 'silent' mode without any output. But this is my example now.
+There's more. Also a 'silent' mode without any output (which is the default config).
+But this is my example now.
 
 ![Example Screenshot](./img/screenshot.png)
 
