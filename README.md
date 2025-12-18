@@ -4,11 +4,13 @@
 
 # `zsleep`
 
-I'm working on it right now. Seems to be nearly finished.
-So it works, but there may be some bugs left to be fixed?
+My own, better `sleep` replacement. Vanilla JavaScript, without any dependencies.
 
 > [!NOTE]
 > This Documentation is **maximum TODO**!
+
+I'm working on it right now. Seems to be nearly finished.
+So it works, but there may be some bugs left to be fixed?
 
 <br><br>
 
