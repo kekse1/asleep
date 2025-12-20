@@ -20,6 +20,12 @@ But this is my example now.
 
 ![Example Screenshot](./img/screenshot.png)
 
+<br>
+
+> [!NOTE]
+> This time **without** any [ANSI Escape Sequence](https://github.com/kekse1/ansi.js/),
+> only using `\r` for the progress bar..
+
 <br><br>
 
 ## Source Code
@@ -27,9 +33,10 @@ But this is my example now.
 
 * [Version v**1.0.0**](src/zsleep.js)
 
-> [!INFO]
-> This time **without** any [ANSI Escape Sequence](https://github.com/kekse1/ansi.js/),
-> only using `\r` for the progress bar..
+<br><br>
+
+## You're welcome!
+Any feature idea is welcome! If you have on, please [contact](#contact) me!
 
 <br><br><br>
 
