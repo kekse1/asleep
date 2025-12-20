@@ -4,13 +4,16 @@
 
 # `zsleep`
 
-My own, better `sleep` replacement. Vanilla JavaScript, without any dependencies.
+My own, better `sleep` replacement. Vanilla JavaScript, **without** any dependency.
 
 > [!NOTE]
 > This Documentation is **maximum TODO**!
 
 I'm working on it right now. Seems to be nearly finished.
 So it works, but there may be some bugs left to be fixed?
+
+> [!TIP]
+> Includes an `export` of (global) `Math.time` functions, etc.
 
 <br><br>
 
