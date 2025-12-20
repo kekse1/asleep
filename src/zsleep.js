@@ -17,7 +17,7 @@ const	VERSION = '1.0.0';
  * w/ a tiny 'configuration' on top of the following code;
  * see my const's 'DEFAULT_*'!
  *
- */
+*/
 
 //
 const	DEFAULT_LONG = true,
@@ -677,7 +677,7 @@ const start = () => {
 
 	if(param.progress)
 	{
-		if(result <= 1000)
+		if(result < 1000)
 		{
 			param.progress = false;
 		}
