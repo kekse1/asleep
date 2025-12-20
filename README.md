@@ -27,6 +27,10 @@ But this is my example now.
 
 * [Version v**1.0.0**](src/zsleep.js)
 
+> [!INFO]
+> This time **without** any [ANSI Escape Sequence](https://github.com/kekse1/ansi.js/),
+> only using `\r` for the progress bar..
+
 <br><br><br>
 
 # Contact
