@@ -36,7 +36,7 @@ But this is my example now.
 <br><br>
 
 ## You're welcome!
-Any feature idea is welcome! If you have on, please [contact](#contact) me!
+Any feature idea is welcome! If you have one, please [contact](#contact) me!
 
 <br><br><br>
 
