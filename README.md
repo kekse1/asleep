@@ -20,6 +20,8 @@ So it works, but there may be some bugs left to be fixed?
 ## News
 * \[**2025-12-20**\] Now with splitted short arguments (e.g. `-Pp`); v**1.0.1**;
 
+<br><br>
+
 ## Example screenshot
 There's more. Also a 'silent' mode without any output (which is the default config).
 But this is my example now.
