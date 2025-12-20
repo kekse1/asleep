@@ -17,6 +17,9 @@ So it works, but there may be some bugs left to be fixed?
 
 <br><br>
 
+## News
+* \[**2025-12-20**\] Now with splitted short arguments (e.g. `-Pp`); v**1.0.1**;
+
 ## Example screenshot
 There's more. Also a 'silent' mode without any output (which is the default config).
 But this is my example now.
@@ -34,7 +37,7 @@ But this is my example now.
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**1.0.0**](src/zsleep.js)
+* [Version v**1.0.1**](src/zsleep.js)
 
 <br><br>
 

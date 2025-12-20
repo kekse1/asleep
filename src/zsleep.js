@@ -8,7 +8,7 @@
  */
 
 //
-const	VERSION = '1.0.0';
+const	VERSION = '1.0.1';
 
 //
 /*
@@ -361,7 +361,7 @@ const getParameter = () => {
 			if(argv[i][0] === '-')
 			{
 				argv[i] = argv[i].substr(1);
-
+				
 				if(long.has(argv[i]))
 				{
 					parameter[argv[i]] = true;
@@ -374,16 +374,24 @@ const getParameter = () => {
 					throw err;
 				}
 			}
-			else if(short.has(argv[i]))
-			{
-				parameter[short.get(argv[i])] = true;
-			}
 			else
 			{
-				const err = new Error('Unknown short argument vector switch');
-				err.param = '-' + argv[i];
-				err.exit = 101;
-				throw err;
+				argv[i] = argv[i].split('');
+
+				for(const arg of argv[i])
+				{
+					if(short.has(arg))
+					{
+						parameter[short.get(arg)] = true;
+					}
+					else
+					{
+						const err = new Error('Unknown short argument vector switch');
+						err.param = '-' + arg;
+						err.exit = 101;
+						throw err;
+					}
+				}
 			}
 
 			continue;
