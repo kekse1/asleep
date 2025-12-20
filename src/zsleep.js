@@ -26,7 +26,7 @@ const	DEFAULT_LONG = true,
 	DEFAULT_PREC = 2;
 
 //
-const math = Math.time = (_value) => {
+const time = Math.time = (_value) => {
 	if(typeof _value === 'string')
 	{
 		return Math.time.parse(_value);
@@ -284,7 +284,7 @@ Reflect.defineProperty(Math, 'sign', { value: (_item, _string = false) => {
 }});
 
 //
-export default math;
+export default time;
 
 //
 Reflect.defineProperty(console, 'width', { get: () => {
