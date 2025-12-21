@@ -26,7 +26,7 @@ const
 	DEFAULT_SEP = ', ',
 	DEFAULT_PREC = 2;
 
-const VECTOR = {
+const GETOPT = {
 	'p': 'print',
 	'P': 'progress',
 	'i': 'info',
@@ -454,7 +454,7 @@ getParameter.apply = (_param) => {
 	return _param;
 };
 
-getParameter.getMaps = (_vector = VECTOR) => {
+getParameter.getMaps = (_vector = GETOPT) => {
 	const	long = new Set(), short = new Map(),
 		entries = Object.entries(_vector);
 	
@@ -466,7 +466,7 @@ getParameter.getMaps = (_vector = VECTOR) => {
 };
 
 //
-const help = (_vector = VECTOR) => {
+const help = (_vector = GETOPT) => {
 	info(); console.log();
 
 	for(const idx in _vector)
@@ -478,6 +478,8 @@ const help = (_vector = VECTOR) => {
 			console.log();
 		}
 	}
+
+	console.log();
 };
 
 const info = () => { copyright(); version(); };
