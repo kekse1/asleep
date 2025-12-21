@@ -368,7 +368,7 @@ const getParameter = () => {
 				}
 				else
 				{
-					const err = new Error('Unknown long argument vector switch');
+					const err = new Error('Unknown long parameter');
 					err.param = '--' + argv[i];
 					err.exit = 100;
 					throw err;
@@ -386,7 +386,7 @@ const getParameter = () => {
 					}
 					else
 					{
-						const err = new Error('Unknown short argument vector switch');
+						const err = new Error('Unknown short parameter');
 						err.param = '-' + arg;
 						err.exit = 101;
 						throw err;
