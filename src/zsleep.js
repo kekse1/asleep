@@ -69,7 +69,7 @@ Reflect.defineProperty(Math.time, 'MAX_TIMEOUT', { get: () => (((2 ** 32) / 2) -
 	}
 })();
 
-Reflect.defineProperty(Math.time, 'parse', { value: (_value, _negative = false, _timeout = false) => {
+Reflect.defineProperty(Math.time, 'parse', { value: (_value, _negative = true, _timeout = false) => {
 	if(typeof _value !== 'string')
 	{
 		return null;
@@ -681,7 +681,7 @@ const start = () => {
 		param.progress = false;
 		param.stream = null;
 	}
-	else if((result = Math.time.parse(param.result, false, false)) === null)
+	else if((result = Math.time.parse(param.result, true, false)) === null)
 	{
 		const error = new Error('Unable to parse your argument.');
 		error.param = param.result;
