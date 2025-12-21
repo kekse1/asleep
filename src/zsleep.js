@@ -713,7 +713,7 @@ const start = () => {
 		}
 	}
 
-	if(param.print)
+	if(param.print || result < 0)
 	{
 		console.info('Milliseconds: ' + result);
 		console.info('     Seconds: ' + Math.round(result / 1000));
