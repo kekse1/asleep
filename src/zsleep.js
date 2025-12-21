@@ -713,7 +713,7 @@ const start = () => {
 		}
 	}
 
-	if(param.print || result < 0)
+	if(param.print)
 	{
 		console.info('Milliseconds: ' + result);
 		console.info('     Seconds: ' + Math.round(result / 1000));
@@ -723,6 +723,10 @@ const start = () => {
 	if(result > 0 && param.sleep)
 	{
 		startTimeout(result, param);
+	}
+	else if(result < 0)
+	{
+		process.exit(2);
 	}
 };
 
