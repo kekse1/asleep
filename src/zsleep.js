@@ -8,7 +8,7 @@
  */
 
 //
-const	VERSION = '1.0.1';
+const	VERSION = '1.1.0';
 
 //
 /*
@@ -20,10 +20,20 @@ const	VERSION = '1.0.1';
 */
 
 //
-const	DEFAULT_LONG = true,
+const
+	DEFAULT_LONG = true,
 	DEFAULT_MILLISEC = true,
 	DEFAULT_SEP = ', ',
 	DEFAULT_PREC = 2;
+
+const VECTOR = {
+	'p': 'print',
+	'P': 'progress',
+	'i': 'info',
+	'c': 'copyright',
+	'v': 'version',
+	'h': 'help',
+	'?': 'help' };
 
 //
 const time = Math.time = (_value) => {
@@ -199,6 +209,7 @@ Reflect.defineProperty(Math.time, 'render', { value: (_value, _millisec = DEFAUL
 		return '-/-';
 	}
 	
+	_value = Math.abs(_value);
 	const	orig = _value, append = (_value, _unit) => {
 			if(_value < 1) return;
 			if(_long && (_value = Math.int(_value)) === 1 &&
@@ -340,7 +351,7 @@ const getParameter = () => {
 	const	{ long, short } = getParameter.getMaps(),
 		argv = [ ... process.argv.slice(2) ],
 		parameter = {};
-	var	result = '';
+	var	result = '', stop = false;
 
 	for(var i = 0; i < argv.length; ++i)
 	{
@@ -351,10 +362,11 @@ const getParameter = () => {
 
 		if(argv[i] === '--')
 		{
-			break;
+			stop = true;
+			continue;
 		}
-
-		if(argv[i][0] === '-')
+		
+		if(!stop && argv[i][0] === '-')
 		{
 			argv[i] = argv[i].substr(1);
 
@@ -412,41 +424,38 @@ const getParameter = () => {
 			result += '+' + argv[i];
 		}
 	}
-	
+
 	return Object.assign(parameter, { result });
 }
 
 getParameter.apply = (_param) => {
-	if(_param.version)
+	if(_param.info)
 	{
-		_param.copyright = true;
+		info();
+		return process.exit();
 	}
 	
 	if(_param.copyright)
 	{
 		copyright();
 	}
-
-	if(_param.copyright || _param.help)
+	
+	if(_param.version)
 	{
-		console.log('  `zsleep` v' + VERSION + '\t\thttps://kekse.biz/');
+		version();
 	}
-
-	if(_param.help)
-	{
-		if(_param.copyright)
-		{
-			console.log();
-		}
-		
-		help();
-	}
-
-	if(_param.copyright || _param.help)
+	
+	if(_param.copyright || _param.version)
 	{
 		return process.exit();
 	}
-
+	
+	if(_param.help)
+	{
+		help();
+		return process.exit();
+	}
+	
 	if(typeof _param.print === 'undefined')
 	{
 		_param.print = false;
@@ -460,37 +469,36 @@ getParameter.apply = (_param) => {
 	return _param;
 };
 
-//
-getParameter.vector = {
-	print: 'p',
-	progress: 'P',
-	help: '?',
-	copyright: 'c',
-	version: 'V'
-};
-
-getParameter.getMaps = (_vec = getParameter.vector) => {
-	const	long = new Map(), short = new Map(),
-		entries = Object.entries(_vec);
-
+getParameter.getMaps = (_vector = VECTOR) => {
+	const	long = new Set(), short = new Map(),
+		entries = Object.entries(_vector);
+	
 	entries.forEach((_item) => {
-		long.set(_item[0], _item[1]);
-		short.set(_item[1], _item[0]); });
-
+		long.add(_item[1]);
+		short.set(_item[0], _item[1]); });
+	
 	return { long, short };
 };
 
 //
-const help = () => {
-	console.log();
-	
-	console.log('--help / -h');
-	
-	console.log();
+const help = (_vector = VECTOR) => {
+	info(); console.log();
+
+	for(const idx in _vector)
+	{
+		console.log('\t-' + idx + '\t--' + _vector[idx]);
+		
+		if(idx === 'P')
+		{
+			console.log();
+		}
+	}
 };
 
-const copyright = () => console.log('Copyright (c) Sebastian Kucharczyk' +
-	' <kuchen@kekse.biz>\n');
+const info = () => { copyright(); version(); };
+const copyright = () => console.log('Copyright (c) ' +
+	'Sebastian Kucharczyk <kuchen@kekse.biz>');
+const version = () => console.log('`zsleep` v' + VERSION);
 
 //
 import readline from 'node:readline';
@@ -663,6 +671,8 @@ const startTimeout = (_millisec, _param) => {
 const start = () => {
 	const	param = getParameter();
 	var	result;
+	
+	getParameter.apply(param);
 
 	if(typeof param.result === 'number')
 	{
