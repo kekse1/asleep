@@ -711,6 +711,11 @@ const start = () => {
 	}
 	else if(result < 0)
 	{
+		if(param.print)
+		{
+			console.error('\nYou can\'t travel back in time (negative time)..');
+		}
+
 		process.exit(2);
 	}
 };
