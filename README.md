@@ -45,7 +45,7 @@ But this is my example now.
 See `--help / -? / -h` (needs more description/syntax there).
 
 Basically, call this script with one or multiple parameter(s) with time(s)
-that get parsed (see `Math.time.parse()`). It'll just "wait" for it's end.
+that'll get parsed (see `Math.time.parse()`). It just "waits" for the end.
 
 Additionally you can also use `--print / -p` and/or `--progress / -P`.
 
