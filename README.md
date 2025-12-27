@@ -9,15 +9,12 @@ My own, better `sleep` replacement. Vanilla JavaScript, **without** any dependen
 > [!NOTE]
 > This Documentation is **maximum TODO**!
 
-I'm working on it right now. Seems to be nearly finished.
-So it works, but there may be some bugs left to be fixed?
-
-> [!TIP]
-> Includes an `export` of (global) `Math.time` functions, etc.
+The script already works well. Even though I'll extend it a bit, s00n.
 
 <br><br>
 
 ## News
+* \[**2025-12-27**\] A bit more documentation here. Plus new v**1.1.1**;
 * \[**2025-12-21**\] Some bugs fixed, better structs, etc... v**1.1.0**;
 * \[**2025-12-20**\] Now with splitted short arguments (e.g. `-Pp`); v**1.0.1**;
 
@@ -40,7 +37,50 @@ But this is my example now.
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**1.1.0**](src/zsleep.js)
+* [Version v**1.1.1**](src/zsleep.js)
+
+<br><br>
+
+## Usage
+See `--help / -? / -h` (needs more description/syntax there).
+
+Basically, call this script with one or multiple parameter(s) with time(s)
+that get parsed (see `Math.time.parse()`). It'll just "wait" for it's end.
+
+Additionally you can also use `--print / -p` and/or `--progress / -P`.
+
+If you abort the timeout via **`SIGINT`** (using `<Ctrl>+<c>`), it'll
+return with exit code (1). Exit code (2) if time sum is negative.
+
+> [!TIP]
+> The time parser also accepts negative parts for **subtraction** (beneath
+> floating points), e.g. `+4m-0.5m`.
+
+<br><br>
+
+## Exports and Extensions
+I'm exporting the maths from my `Math.time` extensions:
+
+* `Math.time(_item)`
+* `Math.time.parse(_value, _timeout)`
+* `Math.time.render(_value, _millisec, _long, _sep)`
+* `Math.time.MAX_TIMEOUT`
+
+Additionally, since I needed 'em here, this `Math` extensions:
+
+* `Math.round(_value, _prec)`
+* `Math.int(_value, _prec, _inverse)`
+* `Math.sign(_item, _string)`
+
+Plus these ones:
+
+* `console.width`
+* `console.height`
+* `console.ttyStream`
+
+And this:
+
+* `String.prototype.repeat(_count)`
 
 <br><br>
 

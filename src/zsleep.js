@@ -8,7 +8,7 @@
  */
 
 //
-const	VERSION = '1.1.0';
+const	VERSION = '1.1.1';
 
 //
 /*
@@ -283,36 +283,25 @@ Reflect.defineProperty(Math, 'sign', { value: (_item, _string = false) => {
 export default time;
 
 //
-Reflect.defineProperty(console, 'width', { get: () => {
-	if(process.stdout.columns)
-	{
-		return process.stdout.columns;
-	}
+Reflect.defineProperty(console, 'width', {
+	get: () => (process.stdout.columns || process.stderr.columns || 0) });
 
-	if(process.stderr.columns)
-	{
-		return process.stderr.columns;
-	}
-	
-	return 0;
-}});
+Reflect.defineProperty(console, 'height', {
+	get: () => (process.stdout.rows || process.stderr.rows || 0) });
 
 Reflect.defineProperty(console, 'ttyStream', { get: () => {
-	if(process.stdout.columns)
+	if(process.stdout.isTTY)
 	{
 		return process.stdout;
 	}
 	
-	if(process.stderr.columns)
+	if(process.stderr.isTTY)
 	{
 		return process.stderr;
 	}
 	
 	return null;
 }});
-
-Reflect.defineProperty(Math, 'getPercentStringLength', { value:
-	(_prec = DEFAULT_PREC, _sign = false) => (3 + (_prec ? 1 : 0) + _prec + (_sign ? 1 : 0)) });
 
 Reflect.defineProperty(String.prototype, 'repeat', { value: function(_count = 2)
 {
@@ -330,6 +319,10 @@ Reflect.defineProperty(String.prototype, 'repeat', { value: function(_count = 2)
 	
 	return result;
 }});
+
+//
+const getPercentStringLength =
+	(_prec = DEFAULT_PREC, _sign = false) => (3 + (_prec ? 1 : 0) + _prec + (_sign ? 1 : 0));
 
 //
 const getParameter = () => {
@@ -497,7 +490,7 @@ const startTimeout = (_millisec, _param) => {
 		rest = _millisec, timeout, progress,
 		progressCount = 0, ended = false;
 
-	const	percentLength = Math.getPercentStringLength(
+	const	percentLength = getPercentStringLength(
 			DEFAULT_PREC, false);
 	var	progressRuntime = 0,
 		progressWidth,
