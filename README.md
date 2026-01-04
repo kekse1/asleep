@@ -4,12 +4,15 @@
 
 # `zsleep`
 
-My own, better `sleep` replacement. Vanilla JavaScript, **without** any dependency.
+My own, better `sleep` replacement.
+
+Pure **Vanilla** JavaScript, \[so\] **without** any dependency.
+
+<br>
 
 > [!NOTE]
-> This Documentation is **maximum TODO**!
-
-The script already works well. Even though I'll extend it a bit, s00n.
+> This (Markdown) documentation is still much **TODO**.
+> The script itself is **not**, it's ready to be used.
 
 <br><br>
 
@@ -22,16 +25,20 @@ The script already works well. Even though I'll extend it a bit, s00n.
 <br><br>
 
 ## Example screenshot
-There's more. Also a 'silent' mode without any output (which is the default config).
-But this is my example now.
+This is an **older**(!) example screenshot, with the status output and the progress bar.
 
 ![Example Screenshot](./img/screenshot.png)
 
 <br>
 
 > [!NOTE]
-> This time **without** any [ANSI Escape Sequence](https://github.com/kekse1/ansi.js/),
+> Running **with_out_** any [ANSI Escape Sequence](https://github.com/kekse1/ansi.js/),
 > only using `\r` for the progress bar..
+
+I decided **not** to use any ANSI escape sequence for more compatibility, etc..
+
+If you **really** want some fancy colors and styles (maybe escpecially for the progress bar),
+please extend it or [let me know](#contact), so I'll maybe add an **`--ansi`** parameter, etc.
 
 <br><br>
 
@@ -61,6 +68,22 @@ the other ones can be found in the source code..
 
 <br><br>
 
+### Units
+As you can see in the script itself (look for the `Math.time.{parse,render}()` functions),
+we're supporting here the following units and it's abbreviations you can use after every
+value (e.g. `5m-0.5m`):
+
+* **`ms`** **milliseconds** (the default if no unit string is used)
+* **`s`** **seconds**
+* **`m`** **minutes**
+* **`h`** **hours**
+* **`d`** **days**
+* **`w`** **weeks**
+* **`M`** **months** (upper case!)
+* **`y`** **years**
+
+<br><br>
+
 ## Exports and Extensions
 I'm exporting the maths from my `Math.time` extensions:
 
@@ -84,6 +107,13 @@ Plus these ones:
 And this:
 
 * `String.prototype.repeat(_count)`
+
+<br>
+
+> [!TIP]
+> For best efficiency I'm using (at least one) `setTimeout()` (a big main loop would be worse);
+> Since the maximum amount of time is limitted (`(((2 ** 32) / 2) - 1)`), I also implemented kinda
+> 'workaround' for it, so the theoretical limit is practically (much) higher.
 
 <br><br>
 

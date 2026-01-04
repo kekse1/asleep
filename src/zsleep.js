@@ -64,8 +64,7 @@ const time = Math.time = (_value) => {
 	return Math.time.render(_value);
 };
 
-//Reflect.defineProperty(Math.time, 'MAX_TIMEOUT', { get: () => (((2 ** 32) / 2) - 1) });
-Math.time.MAX_TIMEOUT = 2000;
+Reflect.defineProperty(Math.time, 'MAX_TIMEOUT', { get: () => (((2 ** 32) / 2) - 1) });
 
 (() => {
 	Math.time.unit = [
