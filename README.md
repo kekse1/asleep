@@ -70,8 +70,8 @@ the other ones can be found in the source code..
 
 ### Units
 As you can see in the script itself (look for the `Math.time.{parse,render}()` functions),
-we're supporting here the following units and it's abbreviations you can use after every
-value (e.g. `5m-0.5m`):
+we're supporting here the following units and it's abbreviations (you can use after every
+value (e.g. `5m-0.5m`)):
 
 * **`ms`** **milliseconds** (the default if no unit string is used)
 * **`s`** **seconds**
