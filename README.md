@@ -66,7 +66,7 @@ the other ones can be found in the source code..
 > floating points), e.g. `+4m-0.5m` (equals `210000` milliseconds, so
 > `3 minutes, 30 seconds`).
 
-<br><br>
+<br>
 
 ### Units
 As you can see in the script itself (look for the `Math.time.{parse,render}()` functions),
