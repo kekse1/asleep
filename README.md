@@ -4,15 +4,9 @@
 
 # `zsleep`
 
-My own, better `sleep` replacement.
+My own, better `sleep` replacement (see `man 1 sleep`).
 
-Pure **Vanilla** JavaScript, \[so\] **without** any dependency.
-
-<br>
-
-> [!NOTE]
-> This (Markdown) documentation is still much **TODO**.
-> The script itself is **not**, it's ready to be used.
+Pure **Vanilla** JavaScript - **without** any dependency!
 
 <br><br>
 
@@ -21,6 +15,12 @@ Pure **Vanilla** JavaScript, \[so\] **without** any dependency.
 * \[**2025-12-27**\] A bit more documentation here. Plus new v**1.1.1**;
 * \[**2025-12-21**\] Some bugs fixed, better structs, etc... v**1.1.0**;
 * \[**2025-12-20**\] Now with splitted short arguments (e.g. `-Pp`); v**1.0.1**;
+
+<br>
+
+> [!NOTE]
+> This (Markdown) documentation is still much **TODO**.
+> The script itself is **not**, it's ready to be used.
 
 <br><br>
 
