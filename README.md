@@ -123,8 +123,8 @@ Because I really wanted to eliminate any dependency, I decided to use my own,
 very **little** `getopt` interpretation (especially made for this script).
 It's really limited, but supports everything we really need and wish,
 including multiple short parameters (like `-pP`), plus the necessary
-**Integer** values for some less getopt-ions, and - of course - also
-the mandatory `--` 'stop sign'.
+**Integer** values for some less getopt-ions, and - of course - the
+mandatory `--` 'stop sign'.
 
 <br><br>
 
