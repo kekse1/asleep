@@ -14,6 +14,7 @@ The script already works well. Even though I'll extend it a bit, s00n.
 <br><br>
 
 ## News
+* \[**2026-01-04**\] **Really big improvements and BugFixes**! .. v**2.0.0**;
 * \[**2025-12-27**\] A bit more documentation here. Plus new v**1.1.1**;
 * \[**2025-12-21**\] Some bugs fixed, better structs, etc... v**1.1.0**;
 * \[**2025-12-20**\] Now with splitted short arguments (e.g. `-Pp`); v**1.0.1**;
@@ -37,7 +38,7 @@ But this is my example now.
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**1.1.1**](src/zsleep.js)
+* [Version v**2.0.0**](src/zsleep.js)
 
 <br><br>
 

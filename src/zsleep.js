@@ -8,32 +8,51 @@
  */
 
 //
-const	VERSION = '1.1.1';
-
-//
-/*
- * (description)
- *
- * w/ a tiny 'configuration' on top of the following code;
- * see my const's 'DEFAULT_*'!
- *
-*/
+const	VERSION = '2.0.0';
 
 //
 const
-	DEFAULT_LONG = true,
 	DEFAULT_MILLISEC = true,
-	DEFAULT_SEP = ', ',
-	DEFAULT_PREC = 2;
+	DEFAULT_PRECISION = 2,
+	DEFAULT_LONG = true,
+	DEFAULT_SEP = ', ';
 
-const GETOPT = {
+//
+const GETOPT = [
+	'print',
+	'progress',
+	'',
+	'precision',
+	'offset',
+	'',
+	'info',
+	'',
+	'copyright',
+	'version',
+	'',
+	'help'
+];
+
+const SHORT = {
 	'p': 'print',
 	'P': 'progress',
+	'n': 'precision',
+	'o': 'offset',
 	'i': 'info',
 	'c': 'copyright',
 	'v': 'version',
-	'h': 'help',
-	'?': 'help' };
+	'?': 'help',
+	'h': 'help'
+};
+
+const VALUES = [
+	'offset',
+	'precision'
+];
+
+//
+var PRECISION =
+	DEFAULT_PRECISION;
 
 //
 const time = Math.time = (_value) => {
@@ -45,7 +64,8 @@ const time = Math.time = (_value) => {
 	return Math.time.render(_value);
 };
 
-Reflect.defineProperty(Math.time, 'MAX_TIMEOUT', { get: () => (((2 ** 32) / 2) - 1) });
+//Reflect.defineProperty(Math.time, 'MAX_TIMEOUT', { get: () => (((2 ** 32) / 2) - 1) });
+Math.time.MAX_TIMEOUT = 2000;
 
 (() => {
 	Math.time.unit = [
@@ -69,7 +89,7 @@ Reflect.defineProperty(Math.time, 'MAX_TIMEOUT', { get: () => (((2 ** 32) / 2) -
 	}
 })();
 
-Reflect.defineProperty(Math.time, 'parse', { value: (_value, _timeout = false) => {
+Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 	if(typeof _value !== 'string')
 	{
 		return null;
@@ -175,12 +195,6 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value, _timeout = false) =
 		return null;
 	}
 	
-	if(_timeout)
-	{
-		return Math.min(result,
-			Math.time.MAX_TIMEOUT);
-	}
-	
 	return result;
 }});
 
@@ -195,20 +209,27 @@ Reflect.defineProperty(Math.time, 'render', { value: (_value, _millisec = DEFAUL
 	}
 	
 	_value = Math.abs(_value);
-	const	orig = _value, append = (_value, _unit) => {
+
+	const orig = _value,
+		append = (_value, _unit) => {
 			if(_value < 1) return;
 			if(_long && (_value = Math.int(_value)) === 1 &&
 				_unit[_unit.length - 1] === 's') _unit = _unit.slice(0, -1);
-			if(index === 0 && orig >= 1000 && !_millisec) return;
-			var res = Math.int(_value).toString();
+			var secs; if(orig >= 1000 && !_millisec) {
+				if(index === 0) return;
+				if(index > 1) return;
+				if(_millisec === null)
+					secs = true;
+				else	secs = false} else secs = false;
+			var res; if(secs) res = Math.round(_value, PRECISION).
+				toFixed(PRECISION); else res = Math.int(_value).toString();
 			return (result = (res + _unit + _sep) + result);
 		};
 	
 	const	unit = Math.time.unit;
-	var	result = '',
-		index = -1,
+	var	result = '', index = -1,
 		u, v;
-		
+
 	if(_value < 1)
 	{
 		return '0';
@@ -232,7 +253,7 @@ Reflect.defineProperty(Math.time, 'render', { value: (_value, _millisec = DEFAUL
 
 //
 Reflect.defineProperty(Math, '_round', { value: Math.round });
-Reflect.defineProperty(Math, 'round', { value: (_value, _prec = DEFAULT_PREC) => {
+Reflect.defineProperty(Math, 'round', { value: (_value, _prec = DEFAULT_PRECISION) => {
 	if(_prec <= 0) return (Math._round(_value) || 0);
 	const coefficient = Math.pow(10, _prec);
 	return ((Math._round(_value * coefficient) / coefficient) || 0);
@@ -322,14 +343,63 @@ Reflect.defineProperty(String.prototype, 'repeat', { value: function(_count = 2)
 
 //
 const getPercentStringLength =
-	(_prec = DEFAULT_PREC, _sign = false) => (3 + (_prec ? 1 : 0) + _prec + (_sign ? 1 : 0));
+	(_prec = PRECISION, _sign = false) => (3 + (_prec ? 1 : 0) + _prec + (_sign ? 1 : 0));
 
 //
 const getParameter = () => {
 	const	{ long, short } = getParameter.getMaps(),
 		argv = [ ... process.argv.slice(2) ],
 		parameter = {};
-	var	result = '', stop = false;
+	var	result = '',
+		stop = false,
+		done = false,
+		value, err;
+	
+	const getValue = (_key, _index, _exit) => {
+		if(_key.length === 1)
+		{
+			_key = short.get(_key);
+		}
+		
+		if(!VALUES.includes(_key))
+		{
+			return true;
+		}
+		
+		var temp = argv[_index + 1];
+		
+		if(typeof temp !== 'string' || temp.length === 0)
+		{
+			err = new Error('Missing value for parameter');
+			err.param = '--' + _key;
+			if(long.get(_key).length)
+				err.param += ' / ' +
+					long.get(_key).join('/');
+			if(_exit) err.exit = _exit;
+			throw err;
+		}
+
+		if(isNaN(temp))
+		{
+			if((temp = Math.time.parse(temp)) === null)
+			{
+				err = new Error('Invalid value for parameter (not an Integer)');
+				err.param = '--' + _key;
+				if(long.get(_key).length)
+					err.param += ' / ' +
+						long.get(_key).join('/');
+				err.value = temp;
+				if(_exit) err.exit = _exit;
+				throw err;
+			}
+		}
+		else
+		{
+			temp = Number(temp);
+		}
+		
+		return temp;
+	};
 
 	for(var i = 0; i < argv.length; ++i)
 	{
@@ -354,11 +424,12 @@ const getParameter = () => {
 				
 				if(long.has(argv[i]))
 				{
-					parameter[argv[i]] = true;
+					if((value = getValue(argv[i], i, 102)) !== true) ++i;
+					parameter[argv[i]] = value;
 				}
 				else
 				{
-					const err = new Error('Unknown long parameter');
+					err = new Error('Unknown long parameter');
 					err.param = '--' + argv[i];
 					err.exit = 100;
 					throw err;
@@ -372,11 +443,12 @@ const getParameter = () => {
 				{
 					if(short.has(arg))
 					{
-						parameter[short.get(arg)] = true;
+						if((value = getValue(arg, i, 103)) !== true) ++i;
+						parameter[short.get(arg)] = value;
 					}
 					else
 					{
-						const err = new Error('Unknown short parameter');
+						err = new Error('Unknown short parameter');
 						err.param = '-' + arg;
 						err.exit = 101;
 						throw err;
@@ -386,11 +458,16 @@ const getParameter = () => {
 
 			continue;
 		}
+		
+		if(done)
+		{
+			continue;
+		}
 
 		if(argv[i][0] === '=' && !isNaN(argv[i] = argv[i].substr(1)))
 		{
 			result = Number(argv[i]);
-			break;
+			done = true;
 		}
 		
 		if(argv[i][0] === '+' || argv[i][0] === '-')
@@ -403,7 +480,8 @@ const getParameter = () => {
 		}
 	}
 
-	return Object.assign(parameter, { result });
+	return getParameter.apply(
+		Object.assign(parameter, { result }));
 }
 
 getParameter.apply = (_param) => {
@@ -413,14 +491,14 @@ getParameter.apply = (_param) => {
 		return process.exit();
 	}
 	
-	if(_param.copyright)
-	{
-		copyright();
-	}
-	
 	if(_param.version)
 	{
 		version();
+	}
+
+	if(_param.copyright)
+	{
+		copyright();
 	}
 	
 	if(_param.copyright || _param.version)
@@ -443,41 +521,85 @@ getParameter.apply = (_param) => {
 	{
 		_param.progress = false;
 	}
-	
+
+	if('offset' in _param)
+	{
+		_param.offset = Math.max(0,
+			Math.int(_param.offset));
+	}
+	else
+	{
+		_param.offset = 0;
+	}
+
+	if('precision' in _param)	
+	{
+		_param.precision = PRECISION =
+			Math.abs(Math.int(_param.precision));
+	}
+	else
+	{
+		_param.precision = PRECISION =
+			DEFAULT_PRECISION;
+	}
+
 	return _param;
 };
 
-getParameter.getMaps = (_vector = GETOPT) => {
-	const	long = new Set(), short = new Map(),
-		entries = Object.entries(_vector);
+getParameter.getMaps = () => {
+	const long = new Map();
+	const short = new Map();
 	
-	entries.forEach((_item) => {
-		long.add(_item[1]);
-		short.set(_item[0], _item[1]); });
+	for(const item of GETOPT)
+	{
+		if(!item) continue;
+		long.set(item, []);
+	}
 	
+	for(const idx in SHORT)
+	{
+		long.get(SHORT[idx]).push(idx);
+		short.set(idx, SHORT[idx]);
+	}
+
 	return { long, short };
 };
 
 //
-const help = (_vector = GETOPT) => {
+const help = () => {
+	const { long, short } =
+		getParameter.getMaps();
 	info(); console.log();
 
-	for(const idx in _vector)
+	var max = 0; long.forEach((_value, _key) => {
+		if(_value.length > max)
+			max = _value.length;
+	}); max = ((max * 5) - 3);
+
+	const getShorts = (_long) => (('-' +
+		long.get(_long).join(' / -')).
+			padStart(max, ' '));
+
+	for(const item of GETOPT)
 	{
-		console.log('\t-' + idx + '\t--' + _vector[idx]);
-		
-		if(idx === 'P')
+		if(!item)
 		{
 			console.log();
+			continue;
 		}
+		
+		console.log('  \t' + getShorts(item) +
+			' / ' + '--' + item + (VALUES.includes(item) ?
+				'\t  <int>' : ''));
 	}
 
 	console.log();
 };
 
-const info = () => { copyright(); version(); };
+const info = () => { copyright(); console.log(); version(); };
 const copyright = () => console.log('Copyright (c) ' +
-	'Sebastian Kucharczyk <kuchen@kekse.biz>');
+	'Sebastian Kucharczyk <kuchen@kekse.biz>\n' +
+	'https://kekse.biz/  https://github.com/kekse1/zsleep/');
 const version = () => console.log('`zsleep` v' + VERSION);
 
 //
@@ -486,13 +608,14 @@ import readline from 'node:readline';
 //
 const startTimeout = (_millisec, _param) => {
 	const	max_timeout = Math.time.MAX_TIMEOUT;
-	var	runtime = 0, last = Date.now(), now,
-		rest = _millisec, timeout, progress,
-		progressCount = 0, ended = false;
+	var	runtime = _param.offset, timeout,
+		last = Date.now(), now, progress,
+		rest = (_millisec - _param.offset),
+		ended = false, progressCount = 0;
 
 	const	percentLength = getPercentStringLength(
-			DEFAULT_PREC, false);
-	var	progressRuntime = 0,
+			PRECISION, false);
+	var	progressRuntime = _param.offset,
 		progressWidth,
 		progressLast,
 		progressNow;
@@ -523,10 +646,15 @@ const startTimeout = (_millisec, _param) => {
 		{
 			_value = 1;
 		}
+		
+		if(_value === 1)
+		{
+			progressRuntime = _millisec;
+		}
 
-		var line = Math.round(_value * 100, 2).toString().padStart(
+		var line = Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
 			percentLength, ' ') + '%   ' + Math.time.render(
-				progressRuntime, false, false) + '   ';
+				progressRuntime, null, false) + '   ';
 
 		progressWidth -= (line.length + 2);
 
@@ -558,7 +686,14 @@ const startTimeout = (_millisec, _param) => {
 			timeout = null;
 		}
 
-		runtime += (Date.now() - last);
+		if(_fin)
+		{
+			runtime = _millisec;
+		}
+		else
+		{
+			runtime += (Date.now() - last);
+		}
 
 		if(_param.progress)
 		{
@@ -584,17 +719,14 @@ const startTimeout = (_millisec, _param) => {
 		setTimeout(() => end(_fin !== false, runtime, _millisec, _param));
 	};
 
-	const time = () => Math.min(Math.time.MAX_TIMEOUT,
-		Math.max(0, _millisec - runtime));
+	const time = () => Math.min(
+		Math.time.MAX_TIMEOUT, rest);
 	
 	const handler = (_time) => {
 		if((rest -= _time) <= 0)
 		{
-			endProgress(true);
-			return end(true,
-				runtime,
-				_millisec,
-				_param);
+			endProgress(true); return end(true,
+				runtime, _millisec, _param);
 		}
 		
 		now = Date.now();
@@ -649,10 +781,8 @@ const startTimeout = (_millisec, _param) => {
 };
 
 const start = () => {
-	const	param = getParameter();
 	var	result;
-	
-	getParameter.apply(param);
+	const	param = getParameter();
 
 	if(typeof param.result === 'number')
 	{
@@ -661,7 +791,7 @@ const start = () => {
 		param.progress = false;
 		param.stream = null;
 	}
-	else if((result = Math.time.parse(param.result, false)) === null)
+	else if((result = Math.time.parse(param.result)) === null)
 	{
 		const error = new Error('Unable to parse your argument.');
 		error.param = param.result;
@@ -695,9 +825,20 @@ const start = () => {
 
 	if(param.print)
 	{
-		console.info('Milliseconds: ' + result);
-		console.info('     Seconds: ' + Math.round(result / 1000));
-		console.info('        Time: ' + Math.time.render(result));
+		console.info('  Milliseconds: ' + result.toString());
+		console.info('       Seconds: ' + Math.round(
+			result / 1000, PRECISION).toFixed(PRECISION));
+		console.info('          Time: ' + Math.time.render(result));
+
+		if(param.offset > 0)
+		{
+			const real = (result - param.offset);
+
+			console.log();
+			console.info('        Offset: ' + param.offset.toString());
+			console.info('   Offset time: ' + Math.time.render(param.offset));
+			console.info('Effective time: ' + Math.time.render(real));
+		}
 	}
 
 	if(result > 0 && param.sleep)
@@ -718,10 +859,12 @@ const start = () => {
 const end = (_fin, _runtime, _millisec, _param) => {
 	if(!_fin)
 	{
+		const diff = Math.max(0, (_millisec - _runtime));
 		if(_param.print) console.error(
 			'\n(aborted by SIGINT)\n     Runtime: ' + Math.time.
 				render(_runtime) + '\n  Difference: ' + Math.time.
-				render(Math.max(0, (_millisec - _runtime))));
+				render(diff) + '\nMilliseconds: ' + diff + '\n     Seconds: ' +
+				Math.round(diff / 1000, PRECISION).toFixed(PRECISION));
 		process.exit(1);
 	}
 
@@ -738,11 +881,9 @@ catch(_err)
 	if('exit' in _err)
 	{
 		console.error(_err.message);
-
-		if(_err.param)
-			console.info(
-				'\n\t' + _err.param + '\n');
-
+		if(_err.param) console.info(
+			'\n\t' + _err.param + (_err.value ?
+				' `' + _err.value + '`' : '') + '\n');
 		process.exit(_err.exit || 255);
 	}
 
