@@ -112,8 +112,9 @@ And this:
 
 > [!TIP]
 > For best efficiency I'm using (at least one) `setTimeout()` (a big main loop would be worse);
-> Since the maximum amount of time is limitted (`(((2 ** 32) / 2) - 1)`), I also implemented kinda
-> 'workaround' for it, so the theoretical limit is practically (much) higher.
+> Since the maximum amount of time is limitted (see my `Math.time.MAX_TIMEOUT`, which is
+> (((2 ** 32) / 2) - 1)`), I also implemented kinda 'workaround' for it, so the theoretical
+> limit is practically (much) higher.
 
 <br><br>
 
