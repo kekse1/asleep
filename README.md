@@ -116,6 +116,14 @@ And this:
 
 * `String.prototype.repeat(_count)`
 
+<br>
+
+### `getopt`
+Because I really wanted to eliminate any dependency, I decided to use my own,
+very **little** `getopt` interpretation. It's really limited, but supports
+everything we really need and wish (also multiple short parameters, like
+`-pP`, plus the necessary **Integer** values for some less getopt-ions).
+
 <br><br>
 
 ## You're welcome!
