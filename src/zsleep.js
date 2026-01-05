@@ -8,7 +8,7 @@
  */
 
 //
-const	VERSION = '2.0.0';
+const	VERSION = '2.0.1';
 
 //
 const
@@ -440,6 +440,9 @@ const getParameter = () => {
 
 				for(const arg of argv[i])
 				{
+					//
+					//TODO/.. offensichtlich. oder??
+					//
 					if(short.has(arg))
 					{
 						if((value = getValue(arg, i, 103)) !== true) ++i;
@@ -828,11 +831,14 @@ const start = () => {
 		console.info('       Seconds: ' + Math.round(
 			result / 1000, PRECISION).toFixed(PRECISION));
 		console.info('          Time: ' + Math.time.render(result));
+		
+		const real = (result - param.offset);
+
+		const end = (Date.now() + real);
+		console.info('           End: ' + new Date(end).toGMTString());
 
 		if(param.offset > 0)
 		{
-			const real = (result - param.offset);
-
 			console.log();
 			console.info('        Offset: ' + param.offset.toString());
 			console.info('   Offset time: ' + Math.time.render(param.offset));
