@@ -11,7 +11,7 @@ Pure **Vanilla** JavaScript - **without** any dependency!
 <br><br>
 
 ## News
-* \[**2026-01-04**\] **Really big improvements and BugFixes**! .. v**2.0.1**;
+* \[**2026-01-04**\] **Really big improvements and BugFixes**! .. v**2.1.0**;
 * \[**2025-12-27**\] A bit more documentation here. Plus new v**1.1.1**;
 * \[**2025-12-21**\] Some bugs fixed, better structs, etc... v**1.1.0**;
 * \[**2025-12-20**\] Now with splitted short arguments (e.g. `-Pp`); v**1.0.1**;
@@ -45,7 +45,7 @@ please extend it or [let me know](#contact), so I'll maybe add an **`--ansi`** p
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.0.1**](src/zsleep.js) (updated **2026-01-05**);
+* [Version v**2.1.0**](src/zsleep.js) (updated **2026-01-05**);
 
 <br><br>
 

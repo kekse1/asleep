@@ -8,7 +8,7 @@
  */
 
 //
-const	VERSION = '2.0.1';
+const	VERSION = '2.1.0';
 
 //
 const
@@ -352,7 +352,7 @@ const getParameter = () => {
 	var	result = '',
 		stop = false,
 		done = false,
-		value, err;
+		err;
 	
 	const getValue = (_key, _index, _exit) => {
 		if(_key.length === 1)
@@ -399,7 +399,7 @@ const getParameter = () => {
 		
 		return temp;
 	};
-
+	
 	for(var i = 0; i < argv.length; ++i)
 	{
 		if(!(argv[i] = argv[i].trim()))
@@ -423,8 +423,10 @@ const getParameter = () => {
 				
 				if(long.has(argv[i]))
 				{
-					if((value = getValue(argv[i], i, 102)) !== true) ++i;
-					parameter[argv[i]] = value;
+					if((parameter[argv[i]] = getValue(argv[i], i, 102)) !== true)
+					{
+						++i;
+					}
 				}
 				else
 				{
@@ -441,12 +443,15 @@ const getParameter = () => {
 				for(const arg of argv[i])
 				{
 					//
-					//TODO/.. offensichtlich. oder??
+					//TODO/.. offensichtlich. oder?? => werte!!
 					//
 					if(short.has(arg))
 					{
-						if((value = getValue(arg, i, 103)) !== true) ++i;
-						parameter[short.get(arg)] = value;
+						if((parameter[short.get(arg)] = getValue(
+							arg, i, 103)) !== true)
+						{
+							++i;
+						}
 					}
 					else
 					{
@@ -457,7 +462,7 @@ const getParameter = () => {
 					}
 				}
 			}
-
+			
 			continue;
 		}
 		
@@ -481,7 +486,7 @@ const getParameter = () => {
 			result += '+' + argv[i];
 		}
 	}
-
+	
 	return getParameter.apply(
 		Object.assign(parameter, { result }));
 }
