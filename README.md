@@ -25,9 +25,11 @@ Pure **Vanilla** JavaScript - **without** any dependency!
 <br><br>
 
 ## Example screenshot
-This is an **older**(!) example screenshot, with the status output and the progress bar.
+Click on it to enlarge.
 
-![Example Screenshot](./img/screenshot.png)
+<a href="./img/full.png">
+    <img src="./img/half.png" alt="Example Screenshot">
+</a>
 
 <br>
 
