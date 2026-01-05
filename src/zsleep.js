@@ -838,9 +838,10 @@ const start = () => {
 		console.info('          Time: ' + Math.time.render(result));
 		
 		const real = (result - param.offset);
-
+		console.log();
+		console.debug('         Start: ' + new Date().toGMTString());
 		const end = (Date.now() + real);
-		console.info('           End: ' + new Date(end).toGMTString());
+		console.debug('           End: ' + new Date(end).toGMTString());
 
 		if(param.offset > 0)
 		{
