@@ -25,11 +25,9 @@ Pure **Vanilla** JavaScript - **without** any dependency!
 <br><br>
 
 ## Example screenshot
-Click on it to enlarge.
+This is the latest example screenshot (v**2.1.1**).
 
-<a href="./img/full.png">
-    <img src="./img/half.png" alt="Example Screenshot">
-</a>
+![Latest Example Screenshot](./img/screenshot.png)
 
 <br>
 
