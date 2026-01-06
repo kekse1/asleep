@@ -872,8 +872,8 @@ const end = (_fin, _runtime, _millisec, _param) => {
 	{
 		const diff = Math.max(0, (_millisec - _runtime));
 		if(_param.print) console.error(
-			'\n(aborted by SIGINT)\n       Real End: ' + new Date().toGMTString() +
-			'\n        Runtime: ' + Math.time.render(_runtime) + '\n     Difference: ' +
+			'\n(aborted by SIGINT)\n        Runtime: ' + Math.time.render(_runtime) +
+			'\n       Real End: ' + new Date().toGMTString() + '\n     Difference: ' +
 			Math.time.render(diff) + '\n   Milliseconds: ' + diff.toLocaleString() +
 			'\n        Seconds: ' + Math.round(diff / 1000, PRECISION).toFixed(PRECISION));
 		process.exit(1);
