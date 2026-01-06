@@ -8,7 +8,7 @@
  */
 
 //
-const	VERSION = '2.1.0';
+const	VERSION = '2.1.1';
 
 //
 const
@@ -366,8 +366,8 @@ const getParameter = () => {
 		}
 		
 		var temp = argv[_index + 1];
-		
-		if(typeof temp !== 'string' || temp.length === 0)
+
+		if(typeof temp !== 'string' || temp.length === 0 || temp[0] === '-')
 		{
 			err = new Error('Missing value for parameter');
 			err.param = '--' + _key;
@@ -382,7 +382,7 @@ const getParameter = () => {
 		{
 			if((temp = Math.time.parse(temp)) === null)
 			{
-				err = new Error('Invalid value for parameter (not an Integer)');
+				err = new Error('Invalid value for parameter');
 				err.param = '--' + _key;
 				if(long.get(_key).length)
 					err.param += ' / ' +
@@ -597,7 +597,7 @@ const help = () => {
 		
 		console.log('  \t' + getShorts(item) +
 			' / ' + '--' + item + (VALUES.includes(item) ?
-				'\t  <int>' : ''));
+				'\t  <param>' : ''));
 	}
 
 	console.log();
