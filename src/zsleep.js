@@ -832,23 +832,23 @@ const start = () => {
 
 	if(param.print)
 	{
-		console.info('  Milliseconds: ' + result.toLocaleString());
-		console.info('       Seconds: ' + Math.round(
+		console.info('   Milliseconds: ' + result.toLocaleString());
+		console.info('        Seconds: ' + Math.round(
 			result / 1000, PRECISION).toFixed(PRECISION));
-		console.info('          Time: ' + Math.time.render(result));
+		console.info('           Time: ' + Math.time.render(result));
 		
 		const real = (result - param.offset);
 		console.log();
-		console.debug('         Start: ' + new Date().toGMTString());
+		console.debug('          Start: ' + new Date().toGMTString());
 		const end = (Date.now() + real);
-		console.debug('           End: ' + new Date(end).toGMTString());
+		console.debug('            End: ' + new Date(end).toGMTString());
 
 		if(param.offset > 0)
 		{
 			console.log();
-			console.info('        Offset: ' + param.offset.toLocaleString());
-			console.info('   Offset time: ' + Math.time.render(param.offset));
-			console.info('Effective time: ' + Math.time.render(real));
+			console.info('         Offset: ' + param.offset.toLocaleString());
+			console.info('    Offset time: ' + Math.time.render(param.offset));
+			console.info(' Effective time: ' + Math.time.render(real));
 		}
 	}
 
@@ -872,10 +872,10 @@ const end = (_fin, _runtime, _millisec, _param) => {
 	{
 		const diff = Math.max(0, (_millisec - _runtime));
 		if(_param.print) console.error(
-			'\n(aborted by SIGINT)\n    Real End: ' + new Date().toGMTString() +
-			'\n     Runtime: ' + Math.time.render(_runtime) + '\n  Difference: ' +
-			Math.time.render(diff) + '\nMilliseconds: ' + diff.toLocaleString() +
-			'\n     Seconds: ' + Math.round(diff / 1000, PRECISION).toFixed(PRECISION));
+			'\n(aborted by SIGINT)\n       Real End: ' + new Date().toGMTString() +
+			'\n        Runtime: ' + Math.time.render(_runtime) + '\n     Difference: ' +
+			Math.time.render(diff) + '\n   Milliseconds: ' + diff.toLocaleString() +
+			'\n        Seconds: ' + Math.round(diff / 1000, PRECISION).toFixed(PRECISION));
 		process.exit(1);
 	}
 
