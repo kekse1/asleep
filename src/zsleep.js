@@ -12,7 +12,12 @@
  */
 
 //
+<<<<<<< HEAD
 const	VERSION = '2.2.0';
+=======
+const
+	VERSION = '2.1.1';
+>>>>>>> e216e230b9f41d648c42d38d98b036dd673be6e3
 
 //
 const
@@ -22,7 +27,7 @@ const
 	DEFAULT_SEP = ', ';
 
 //
-const GETOPT = [
+const GETOPT_LONG = [
 	'print',
 	'progress',
 	'',
@@ -37,7 +42,7 @@ const GETOPT = [
 	'help'
 ];
 
-const SHORT = {
+const GETOPT_SHORT = {
 	'p': 'print',
 	'P': 'progress',
 	'n': 'precision',
@@ -49,7 +54,7 @@ const SHORT = {
 	'h': 'help'
 };
 
-const VALUES = [
+const GETOPT_VALUES = [
 	'offset',
 	'precision'
 ];
@@ -364,7 +369,7 @@ const getParameter = () => {
 			_key = short.get(_key);
 		}
 		
-		if(!VALUES.includes(_key))
+		if(!GETOPT_VALUES.includes(_key))
 		{
 			return true;
 		}
@@ -561,16 +566,16 @@ getParameter.getMaps = () => {
 	const long = new Map();
 	const short = new Map();
 	
-	for(const item of GETOPT)
+	for(const item of GETOPT_LONG)
 	{
 		if(!item) continue;
 		long.set(item, []);
 	}
 	
-	for(const idx in SHORT)
+	for(const idx in GETOPT_SHORT)
 	{
-		long.get(SHORT[idx]).push(idx);
-		short.set(idx, SHORT[idx]);
+		long.get(GETOPT_SHORT[idx]).push(idx);
+		short.set(idx, GETOPT_SHORT[idx]);
 	}
 
 	return { long, short };
@@ -591,7 +596,7 @@ const help = () => {
 		long.get(_long).join(' / -')).
 			padStart(max, ' '));
 
-	for(const item of GETOPT)
+	for(const item of GETOPT_LONG)
 	{
 		if(!item)
 		{
@@ -600,8 +605,9 @@ const help = () => {
 		}
 		
 		console.log('  \t' + getShorts(item) +
-			' / ' + '--' + item + (VALUES.includes(item) ?
-				'\t  <param>' : ''));
+			' / ' + '--' + item + (GETOPT_VALUES.
+				includes(item) ?
+					'\t  <param>' : ''));
 	}
 
 	console.log();
