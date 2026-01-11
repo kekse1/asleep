@@ -7,8 +7,12 @@
  *
  */
 
+/*
+ * TODO * bitte mein `Date.prototype.toString()` via GETOPT anpassbar machen!!!
+ */
+
 //
-const	VERSION = '2.1.1';
+const	VERSION = '2.2.0';
 
 //
 const
@@ -839,9 +843,9 @@ const start = () => {
 		
 		const real = (result - param.offset);
 		console.log();
-		console.debug('          Start: ' + new Date().toGMTString());
+		console.debug('          Start: ' + new Date().toString(true));
 		const end = (Date.now() + real);
-		console.debug('            End: ' + new Date(end).toGMTString());
+		console.debug('            End: ' + new Date(end).toString(true));
 
 		if(param.offset > 0)
 		{
@@ -867,13 +871,52 @@ const start = () => {
 	}
 };
 
+//
+//TODO/getopt parameter(s)s for locale w/ date-time-format(s), etc..!1
+//
+Reflect.defineProperty(Date, 'currentLocale', { get: () => Intl.
+	DateTimeFormat().resolvedOptions().locale });
+
+const _toString = Date.prototype.toString;
+Reflect.defineProperty(Date.prototype, '_toString', { value: _toString });
+Reflect.defineProperty(Date.prototype, 'toString', { value: function(... _args)
+{
+	if(_args.length === 0 || !_args[0])
+	{
+		return _toString.call(this);
+	}
+
+	const params = new Array(2);
+
+	if(typeof _args[0] === 'string' && _args[0].length > 0)
+	{
+		params[0] = _args.shift();
+	}
+	else
+	{
+		params[0] = Date.currentLocale;
+	}
+
+	const opts = {
+		weekday: 'long',
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit' };
+
+	params[1] = Object.assign(opts, _args.shift());
+	return this.toLocaleString(... params);
+}});
+
 const end = (_fin, _runtime, _millisec, _param) => {
 	if(!_fin)
 	{
 		const diff = Math.max(0, (_millisec - _runtime));
 		if(_param.print) console.error(
 			'\n(aborted by SIGINT)\n        Runtime: ' + Math.time.render(_runtime) +
-			'\n       Real End: ' + new Date().toGMTString() + '\n     Difference: ' +
+			'\n       Real End: ' + new Date().toString(true) + '\n     Difference: ' +
 			Math.time.render(diff) + '\n   Milliseconds: ' + diff.toLocaleString() +
 			'\n        Seconds: ' + Math.round(diff / 1000, PRECISION).toFixed(PRECISION));
 		process.exit(1);

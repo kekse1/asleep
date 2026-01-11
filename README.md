@@ -13,6 +13,7 @@ JavaScript interpreter)!
 <br><br>
 
 ## News
+* \[**2026-01-11**\] Extended date/time functionality (but w/ more TODO), v**2.2.0**;
 * \[**2026-01-06**\] **Really big improvements and BugFixes**! .. v**2.1.1**;
 * \[**2025-12-27**\] A bit more documentation here. Plus new v**1.1.1**;
 * \[**2025-12-21**\] Some bugs fixed, better structs, etc... v**1.1.0**;
@@ -27,9 +28,10 @@ JavaScript interpreter)!
 <br><br>
 
 ## Example screenshot
-This is the latest example screenshot (v**2.1.1**).
+This is an example screenshot (v**2.1.1**); **not** yet the newest version (with
+more accurate Date/Time outputs).
 
-![Latest Example Screenshot](./img/screenshot.png)
+![Example Screenshot](./img/screenshot.png)
 
 <br>
 
@@ -47,7 +49,7 @@ please extend it or [let me know](#contact), so I'll maybe add an **`--ansi`** p
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.1.1**](src/zsleep.js) (updated **2026-01-06**);
+* [Version v**2.2.0**](src/zsleep.js) (updated **2026-01-11**);
 
 <br><br>
 
@@ -117,6 +119,8 @@ Plus these ones:
 And this:
 
 * `String.prototype.repeat(_count)`
+* `Date.prototype.toString(_locale, _options)`
+* `Date.currentLocale`
 
 <br>
 
@@ -127,6 +131,12 @@ It's really limited, but supports everything we really need and wish,
 including multiple short parameters (like `-pP`), plus the necessary
 values for some less getopt-ions, and, of course, the mandatory `--`
 parameter 'stop sign'.
+
+<br>
+
+#### TODO
+Since v**2.2.0** I adjust the date/time outputs. But I also want to include
+some options for it in the getopt parameters. That's the latest **TODO**.
 
 <br><br>
 
