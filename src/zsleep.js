@@ -12,12 +12,8 @@
  */
 
 //
-<<<<<<< HEAD
-const	VERSION = '2.2.0';
-=======
 const
-	VERSION = '2.1.1';
->>>>>>> e216e230b9f41d648c42d38d98b036dd673be6e3
+	VERSION = '2.2.0';
 
 //
 const
