@@ -13,7 +13,7 @@
 
 //
 const
-	VERSION = '2.2.0';
+	VERSION = '2.2.1';
 
 //
 const
@@ -219,16 +219,9 @@ Reflect.defineProperty(Math.time, 'render', { value: (_value, _millisec = DEFAUL
 			if(_value < 1) return;
 			if(_long && (_value = Math.int(_value)) === 1 &&
 				_unit[_unit.length - 1] === 's') _unit = _unit.slice(0, -1);
-			var secs; if(orig >= 1000 && !_millisec) {
-				if(index === 0) return;
-				if(index > 1) return;
-				if(_millisec === null)
-					secs = true;
-				else	secs = false} else secs = false;
-			var res; if(secs) res = Math.round(_value, PRECISION).
-				toFixed(PRECISION); else res = Math.int(_value).toString();
-			return (result = (res + _unit + _sep) + result);
-		};
+			if(index === 0 && orig >= 1000 && !_millisec) return;
+			var res = Math.int(_value).toString();
+			return (result = (res + _unit + _sep) + result); };
 	
 	const	unit = Math.time.unit;
 	var	result = '', index = -1,
@@ -665,9 +658,9 @@ const startTimeout = (_millisec, _param) => {
 			progressRuntime = _millisec;
 		}
 
+		const seconds = (progressRuntime / 1000);
 		var line = Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
-			percentLength, ' ') + '%   ' + Math.time.render(
-				progressRuntime, null, false) + '   ';
+			percentLength, ' ') + '%   ' + seconds.toFixed(PRECISION) + 's   ';
 
 		progressWidth -= (line.length + 2);
 

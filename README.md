@@ -18,6 +18,7 @@ JavaScript interpreter)!
 <br><br>
 
 ## News
+* \[**2026-02-04**\] BugFix for wrong second count in progress view, v**2.2.1**;
 * \[**2026-01-11**\] Extended date/time functionality (but w/ more TODO), v**2.2.0**;
 * \[**2026-01-06**\] **Really big improvements and BugFixes**! .. v**2.1.1**;
 * \[**2025-12-27**\] A bit more documentation here. Plus new v**1.1.1**;
@@ -54,7 +55,7 @@ please extend it or [let me know](#contact), so I'll maybe add an **`--ansi`** p
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.2.0**](src/zsleep.js) (updated **2026-01-11**);
+* [Version v**2.2.1**](src/zsleep.js) (updated **2026-02-04**);
 
 <br><br>
 
@@ -136,12 +137,6 @@ It's really limited, but supports everything we really need and wish,
 including multiple short parameters (like `-pP`), plus the necessary
 values for some less getopt-ions, and, of course, the mandatory `--`
 parameter 'stop sign'.
-
-<br>
-
-#### TODO
-Since v**2.2.0** I adjust the date/time outputs. But I also want to include
-some options for it in the getopt parameters. That's the latest **TODO**.
 
 <br><br>
 
