@@ -134,7 +134,7 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 
 		if(Number.isNaN(_value = Number(_value)))
 		{
-			return null;
+			return false;
 		}
 		
 		if(_unit)
