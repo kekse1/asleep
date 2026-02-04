@@ -122,6 +122,17 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 				_value = _value.slice(0, -1);
 			}
 
+			if(_value[0] === '.')
+			{
+				do
+				{
+					_value = _value.substr(1);
+				}
+				while(_value[0] === '.');
+
+				_value = '0.' + _value;
+			}
+
 			_value = Number(_value);
 		}
 		
@@ -195,18 +206,13 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 				unit = '';
 				value = '0.';
 			}
-			else if(value)
+			else if(value.includes('.'))
 			{
-				if(value.includes('.'))
-				{
-					return null;
-				}
-
-				value += '.';
+				return null;
 			}
 			else
 			{
-				value = '0.';
+				value += '.';
 			}
 		}
 		else if(unit)
