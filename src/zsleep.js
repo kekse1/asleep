@@ -111,8 +111,19 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 	const	units = Math.time.units;
 	
 	const	add = (_value, _unit) => {
-		if(!_value) _value = 0;
-		else _value = Number(_value);
+		if(!_value)
+		{
+			_value = 0;
+		}
+		else
+		{
+			while(_value[_value.length - 1] === '.')
+			{
+				_value = _value.slice(0, -1);
+			}
+
+			_value = Number(_value);
+		}
 		
 		if(_unit)
 		{
@@ -172,25 +183,55 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 				value = '-';
 			}
 		}
-		else if(_value[i] === '.' && !unit && !value.includes('.'))
+		else if(_value[i] === '.')
 		{
-			value += '.';
+			if(unit)
+			{
+				if(!add(value, unit))
+				{
+					return null;
+				}
+
+				unit = '';
+				value = '0.';
+			}
+			else if(value)
+			{
+				if(value.includes('.'))
+				{
+					return null;
+				}
+
+				value += '.';
+			}
+			else
+			{
+				value = '0.';
+			}
 		}
-		else if(isNaN(_value[i]))
+		else if(unit)
 		{
-			unit += _value[i];
+			if(isNaN(_value[i]))
+			{
+				unit += _value[i];
+			}
+			else if(!add(value, unit))
+			{
+				return null;
+			}
+			else
+			{
+				value = _value[i];
+				unit = '';
+			}
 		}
-		else if(!unit)
+		else if(!isNaN(_value[i]))
 		{
 			value += _value[i];
-		}
-		else if(!add(value, unit))
-		{
-			return null;
 		}
 		else
 		{
-			value += _value[i];
+			unit += _value[i];
 		}
 	}
 	
