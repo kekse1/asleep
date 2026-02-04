@@ -18,6 +18,7 @@ JavaScript interpreter)!
 <br><br>
 
 ## News
+* \[**2026-02-04**\] Additionally a new **`--seconds`** parameter, v**2.2.2**;
 * \[**2026-02-04**\] BugFix for wrong second count in progress view, v**2.2.1**;
 * \[**2026-01-11**\] Extended date/time functionality (but w/ more TODO), v**2.2.0**;
 * \[**2026-01-06**\] **Really big improvements and BugFixes**! .. v**2.1.1**;
@@ -55,7 +56,7 @@ please extend it or [let me know](#contact), so I'll maybe add an **`--ansi`** p
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.2.1**](src/zsleep.js) (updated **2026-02-04**);
+* [Version v**2.2.2**](src/zsleep.js) (updated **2026-02-04**);
 
 <br><br>
 

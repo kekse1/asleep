@@ -7,16 +7,13 @@
  *
  */
 
-/*
- * TODO * bitte mein `Date.prototype.toString()` via GETOPT anpassbar machen!!!
- */
+//
+const
+	VERSION = '2.2.2';
 
 //
 const
-	VERSION = '2.2.1';
-
-//
-const
+	DEFAULT_SECONDS = false,
 	DEFAULT_MILLISEC = true,
 	DEFAULT_PRECISION = 2,
 	DEFAULT_LONG = true,
@@ -26,6 +23,8 @@ const
 const GETOPT_LONG = [
 	'print',
 	'progress',
+	'',
+	'seconds',
 	'',
 	'precision',
 	'offset',
@@ -41,6 +40,7 @@ const GETOPT_LONG = [
 const GETOPT_SHORT = {
 	'p': 'print',
 	'P': 'progress',
+	's': 'seconds',
 	'n': 'precision',
 	'o': 'offset',
 	'i': 'info',
@@ -547,6 +547,11 @@ getParameter.apply = (_param) => {
 		_param.precision = PRECISION =
 			DEFAULT_PRECISION;
 	}
+	
+	if(typeof _param.seconds !== 'boolean')
+	{
+		_param.seconds = DEFAULT_SECONDS;
+	}
 
 	return _param;
 };
@@ -658,9 +663,20 @@ const startTimeout = (_millisec, _param) => {
 			progressRuntime = _millisec;
 		}
 
-		const seconds = (progressRuntime / 1000);
-		var line = Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
-			percentLength, ' ') + '%   ' + seconds.toFixed(PRECISION) + 's   ';
+		var line;
+		
+		if(_param.seconds)
+		{
+			const seconds = (progressRuntime / 1000);
+			line = Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
+				percentLength, ' ') + '%   ' + seconds.toFixed(PRECISION) + 's  ';
+		}
+		else
+		{
+			line = Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
+				percentLength, ' ') + '%   ' + Math.time.render(progressRuntime,
+					false, false, ' ') + '  ';
+		}
 
 		progressWidth -= (line.length + 2);
 
