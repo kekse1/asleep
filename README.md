@@ -13,7 +13,7 @@ JavaScript interpreter)!
 <br>
 
 > [!TIP]
-> Default unit is 'milliseconds', not 'seconds' (as is regular `sleep`).
+> The default unit is **milliseconds**, not **seconds** (as is regular `sleep`).
 
 <br><br>
 
