@@ -115,26 +115,24 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 		{
 			return true;
 		}
-		else
+		
+		while(_value[_value.length - 1] === '.')
 		{
-			while(_value[_value.length - 1] === '.')
-			{
-				_value = _value.slice(0, -1);
-			}
-
-			if(_value[0] === '.')
-			{
-				do
-				{
-					_value = _value.substr(1);
-				}
-				while(_value[0] === '.');
-
-				_value = '0.' + _value;
-			}
-
-			_value = Number(_value);
+			_value = _value.slice(0, -1);
 		}
+
+		if(_value[0] === '.')
+		{
+			do
+			{
+				_value = _value.substr(1);
+			}
+			while(_value[0] === '.');
+
+			_value = '0.' + _value;
+		}
+
+		_value = Number(_value);
 		
 		if(_unit)
 		{
