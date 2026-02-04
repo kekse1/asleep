@@ -132,7 +132,10 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 			_value = '0.' + _value;
 		}
 
-		_value = Number(_value);
+		if(Number.isNaN(_value = Number(_value)))
+		{
+			return null;
+		}
 		
 		if(_unit)
 		{
