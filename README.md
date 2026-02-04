@@ -10,6 +10,11 @@ Pure **Vanilla** JavaScript - **without** any
 dependency (except the [Node.js](https://nodejs.org/)
 JavaScript interpreter)!
 
+<br>
+
+> [!TIP]
+> Default unit is 'milliseconds', not seconds (as is regular `sleep`).
+
 <br><br>
 
 ## News
