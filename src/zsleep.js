@@ -847,7 +847,7 @@ const start = () => {
 
 	if(param.print)
 	{
-		console.info('   Milliseconds: ' + result.toLocaleString());
+		console.info('   Milliseconds: ' + result.toString());//.toLocaleString());
 		console.info('        Seconds: ' + Math.round(
 			result / 1000, PRECISION).toFixed(PRECISION));
 		console.info('           Time: ' + Math.time.render(result));
@@ -861,7 +861,7 @@ const start = () => {
 		if(param.offset > 0)
 		{
 			console.log();
-			console.info('         Offset: ' + param.offset.toLocaleString());
+			console.info('         Offset: ' + param.offset.toString());//toLocaleString());
 			console.info('    Offset time: ' + Math.time.render(param.offset));
 			console.info(' Effective time: ' + Math.time.render(real));
 		}
@@ -928,7 +928,7 @@ const end = (_fin, _runtime, _millisec, _param) => {
 		if(_param.print) console.error(
 			'\n(aborted by SIGINT)\n        Runtime: ' + Math.time.render(_runtime) +
 			'\n       Real End: ' + new Date().toString(true) + '\n     Difference: ' +
-			Math.time.render(diff) + '\n   Milliseconds: ' + diff.toLocaleString() +
+			Math.time.render(diff) + '\n   Milliseconds: ' + diff.toString() +//toLocaleString() +
 			'\n        Seconds: ' + Math.round(diff / 1000, PRECISION).toFixed(PRECISION));
 		process.exit(1);
 	}
