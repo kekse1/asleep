@@ -113,7 +113,7 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 	const	add = (_value, _unit) => {
 		if(!_value)
 		{
-			_value = 0;
+			return true;
 		}
 		else
 		{
