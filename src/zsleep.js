@@ -207,13 +207,13 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 				unit = '';
 				value = '0.';
 			}
-			else if(value.includes('.'))
+			else if(!value.includes('.'))
 			{
-				return null;
+				value += '.';
 			}
 			else
 			{
-				value += '.';
+				return null;
 			}
 		}
 		else if(unit)
@@ -222,14 +222,14 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 			{
 				unit += _value[i];
 			}
-			else if(!add(value, unit))
-			{
-				return null;
-			}
-			else
+			else if(add(value, unit))
 			{
 				value = _value[i];
 				unit = '';
+			}
+			else
+			{
+				return null;
 			}
 		}
 		else if(!isNaN(_value[i]))
