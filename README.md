@@ -114,7 +114,8 @@ the (module) extension `.mjs`. This will omit this 'error' message.
 ### Installation (kinda)
 
 Additionally, to really **install** this one, you should put it in one of your `$PATH` directories,
-and optionally rename it to `zsleep` without `.{m,}js` extension.
+and optionally rename it to `zsleep` without `.{m,}js` extension. Maybe you've got local paths for
+such things, or - as root - you could put it into `/usr/local/bin/`.
 
 Last recommended step would be to adjust your `alias` environment (maybe in `/etc/profile{,.d/}`)
 like this: `alias sleep="zsleep"`.
