@@ -102,6 +102,13 @@ value (e.g. `5m-0.5m`)):
 > `(((2 ** 32) / 2) - 1)`), I also implemented kinda 'workaround' for it, so the theoretical
 > limit is practically (much) higher.
 
+<br>
+
+### Shell execution
+If you don't want to store the [`package.json`](./src/package.json), you'll see an error message
+of Node.js (`MODULE_TYPELESS_PACKAGE_JSON`). To avoid this, you can setup this JavaScript with
+the (module) extension `.mjs`. This will omit this 'error' message.
+
 <br><br>
 
 ## Exports and Extensions
