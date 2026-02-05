@@ -9,7 +9,7 @@
 
 //
 const
-	VERSION = '2.2.2';
+	VERSION = '2.2.3';
 
 //
 const
@@ -795,8 +795,8 @@ const startTimeout = (_millisec, _param) => {
 	const handler = (_time) => {
 		if((rest -= _time) <= 0)
 		{
-			endProgress(true); return end(true,
-				runtime, _millisec, _param);
+			endProgress(true);
+			return end(true, runtime, _millisec, _param);
 		}
 		
 		now = Date.now();
@@ -817,9 +817,10 @@ const startTimeout = (_millisec, _param) => {
 		const onKeypress = (_str, _key) => {
 			if(_key.ctrl && _key.name === 'c')
 			{
+				SIGINT = true;
 				process.stdin.off('keypress', onKeypress);
 				process.stdin.setRawMode(false);
-				endProgress(false);
+				endProgress(false, true);
 			}
 		};
 
@@ -838,7 +839,7 @@ const startTimeout = (_millisec, _param) => {
 			}
 			else
 			{
-				endProgress(false);
+				endProgress(false, false);
 			}
 		};
 
@@ -846,7 +847,10 @@ const startTimeout = (_millisec, _param) => {
 	}
 	else
 	{
-		process.once('SIGINT', () => endProgress(false));
+		process.once('SIGINT', () => {
+			SIGINT = true;
+			endProgress(false, true);
+		});
 	}
 };
 
@@ -969,7 +973,7 @@ Reflect.defineProperty(Date.prototype, 'toString', { value: function(... _args)
 	return this.toLocaleString(... params);
 }});
 
-const end = (_fin, _runtime, _millisec, _param) => {
+var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 	if(!_fin)
 	{
 		const diff = Math.max(0, (_millisec - _runtime));
@@ -978,7 +982,18 @@ const end = (_fin, _runtime, _millisec, _param) => {
 			'\n       Real End: ' + new Date().toString(true) + '\n     Difference: ' +
 			Math.time.render(diff) + '\n   Milliseconds: ' + diff.toString() +//toLocaleString() +
 			'\n        Seconds: ' + Math.round(diff / 1000, PRECISION).toFixed(PRECISION));
+		
+		if(SIGINT)
+		{
+			process.kill(process.pid, 'SIGINT');
+		}
+
 		process.exit(1);
+	}
+
+	if(SIGINT)
+	{
+		process.kill(process.pid, 'SIGINT');
 	}
 
 	process.exit(0);
