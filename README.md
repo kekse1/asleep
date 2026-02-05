@@ -92,7 +92,7 @@ value (e.g. `5m-0.5m`)):
 * **`h`** **hours**
 * **`d`** **days**
 * **`w`** **weeks**
-* **`M`** **months** (upper case!)
+* **`o`** **months**
 * **`y`** **years**
 
 <br>

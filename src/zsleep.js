@@ -79,7 +79,7 @@ Reflect.defineProperty(Math.time, 'MAX_TIMEOUT', { get: () => (((2 ** 32) / 2) -
 		[ 24, 'hours', 'h' ],
 		[ 7, 'days', 'd' ],
 		[ 4, 'weeks', 'w' ],
-		[ 12, 'months', 'M' ],
+		[ 12, 'months', 'o' ],
 		[ 0, 'years', 'y' ]
 	];
 
