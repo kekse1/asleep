@@ -109,6 +109,16 @@ If you don't want to store the [`package.json`](./src/package.json), you'll see 
 of Node.js (`MODULE_TYPELESS_PACKAGE_JSON`). To avoid this, you can setup this JavaScript with
 the (module) extension `.mjs`. This will omit this 'error' message.
 
+<br>
+
+### Installation (kinda)
+
+Additionally, to really **install** this one, you should put it in one of your `$PATH` directories,
+and optionally rename it to `zsleep` without `.{m,}js` extension.
+
+Last recommended step would be to adjust your `alias` environment (maybe in `/etc/profile{,.d/}`)
+like this: `alias sleep="zsleep"`.
+
 <br><br>
 
 ## Exports and Extensions
