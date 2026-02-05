@@ -180,14 +180,14 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 				{
 					value = '';
 				}
-				else if(!add(value, unit))
-				{
-					return null;
-				}
-				else
+				else if(add(value, unit))
 				{
 					unit = '';
 					value = '-';
+				}
+				else
+				{
+					return null;
 				}
 			}
 			else
