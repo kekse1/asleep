@@ -10,14 +10,10 @@ Pure **Vanilla** JavaScript - **without** any
 dependency (except the [Node.js](https://nodejs.org/)
 JavaScript interpreter)!
 
-<br>
-
-> [!TIP]
-> The default unit is **milliseconds**, not **seconds** (as is regular `sleep`).
-
 <br><br>
 
 ## News
+* \[**2026-03-04**\] For compatibility I just changed default unit to seconds! v**2.2.4**.
 * \[**2026-02-05**\] Last change: correct `SIGINT` handling!! v**2.2.3**;
 * \[**2026-02-05**\] Another change: fixed the `Math.time.parse()`!
 * \[**2026-02-04**\] Additionally a new **`--seconds`** parameter, and threw `.toLocaleString()` away; v**2.2.2**!
@@ -58,12 +54,12 @@ please extend it or [let me know](#contact), so I'll maybe add an **`--ansi`** p
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.2.3**](src/zsleep.js) (updated **2026-02-05**);
+* [Version v**2.2.4**](src/zsleep.js) (updated **2026-03-04**);
 
 <br><br>
 
 ## Usage
-See `--help / -? / -h` (needs more description/syntax there).
+See **`--help / -? / -h`** (needs more description/syntax there).
 
 Basically, call this script with one or multiple parameter(s) with time(s)
 that'll get parsed (see `Math.time.parse()`). It just "waits" for the end.
@@ -86,8 +82,8 @@ As you can see in the script itself (look for the `Math.time.{parse,render}()` f
 we're supporting here the following units and it's abbreviations (you can use after every
 value (e.g. `5m-0.5m`)):
 
-* **`ms`** **milliseconds** (the default if no unit string is used)
-* **`s`** **seconds**
+* **`ms`** **milliseconds**
+* **`s`** **seconds** (the default unit, when no such suffix is set)
 * **`m`** **minutes**
 * **`h`** **hours**
 * **`d`** **days**

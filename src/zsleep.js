@@ -9,7 +9,7 @@
 
 //
 const
-	VERSION = '2.2.3';
+	VERSION = '2.2.4';
 
 //
 const
@@ -150,7 +150,7 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 		}
 		else
 		{
-			result += _value;
+			result += (_value * 1000);
 		}
 		
 		return true;
