@@ -25,12 +25,6 @@ JavaScript interpreter)!
 * \[**2025-12-21**\] Some bugs fixed, better structs, etc... v**1.1.0**;
 * \[**2025-12-20**\] Now with splitted short arguments (e.g. `-Pp`); v**1.0.1**;
 
-<br>
-
-> [!NOTE]
-> This (Markdown) documentation is still much **TODO**.
-> The script itself is **not**, it's ready to be used.
-
 <br><br>
 
 ## Index
