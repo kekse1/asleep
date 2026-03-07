@@ -33,6 +33,20 @@ JavaScript interpreter)!
 
 <br><br>
 
+## Index
+* [Example Screenshot](#example-screenshot)
+* [Source Code](#source-code)
+* [Usage](#usage)
+    * [Units](#units)
+* [Installation](#installation)
+* [Exports and Extensions](#exports-and-extensions)
+    * [Some tiny `getopt`](#my-really-tiny-getopt-interpretation)
+* [You're welcome!](#youre-welcome)
+* [Contact](#contact)
+* [Copyright and License](#copyright-and-license)
+
+<br><br><br><br>
+
 ## Example screenshot
 This is an example screenshot (v**2.1.1**); **not** yet the newest version (with
 more accurate Date/Time outputs).
@@ -102,7 +116,7 @@ value (e.g. `5m-0.5m`)):
 
 <br>
 
-### Installation
+## Installation
 I assume you've got **root** access to your Linux machine?
 
 You can install this script it in several ways. I'd recommend to do it this way.
