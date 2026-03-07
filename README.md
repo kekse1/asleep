@@ -105,7 +105,7 @@ value (e.g. `5m-0.5m`)):
 ### Installation
 I assume you've got **root** access to your Linux machine?
 
-You could install this script it in several ways. I'd recommend to do it this way.
+You can install this script it in several ways. I'd recommend to do it this way.
 
 * Copy the script iself to `/usr/local/bin/zsleep`.
 * Add an alias like `alias sleep="zsleep -pP"`.
