@@ -34,7 +34,7 @@ JavaScript interpreter)!
     * [Units](#units)
 * [Installation](#installation)
 * [Exports and Extensions](#exports-and-extensions)
-    * [Some tiny `getopt`](#my-really-tiny-getopt-interpretation)
+    * [My really tiny `getopt` interpretation](#my-really-tiny-getopt-interpretation)
 * [You're welcome!](#youre-welcome)
 * [Contact](#contact)
 * [Copyright and License](#copyright-and-license)
