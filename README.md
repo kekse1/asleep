@@ -13,6 +13,7 @@ JavaScript interpreter)!
 <br><br>
 
 ## News
+* \[**2026-03-07**\] Appended `--no-warnings=MODULE_TYPELESS_PACKAGE_JSON` to the **Shebang**, v**2.2.5**;
 * \[**2026-03-04**\] For compatibility I just changed default unit to seconds! v**2.2.4**.
 * \[**2026-02-05**\] Last change: correct `SIGINT` handling!! v**2.2.3**;
 * \[**2026-02-05**\] Another change: fixed the `Math.time.parse()`!
@@ -54,7 +55,7 @@ please extend it or [let me know](#contact), so I'll maybe add an **`--ansi`** p
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.2.4**](src/zsleep.js) (updated **2026-03-04**);
+* [Version v**2.2.5**](src/zsleep.js) (updated **2026-03-07**);
 
 <br><br>
 
@@ -101,21 +102,31 @@ value (e.g. `5m-0.5m`)):
 
 <br>
 
-### Shell execution
-If you don't want to store the [`package.json`](./src/package.json), you'll see an error message
-of Node.js (`MODULE_TYPELESS_PACKAGE_JSON`). To avoid this, you can setup this JavaScript with
-the (module) extension `.mjs`. This will omit this 'error' message.
+### Installation
+I assume you've got **root** access to your Linux machine?
+
+You could install this script it in several ways. I'd recommend to do it this way.
+
+* Copy the script iself to `/usr/local/bin/zsleep`.
+* Add an alias like `alias sleep="zsleep -pP"`.
+
+For the alias you could, for instance, just set the `alias` command in a file like
+`/etc/profile.d/zsleep.sh`. It should (actually) automatically be called on login.
+
+The `-pP` parameters in the alias above are **optional**. But I like it that way! :-)
 
 <br>
 
-### Installation (kinda)
+If you only got user permissions on your Linux box, you can also use this script,
+but you need to add the path to it to your local `$PATH` variable - wherever it is
+(same for your alias).
 
-Additionally, to really **install** this one, you should put it in one of your `$PATH` directories,
-and optionally rename it to `zsleep` without `.{m,}js` extension. Maybe you've got local paths for
-such things, or - as root - you could put it into `/usr/local/bin/`.
+<br><br>
 
-Last recommended step would be to adjust your `alias` environment (maybe in `/etc/profile{,.d/}`)
-like this: `alias sleep="zsleep"`.
+#### [Node.js](https://nodejs.org/)
+You only need to have an installed [Node.js](https://nodejs.org/) (the JavaScript interpreter,
+for the server-side). So **maybe** you're also interested in my
+[`make-nodejs.sh`](https://github.com/kekse1/scripts/#make-nodejssh)?
 
 <br><br>
 
