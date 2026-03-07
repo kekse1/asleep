@@ -1,4 +1,5 @@
 #!/usr/bin/env -S node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON
+
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
  * https://kekse.biz/  https://github.com/kekse1/zsleep/
