@@ -79,7 +79,7 @@ If you abort the timeout via **`SIGINT`** (using `<Ctrl>+<c>`), it'll
 return with exit code (1). Exit code (2) if time sum is negative. And
 the other ones can be found in the source code..
 
-> [!TIP]
+> [!NOTE]
 > The time parser also accepts negative parts for **subtraction** (beneath
 > floating points), e.g. `+4m-0.5m` (equals `210000` milliseconds, so
 > `3 minutes, 30 seconds`).
