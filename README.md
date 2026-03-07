@@ -119,7 +119,7 @@ The `-pP` parameters in the alias above are **optional**. But I like it that way
 
 If you only got user permissions on your Linux box, you can also use this script,
 but you need to add the path to it to your local `$PATH` variable - wherever it is
-(same for your alias).
+(same for the alias).
 
 <br><br>
 
