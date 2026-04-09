@@ -16,7 +16,7 @@ const
 	DEFAULT_PRECISION = 2,
 	DEFAULT_LONG = true,
 	DEFAULT_SEP = ', ',
-	DEFAULT_STRING = '/\\'; // maybe original '#', or '/\\'??
+	DEFAULT_STRING = '#'; //'/\\'; // maybe original '#', or '/\\'??
 
 //
 const GETOPT_LONG = [
@@ -660,10 +660,11 @@ const help = () => {
 			continue;
 		}
 		
+		var t = ''; if(item === 'string') t = '  maybe `#` or `/\\`';
 		console.log('  \t' + getShorts(item) +
 			' / ' + '--' + item + (GETOPT_VALUES.
 				includes(item) ?
-					'\t  <param>' : ''));
+					'\t  <param>' : '') + t);
 	}
 
 	console.log();
