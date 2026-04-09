@@ -13,6 +13,7 @@ JavaScript interpreter)!
 <br><br>
 
 ## News
+* \[**2026-04-09**\] New parameter `-S / --string` (w/ `#` => `/\\`), v**2.2.6**;
 * \[**2026-03-07**\] Appended `--no-warnings=MODULE_TYPELESS_PACKAGE_JSON` to the **Shebang**, v**2.2.5**;
 * \[**2026-03-04**\] For compatibility I just changed default unit to seconds! v**2.2.4**.
 * \[**2026-02-05**\] Last change: correct `SIGINT` handling!! v**2.2.3**;
@@ -63,7 +64,7 @@ please extend it or [let me know](#contact), so I'll maybe add an **`--ansi`** p
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.2.5**](src/zsleep.js) (updated **2026-03-07**);
+* [Version v**2.2.6**](src/zsleep.js) (updated **2026-04-09**);
 
 <br><br>
 

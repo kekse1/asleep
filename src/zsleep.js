@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.2.5';
+	VERSION = '2.2.6';
 
 //
 const
@@ -15,7 +15,8 @@ const
 	DEFAULT_MILLISEC = true,
 	DEFAULT_PRECISION = 2,
 	DEFAULT_LONG = true,
-	DEFAULT_SEP = ', ';
+	DEFAULT_SEP = ', ',
+	DEFAULT_STRING = '/\\'; // maybe original '#', or '/\\'??
 
 //
 const GETOPT_LONG = [
@@ -26,6 +27,8 @@ const GETOPT_LONG = [
 	'',
 	'precision',
 	'offset',
+	'',
+	'string',
 	'',
 	'info',
 	'',
@@ -41,6 +44,7 @@ const GETOPT_SHORT = {
 	's': 'seconds',
 	'n': 'precision',
 	'o': 'offset',
+	'S': 'string',
 	'i': 'info',
 	'c': 'copyright',
 	'v': 'version',
@@ -50,7 +54,8 @@ const GETOPT_SHORT = {
 
 const GETOPT_VALUES = [
 	'offset',
-	'precision'
+	'precision',
+	'string'
 ];
 
 //
@@ -422,6 +427,12 @@ const getParameter = () => {
 			throw err;
 		}
 
+		switch(_key)
+		{
+			case 'string':
+				return temp;
+		}
+
 		if(isNaN(temp))
 		{
 			if((temp = Math.time.parse(temp)) === null)
@@ -599,6 +610,11 @@ getParameter.apply = (_param) => {
 		_param.seconds = DEFAULT_SECONDS;
 	}
 
+	if(typeof _param.string !== 'string' || _param.string.length === 0)
+	{
+		_param.string = DEFAULT_STRING;
+	}
+
 	return _param;
 };
 
@@ -729,7 +745,12 @@ const startTimeout = (_millisec, _param) => {
 		var done = Math._round(_value * progressWidth);
 		var todo = (progressWidth - done);
 
-		line += '[' + '#'.repeat(done) + '-'.repeat(todo) + ']';
+		var t = ''; for(var i = 0; i < done; ++i)
+		{
+			t += _param.string[i % _param.string.length];
+		}
+
+		line += '[' + t + '-'.repeat(todo) + ']';
 		line = line.substr(0, _param.stream.columns);
 		
 		if(progressCount++)
