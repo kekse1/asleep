@@ -16,7 +16,7 @@ const
 	DEFAULT_PRECISION = 2,
 	DEFAULT_LONG = true,
 	DEFAULT_SEP = ', ',
-	DEFAULT_STRING = '#'; //'/\\'; // maybe original '#', or '/\\'??
+	DEFAULT_STRING = '/';
 
 //
 const GETOPT_LONG = [
