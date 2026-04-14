@@ -115,7 +115,10 @@ value (e.g. `5m-0.5m`)):
 * **`y`** **years**
 
 > [!TIP]
-> **YES**, you can use **floating point numbers**, e.g. `0.5m` for 30 seconds.
+> **YES**; you can use **floating point numbers**, e.g. `0.5m` for 30 seconds.
+
+> [!TIP]
+> **AND**: you can also use `-` and `+` for a bit of arithmetics, e.g. `1m-10s` for 50 seconds..
 
 <br>
 
