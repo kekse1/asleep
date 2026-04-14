@@ -47,8 +47,8 @@ JavaScript interpreter)!
 <br><br><br><br>
 
 ## Example screenshot
-This is an example screenshot (v**2.1.1**); **not** yet the newest version (with
-more accurate Date/Time outputs).
+This is an example screenshot (v**2.1.1**); which is **not** the newest version
+(with more accurate Date/Time outputs and other improvements).
 
 ![Example Screenshot](./img/screenshot.png)
 
