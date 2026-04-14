@@ -6,9 +6,8 @@
 
 My own, better `sleep` replacement (see `man 1 sleep`).
 
-Pure **Vanilla** JavaScript - **without** any
-dependency (except the [Node.js](https://nodejs.org/)
-JavaScript interpreter)!
+Pure **Vanilla** JavaScript - with**out** any dependency (except the
+[Node.js](https://nodejs.org/) JavaScript interpreter).
 
 <br><br>
 
