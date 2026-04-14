@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.2.6';
+	VERSION = '2.2.7';
 
 //
 const
@@ -16,7 +16,8 @@ const
 	DEFAULT_PRECISION = 2,
 	DEFAULT_LONG = true,
 	DEFAULT_SEP = ', ',
-	DEFAULT_STRING = '/';
+	DEFAULT_STRING = '/',
+	DEFAULT_FIX = true;
 
 //
 const GETOPT_LONG = [
@@ -742,16 +743,18 @@ const startTimeout = (_millisec, _param) => {
 		}
 
 		progressWidth -= (line.length + 2);
+		line += '[';
 
 		var done = Math._round(_value * progressWidth);
 		var todo = (progressWidth - done);
 
-		var t = ''; for(var i = 0; i < done; ++i)
+		var t = '', tt; for(var i = 0, j = line.length; i < done; ++i, ++j)
 		{
-			t += _param.string[i % _param.string.length];
+			tt = ((DEFAULT_FIX ? j : i) % _param.string.length);
+			t += _param.string[tt];
 		}
 
-		line += '[' + t + '-'.repeat(todo) + ']';
+		line += t + '-'.repeat(todo) + ']';
 		line = line.substr(0, _param.stream.columns);
 		
 		if(progressCount++)
