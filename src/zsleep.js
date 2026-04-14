@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.2.7';
+	VERSION = '2.2.8';
 
 //
 const
@@ -17,7 +17,8 @@ const
 	DEFAULT_LONG = true,
 	DEFAULT_SEP = ', ',
 	DEFAULT_STRING = '/',
-	DEFAULT_FIX = true;
+	DEFAULT_FIX = true,
+	DEFAULT_ANSI = true;
 
 //
 const GETOPT_LONG = [
@@ -727,17 +728,17 @@ const startTimeout = (_millisec, _param) => {
 			progressRuntime = _millisec;
 		}
 
-		var line;
+		var line = ' ';
 		
 		if(_param.seconds)
 		{
 			const seconds = (progressRuntime / 1000);
-			line = Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
+			line += Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
 				percentLength, ' ') + '%   ' + seconds.toFixed(PRECISION) + 's  ';
 		}
 		else
 		{
-			line = Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
+			line += Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
 				percentLength, ' ') + '%   ' + Math.time.render(progressRuntime,
 					false, false, ' ') + '  ';
 		}
@@ -766,7 +767,7 @@ const startTimeout = (_millisec, _param) => {
 			_param.stream.write('\n');
 		}
 		
-		_param.stream.write(line);
+		_param.stream.write(line + '\r');
 		return !ended;
 	};
 
@@ -807,6 +808,11 @@ const startTimeout = (_millisec, _param) => {
 		if(_param.print && _param.progress)
 		{
 			console.log();
+		}
+
+		if(DEFAULT_ANSI)
+		{
+			_param.stream.write(String.fromCodePoint(27) + '[?25h');
 		}
 
 		setTimeout(() => end(_fin !== false, runtime, _millisec, _param));
@@ -851,6 +857,11 @@ const startTimeout = (_millisec, _param) => {
 		process.stdin.on('keypress', onKeypress);
 		process.stdin.setRawMode(true);
 		
+		if(DEFAULT_ANSI)
+		{
+			_param.stream.write(String.fromCodePoint(27) + '[?25l');
+		}
+
 		const interval = () => {
 			progressNow = Date.now();
 			progressRuntime += (progressNow - progressLast);
