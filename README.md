@@ -13,6 +13,7 @@ JavaScript interpreter)!
 <br><br>
 
 ## News
+* \[**2026-04-15**\] More improvements.. best version for now. v**2.2.10**;
 * \[**2026-04-15**\] Improvements.. v**2.2.9**;
 * \[**2026-04-15**\] See `DEFAULT_ANSI`, v**2.2.8**;
 * \[**2026-04-14**\] See `DEFAULT_FIX`, v**2.2.7**;
@@ -62,12 +63,21 @@ I decided **not** to use any ANSI escape sequence for more compatibility, etc..
 If you **really** want some fancy colors and styles (maybe escpecially for the progress bar),
 please extend it or [let me know](#contact), so I'll maybe add an **`--ansi`** parameter, etc.
 
+<br>
+
+\[**update**\] Now with enabled `DEFAULT_ANSI` I'm using ONLY the sequences to show and hide
+your cursor. Totally optional (but enabled by default). If you do **not** want 'em, there's
+nevertheless another fix which prevents that the cursor hides some output or so.
+
+I'm also thinking about colored output (mostly for the progress bar), which looks nice, but
+I'm also not sure about it... maybe in the **future**.
+
 <br><br>
 
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.2.9**](src/zsleep.js) (updated **2026-04-15**);
+* [Version v**2.2.10**](src/zsleep.js) (updated **2026-04-15**);
 
 <br><br>
 

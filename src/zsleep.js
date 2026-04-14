@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.2.9';
+	VERSION = '2.2.10';
 
 //
 const
@@ -682,6 +682,10 @@ const version = () => console.log('`zsleep` v' + VERSION);
 import readline from 'node:readline';
 
 //
+const showCursor = (_stream) => _stream.write(String.fromCodePoint(27) + '[?25h');
+const hideCursor = (_stream) => _stream.write(String.fromCodePoint(27) + '[?25l');
+
+//
 const startTimeout = (_millisec, _param) => {
 	const	max_timeout = Math.time.MAX_TIMEOUT;
 	var	runtime = _param.offset, timeout,
@@ -754,7 +758,7 @@ const startTimeout = (_millisec, _param) => {
 			tt = ((DEFAULT_FIX ? j : i) % _param.string.length);
 			t += _param.string[tt];
 		}
-
+		
 		line += t + '-'.repeat(todo) + ']';
 		line = line.substr(0, _param.stream.columns);
 		
@@ -810,11 +814,6 @@ const startTimeout = (_millisec, _param) => {
 			console.log();
 		}
 
-		if(_param.stream && DEFAULT_ANSI)
-		{
-			_param.stream.write(String.fromCodePoint(27) + '[?25h');
-		}
-
 		setTimeout(() => end(_fin !== false, runtime, _millisec, _param));
 	};
 
@@ -841,11 +840,6 @@ const startTimeout = (_millisec, _param) => {
 		() => handler(time()),
 			time());
 
-	if(_param.stream && DEFAULT_ANSI)
-	{
-		_param.stream.write(String.fromCodePoint(27) + '[?25l')
-	}
-	
 	if(_param.progress && _param.stream)
 	{
 		const onKeypress = (_str, _key) => {
@@ -950,6 +944,11 @@ const start = () => {
 		}
 	}
 
+	if(param.stream && DEFAULT_ANSI)
+	{
+		hideCursor(param.stream);
+	}
+
 	if(result > 0 && param.sleep)
 	{
 		startTimeout(result, param);
@@ -1005,6 +1004,11 @@ Reflect.defineProperty(Date.prototype, 'toString', { value: function(... _args)
 }});
 
 var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
+	if(_param.stream && DEFAULT_ANSI)
+	{
+		showCursor(_param.stream);
+	}
+
 	if(!_fin)
 	{
 		const diff = Math.max(0, (_millisec - _runtime));
