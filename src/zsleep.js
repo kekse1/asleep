@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.2.8';
+	VERSION = '2.2.9';
 
 //
 const
@@ -810,7 +810,7 @@ const startTimeout = (_millisec, _param) => {
 			console.log();
 		}
 
-		if(DEFAULT_ANSI)
+		if(_param.stream && DEFAULT_ANSI)
 		{
 			_param.stream.write(String.fromCodePoint(27) + '[?25h');
 		}
@@ -840,6 +840,11 @@ const startTimeout = (_millisec, _param) => {
 	timeout = setTimeout(
 		() => handler(time()),
 			time());
+
+	if(_param.stream && DEFAULT_ANSI)
+	{
+		_param.stream.write(String.fromCodePoint(27) + '[?25l')
+	}
 	
 	if(_param.progress && _param.stream)
 	{
@@ -857,11 +862,6 @@ const startTimeout = (_millisec, _param) => {
 		process.stdin.on('keypress', onKeypress);
 		process.stdin.setRawMode(true);
 		
-		if(DEFAULT_ANSI)
-		{
-			_param.stream.write(String.fromCodePoint(27) + '[?25l');
-		}
-
 		const interval = () => {
 			progressNow = Date.now();
 			progressRuntime += (progressNow - progressLast);
@@ -911,6 +911,8 @@ const start = () => {
 		param.sleep = true;
 	}
 
+	param.stream = console.ttyStream;
+
 	if(param.progress)
 	{
 		if(result < 1000)
@@ -919,15 +921,10 @@ const start = () => {
 		}
 		else if(param.progress)
 		{
-			if(!(param.stream = console.ttyStream))
+			if(!param.stream)
 			{
 				param.progress = false;
 			}
-		}
-		
-		if(!param.progress)
-		{
-			param.stream = null;
 		}
 	}
 
