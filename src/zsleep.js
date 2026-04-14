@@ -944,13 +944,13 @@ const start = () => {
 		}
 	}
 
-	if(param.stream && DEFAULT_ANSI)
-	{
-		hideCursor(param.stream);
-	}
-
 	if(result > 0 && param.sleep)
 	{
+		if(param.stream && DEFAULT_ANSI)
+		{
+			hideCursor(param.stream);
+		}
+
 		startTimeout(result, param);
 	}
 	else if(result < 0)
