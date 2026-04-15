@@ -481,8 +481,9 @@ const getParameter = () => {
 			err = new Error('Missing value for parameter');
 			err.param = '--' + _key;
 			if(long.get(_key).length)
-				err.param += ' / ' +
-					long.get(_key).join('/');
+				err.param += ' / ' + ('-' +
+					long.get(_key).
+					join(' / -'));
 			if(_exit) err.exit = _exit;
 			throw err;
 		}
@@ -521,8 +522,9 @@ const getParameter = () => {
 				err = new Error('Invalid value for parameter');
 				err.param = '--' + _key;
 				if(long.get(_key).length)
-					err.param += ' / ' +
-						long.get(_key).join('/');
+					err.param += ' / ' + ('-' +
+						long.get(_key).
+						join(' / -'));
 				err.value = temp;
 				if(_exit) err.exit = _exit;
 				throw err;
