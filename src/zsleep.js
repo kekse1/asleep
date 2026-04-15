@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.1';
+	VERSION = '2.4.2';
 
 //
 const
@@ -655,15 +655,28 @@ getParameter.apply = (_param) => {
 		
 		_param.refresh = Math.min(Math.max(
 			0, _param.refresh), MAX_TIME);
+
+		if(typeof _param.string !== 'string' || _param.string.length === 0)
+		{
+			_param.string = DEFAULT_STRING;
+		}
 	}
 	else
 	{
 		_param.refresh = 0;
+		_param.string = '';
 	}
 	
 	if(!(_param.stream = console.ttyStream))
 	{
 		_param.progress = false;
+	}
+
+	_param.cursor = false;
+
+	if(_param.stream && DEFAULT_ANSI)
+	{
+		_param.cursor = !!(_param.progress || _param.print);
 	}
 
 	if(!('offset' in _param))
@@ -686,11 +699,6 @@ getParameter.apply = (_param) => {
 	if(typeof _param.seconds !== 'boolean')
 	{
 		_param.seconds = DEFAULT_SECONDS;
-	}
-
-	if(typeof _param.string !== 'string' || _param.string.length === 0)
-	{
-		_param.string = DEFAULT_STRING;
 	}
 
 	//
@@ -892,13 +900,6 @@ const getPercentStringLength =
 		(_prec ? 1 : 0) + _prec + (_sign ? 1 : 0));
 
 const startTimeout = (_millisec, _param) => {
-	//
-	if(DEFAULT_ANSI && _param.stream)
-	{
-		hideCursor(_param.stream);
-	}
-
-	//
 	const	maxTime = MAX_TIME;
 	const	offset = _param.offset;
 	var	rest = (_millisec - offset), time = offset, last, now,
@@ -1030,8 +1031,12 @@ const startTimeout = (_millisec, _param) => {
 	const realStart = Date.now();
 	last = start = (Date.now() - offset);
 	startLocalTimeout(getTime());
+
+	if(_param.cursor)
+	{
+		hideCursor(_param.stream);
+	}
 	
-	//	
 	if(_param.progress)
 	{
 		const onKeypress = (_str, _key) => {
@@ -1183,7 +1188,7 @@ Reflect.defineProperty(Date.prototype, 'toString', { value: function(... _args)
 }});
 
 var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
-	if(DEFAULT_ANSI && _param.stream)
+	if(_param.cursor)
 	{
 		showCursor(_param.stream);
 	}
