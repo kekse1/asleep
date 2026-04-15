@@ -9,11 +9,25 @@ My own, better `sleep` replacement (see `man 1 sleep`).
 Pure **Vanilla** JavaScript - with**out** any dependency (except the
 [Node.js](https://nodejs.org/) JavaScript interpreter).
 
-<br><br>
+<br>
+
+## Index
+* [News](#news)
+* [Example Screenshot](#example-screenshot)
+* [Source Code](#source-code)
+* [Usage](#usage)
+    * [Units](#units)
+* [Installation](#installation)
+* [Exports and Extensions](#exports-and-extensions)
+    * [My really tiny `getopt` interpretation](#my-really-tiny-getopt-interpretation)
+* [You're welcome!](#youre-welcome)
+* [Contact](#contact)
+* [Copyright and License](#copyright-and-license)
+
+<br><br><br>
 
 ## News
-* \[**2026-04-15**\] More improvements.. best version for now. v**2.2.10**;
-* \[**2026-04-15**\] Improvements.. v**2.2.9**;
+* \[**2026-04-15**\] New minor update (some more improvements), v**2.3.0**;
 * \[**2026-04-15**\] See `DEFAULT_ANSI`, v**2.2.8**;
 * \[**2026-04-14**\] See `DEFAULT_FIX`, v**2.2.7**;
 * \[**2026-04-09**\] New parameter `-S / --string` (w/ `#` => `/`), v**2.2.6**;
@@ -29,21 +43,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 * \[**2025-12-21**\] Some bugs fixed, better structs, etc... v**1.1.0**;
 * \[**2025-12-20**\] Now with splitted short arguments (e.g. `-Pp`); v**1.0.1**;
 
-<br><br>
-
-## Index
-* [Example Screenshot](#example-screenshot)
-* [Source Code](#source-code)
-* [Usage](#usage)
-    * [Units](#units)
-* [Installation](#installation)
-* [Exports and Extensions](#exports-and-extensions)
-    * [My really tiny `getopt` interpretation](#my-really-tiny-getopt-interpretation)
-* [You're welcome!](#youre-welcome)
-* [Contact](#contact)
-* [Copyright and License](#copyright-and-license)
-
-<br><br><br><br>
+<br><br><br>
 
 ## Example screenshot
 This is an example screenshot (v**2.1.1**); which is **not** the newest version
@@ -76,7 +76,7 @@ I'm also not sure about it... maybe in the **future**.
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.2.10**](src/zsleep.js) (updated **2026-04-15**);
+* [Version v**2.3.0**](src/zsleep.js) (updated **2026-04-15**);
 
 <br><br>
 
@@ -128,6 +128,16 @@ value (e.g. `5m-0.5m`)):
 > limit is practically (much) higher.
 
 <br>
+
+### Parameters
+See the `--help / -h / -?` output (now with additional infos).
+
+New in the `--offset / -o` parameter: now also w/ strings w/ `%` percent suffix,
+so it'll calculate the offset as a percentage of the real time to count.
+
+//TODO/...
+
+<br><br>
 
 ## Installation
 I assume you've got **root** access to your Linux machine?

@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.2.10';
+	VERSION = '2.3.0';
 
 //
 const
@@ -18,7 +18,8 @@ const
 	DEFAULT_SEP = ', ',
 	DEFAULT_STRING = '/',
 	DEFAULT_FIX = true,
-	DEFAULT_ANSI = true;
+	DEFAULT_ANSI = true,
+	DEFAULT_MIN = 94;
 
 //
 const GETOPT_LONG = [
@@ -31,6 +32,7 @@ const GETOPT_LONG = [
 	'offset',
 	'',
 	'string',
+	'color',
 	'',
 	'info',
 	'',
@@ -47,6 +49,7 @@ const GETOPT_SHORT = {
 	'n': 'precision',
 	'o': 'offset',
 	'S': 'string',
+	'C': 'color',
 	'i': 'info',
 	'c': 'copyright',
 	'v': 'version',
@@ -57,8 +60,23 @@ const GETOPT_SHORT = {
 const GETOPT_VALUES = [
 	'offset',
 	'precision',
-	'string'
+	'string',
+	'color'
 ];
+
+const GETOPT_HELP = {
+	'print': ' \t\t\t// show time informations',
+	'progress': ' \t\t\t// show progress bar',
+	'seconds': ' \t\t\t// show pure seconds in the progress',
+	'precision': ' \t// rounding values w/ integer [ 0 .. ]',
+	'offset': ' \t// starting point (string/number/percentage)',
+	'string': ' \t// progress bar sub-string; `#` or `/`?',
+	'color': ' \t// still TODO (throws exception);',
+	'info': ' \t\t\t// only a short about this application',
+	'copyright': ' \t\t\t// here\'s my name..',
+	'version': ' \t\t\t// the current version number',
+	'help': ' \t\t\t// shows this help information'
+};
 
 //
 var PRECISION =
@@ -416,7 +434,7 @@ const getParameter = () => {
 			return true;
 		}
 		
-		var temp = argv[_index + 1];
+		var temp = argv[_index + 1].trim();
 
 		if(typeof temp !== 'string' || temp.length === 0 || temp[0] === '-')
 		{
@@ -429,15 +447,27 @@ const getParameter = () => {
 			throw err;
 		}
 
+		var localError = isNaN(temp);
+		
 		switch(_key)
 		{
 			case 'string':
 				return temp;
+			case 'offset':
+				if(!localError)
+				{
+					return Math.max(0, Math.int(Number(temp)));
+				}
+				else if(temp[temp.length - 1] === '%')
+				{
+					return temp;
+				}
+				break;
 		}
-
-		if(isNaN(temp))
+		
+		if(localError)
 		{
-			if((temp = Math.time.parse(temp)) === null)
+			if(temp === null || ((temp = Math.time.parse(temp)) === null))
 			{
 				err = new Error('Invalid value for parameter');
 				err.param = '--' + _key;
@@ -549,6 +579,11 @@ const getParameter = () => {
 }
 
 getParameter.apply = (_param) => {
+	if(_param.color)
+	{
+		throw new Error('TODO');
+	}
+	
 	if(_param.info)
 	{
 		info();
@@ -585,13 +620,8 @@ getParameter.apply = (_param) => {
 	{
 		_param.progress = false;
 	}
-
-	if('offset' in _param)
-	{
-		_param.offset = Math.max(0,
-			Math.int(_param.offset));
-	}
-	else
+	
+	if(!('offset' in _param))
 	{
 		_param.offset = 0;
 	}
@@ -654,7 +684,19 @@ const help = () => {
 		long.get(_long).join(' / -')).
 			padStart(max, ' '));
 
-	for(const item of GETOPT_LONG)
+	var width, additional; const stream = console.ttyStream; if(stream)
+	{
+		additional = ((width = stream.
+			columns) >= DEFAULT_MIN);
+	}
+	else
+	{
+		//?? e.g. w/ *file* (pipe) output.. better *do* show! ;-)
+		additional = true;
+		width = 0;
+	}
+	
+	var t = ''; for(const item of GETOPT_LONG)
 	{
 		if(!item)
 		{
@@ -662,16 +704,28 @@ const help = () => {
 			continue;
 		}
 		
-		var t = ''; if(item === 'string') t = '  maybe `#` or `/\\`';
+		if(additional && typeof GETOPT_HELP[item] === 'string' && GETOPT_HELP[item])
+		{
+			t = GETOPT_HELP[item];
+		}
+		
 		console.log('  \t' + getShorts(item) +
 			' / ' + '--' + item + (GETOPT_VALUES.
 				includes(item) ?
 					'\t  <param>' : '') + t);
 	}
-
+	
 	console.log();
+
+	if(!additional)
+	{
+		console.warn('There\'s additional help information available. ...\n' +
+			'Please enlarge your console to minimum width (' + DEFAULT_MIN + ').');
+		if(width > 0) console.warn('\t ... your current width is exactly (' + width + ').');
+	}
 };
 
+//
 const info = () => { copyright(); console.log(); version(); };
 const copyright = () => console.log('Copyright (c) ' +
 	'Sebastian Kucharczyk <kuchen@kekse.biz>\n' +
@@ -687,6 +741,11 @@ const hideCursor = (_stream) => _stream.write(String.fromCodePoint(27) + '[?25l'
 
 //
 const startTimeout = (_millisec, _param) => {
+	if(DEFAULT_ANSI && _param.stream)
+	{
+		hideCursor(_param.stream);
+	}
+	
 	const	max_timeout = Math.time.MAX_TIMEOUT;
 	var	runtime = _param.offset, timeout,
 		last = Date.now(), now, progress,
@@ -905,21 +964,25 @@ const start = () => {
 		param.sleep = true;
 	}
 
-	param.stream = console.ttyStream;
-
-	if(param.progress)
+	if(typeof param.offset === 'string')
 	{
-		if(result < 1000)
-		{
-			param.progress = false;
-		}
-		else if(param.progress)
-		{
-			if(!param.stream)
-			{
-				param.progress = false;
-			}
-		}
+		param.offset = Math.int(result *
+			Number(param.offset.slice(0, -1)) / 100);
+	}
+	else if(typeof param.offset === 'number')
+	{
+		param.offset = Math.min(
+			param.offset,
+			result);
+	}
+
+	if(!(param.stream = console.ttyStream))
+	{
+		param.progress = false;
+	}
+	else if(param.progress && result < 1000)
+	{
+		param.progress = false;
 	}
 
 	if(param.print)
@@ -946,11 +1009,6 @@ const start = () => {
 
 	if(result > 0 && param.sleep)
 	{
-		if(param.stream && DEFAULT_ANSI)
-		{
-			hideCursor(param.stream);
-		}
-
 		startTimeout(result, param);
 	}
 	else if(result < 0)
@@ -1004,7 +1062,7 @@ Reflect.defineProperty(Date.prototype, 'toString', { value: function(... _args)
 }});
 
 var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
-	if(_param.stream && DEFAULT_ANSI)
+	if(DEFAULT_ANSI && _param.stream)
 	{
 		showCursor(_param.stream);
 	}
