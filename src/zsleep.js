@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.3.1';
+	VERSION = '2.3.2';
 
 //
 const
@@ -449,6 +449,14 @@ const getParameter = () => {
 			{
 				case 'on': case 'yes': case 'true': return true;
 				case 'off': case 'no': case 'false': return false;
+				default:
+					err = new Error('Invalid value for parameter; if necessary at all..');
+					err.param = '--' + _key;
+					if(long.get(_key).length)
+						err.param += ' / ' +
+							long.get(_key).join('/');
+				if(_exit) err.exit = _exit;
+				throw err;
 			}
 			
 			return true;
