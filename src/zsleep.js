@@ -458,7 +458,7 @@ const getParameter = () => {
 				{
 					return Math.max(0, Math.int(Number(temp)));
 				}
-				else if(temp[temp.length - 1] === '%')
+				else if(temp[temp.length - 1] === '%' && !isNaN(temp.slice(0, -1)))
 				{
 					return temp;
 				}
