@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.2';
+	VERSION = '2.4.3';
 
 //
 const
@@ -19,7 +19,8 @@ const
 	DEFAULT_STRING = '/',
 	DEFAULT_FIX = true,
 	DEFAULT_ANSI = true,
-	DEFAULT_REFRESH = 1000;
+	DEFAULT_REFRESH = 1000,
+	DEFAULT_COMMENT = false;
 
 //
 const
@@ -76,19 +77,19 @@ const GETOPT_VALUES = [
 ];
 
 const GETOPT_HELP = {
-	'verbose': 'alias for *both* `-pP` (see below)',
-	'print': 'show time informations',
-	'progress': 'show progress bar',
-	'refresh': 'progress bar refresh rate (0..' + MAX_TIME + ' ms)',
-	'seconds': 'show pure seconds in the progress',
-	'precision': 'rounding values w/ integer (>=0)',
-	'offset': 'starting point (string/number/percentage)',
-	'string': 'progress bar sub-string; `#` or `/`?',
-	'color': 'still TODO (throws exception);',
-	'info': 'only a short about this application',
-	'copyright': 'the authors name.. /me.',
-	'version': 'the current version number',
-	'help': 'shows this help information'
+	'verbose': 'Combinated `-pP` (otherwise invisible)',
+	'print': 'Show time counting infos',
+	'progress': 'Show progress bar',
+	'refresh': 'Refresh rate [ 0..' + MAX_TIME + ' ] millisec.',
+	'seconds': 'Plain seconds beside progress bar',
+	'precision': 'Rounding precision [ 0 .. ]',
+	'offset': 'If you\'d like another starting point',
+	'string': 'Progress bar string (e.g.`#` or `/\/`)',
+	'color': '*TODO* (will throw an Exception)',
+	'info': 'Short info about this application',
+	'copyright': '',//'FYI'
+	'version': '',//Your current version of this tool',
+	'help': 'Print out this help page'
 };
 
 //
@@ -753,7 +754,7 @@ getParameter.getMaps = () => {
 };
 
 //
-const HELP_SPACE = 2;
+const HELP_SPACE = 1;
 
 const help = (_param, _print = true) => {
 	const { long, short } = getParameter.getMaps();
@@ -794,7 +795,7 @@ const help = (_param, _print = true) => {
 		longs[item] = item;
 		shorts[item] = str;
 
-		if(GETOPT_HELP[item] && (len = (str = GETOPT_HELP[item]).length) > max.text)
+		if(GETOPT_HELP[item] && (len = (str = GETOPT_HELP[item]).length + 2) > max.text)
 		{
 			max.text = len;
 		}
@@ -827,7 +828,11 @@ const help = (_param, _print = true) => {
 			}
 			
 			start[item] = str;
-			text[item] = (GETOPT_HELP[item] || '');
+			
+			if(text[item] = (GETOPT_HELP[item] || ''))
+			{
+				text[item] = ' ' + text[item] + ' ';
+			}
 		}
 		else
 		{
@@ -839,8 +844,9 @@ const help = (_param, _print = true) => {
 	const	lines = [];
 	const	diff = ((consoleWidth - max.start - HELP_SPACE) - max.text);
 	const	withAdditional = (diff >= 0);
-	const	addSign = ((diff >= 3) ? ' //' : '');
-	const	addSpace = (diff >= 4 ? ' ' : '');
+	const	addSign = (DEFAULT_COMMENT ? ((diff >= 3) ? ' //' : '') : '');
+	const	addSpaces = (diff >= (DEFAULT_COMMENT ? 4 : 1) ? ' ' : '');
+	const	addPoints = (diff >= (DEFAULT_COMMENT ? 6 : 2) ? '..' : '');
 	var	lineIndex = 0;
 	
 	for(const item of GETOPT_LONG)
@@ -849,9 +855,9 @@ const help = (_param, _print = true) => {
 		{
 			str = start[item];
 			
-			if(withAdditional)
+			if(withAdditional && text[item])
 			{
-				str += helpSpace + addSign + addSpace +
+				str += helpSpace + addSign + addSpaces + addPoints +
 					text[item].padStart(max.text, '.');
 			}
 		}
@@ -865,8 +871,9 @@ const help = (_param, _print = true) => {
 
 	if(!withAdditional && consoleWidth > 0)
 	{
-		lines.push('', 'Additional help information available..', 'Your terminal is too small ' +
-			'(w/ ' + consoleWidth + ' cols)', 'At least (' + (-diff) + ') columns more necessary.');
+		lines.push('', 'Additional help information available..',
+			'Your terminal is too small (w/ ' + consoleWidth +
+			' cols)', 'Needs at least (' + (-diff) + ') columns more!');
 	}
 
 	const result = lines.join('\n');
