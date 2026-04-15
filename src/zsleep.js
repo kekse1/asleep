@@ -20,7 +20,7 @@ const
 	DEFAULT_FIX = true,
 	DEFAULT_ANSI = true,
 	DEFAULT_REFRESH = 1000,
-	DEFAULT_COMMENT = false;
+	DEFAULT_COMMENT = true;
 
 //
 const
@@ -841,13 +841,31 @@ const help = (_param, _print = true) => {
 		}
 	}
 
-	const	lines = [];
+	const	lines = []; var lineIndex = 0;
 	const	diff = ((consoleWidth - max.start - HELP_SPACE) - max.text);
 	const	withAdditional = (diff >= 0);
-	const	addSign = (DEFAULT_COMMENT ? ((diff >= 3) ? ' //' : '') : '');
-	const	addSpaces = (diff >= (DEFAULT_COMMENT ? 4 : 1) ? ' ' : '');
-	const	addPoints = (diff >= (DEFAULT_COMMENT ? 6 : 2) ? '..' : '');
-	var	lineIndex = 0;
+	var	addMore = '';
+
+	if(diff >= 5 && DEFAULT_COMMENT)
+	{
+		addMore = '// ..';
+	}
+	else if(diff >= 4 && DEFAULT_COMMENT)
+	{
+		addMore = '//..';
+	}
+	else if(diff >= 3)
+	{
+		addMore = '// ';
+	}
+	else if(diff >= 2)
+	{
+		addMore = '//';
+	}
+	else if(diff >= 1)
+	{
+		addMore = '.';
+	}
 	
 	for(const item of GETOPT_LONG)
 	{
@@ -857,8 +875,8 @@ const help = (_param, _print = true) => {
 			
 			if(withAdditional && text[item])
 			{
-				str += helpSpace + addSign + addSpaces + addPoints +
-					text[item].padStart(max.text, '.');
+				str += helpSpace + addMore + text[item].
+					padStart(max.text, '.');
 			}
 		}
 		else
