@@ -27,7 +27,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-04-15**\] Last changes.. should be bug-less (and better) now, v**2.4.3**;
+* \[**2026-04-15**\] Last changes.. should be bug-less (and better) now, v**2.4.4**;
 * \[**2026-04-15**\] New minor update(s) (w/ many good improvements);
 * \[**2026-04-15**\] See `DEFAULT_ANSI`, v**2.2.8**;
 * \[**2026-04-14**\] See `DEFAULT_FIX`, v**2.2.7**;
@@ -77,7 +77,7 @@ I'm also not sure about it... maybe in the **future**.
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**2.4.3**](src/zsleep.js) (updated **2026-04-15**);
+* [Version v**2.4.4**](src/zsleep.js) (updated **2026-04-15**);
 
 Just to be sure I'm also leaving the original previous version [v**2.3.4**](src/zsleep.OLD.js)
 here; .. if you encounter bugs in the latest/current one (because there are some more changes

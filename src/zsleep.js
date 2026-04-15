@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.3';
+	VERSION = '2.4.4';
 
 //
 const
@@ -20,7 +20,7 @@ const
 	DEFAULT_FIX = true,
 	DEFAULT_ANSI = true,
 	DEFAULT_REFRESH = 1000,
-	DEFAULT_COMMENT = true;
+	DEFAULT_COMMENT = false;
 
 //
 const
@@ -767,7 +767,7 @@ const help = (_param, _print = true) => {
 
 	const getShorts = (_long) => ('-' + long.get(_long).join(' / -'));
 	const helpSpace = ' '.repeat(HELP_SPACE);
-	const paramString = '< param >';
+	const paramString = '< param > ';
 	const paramSpace = ' '.repeat(paramString.length);
 	const consoleWidth = (_param.stream ? _param.stream.columns : 0);
 
@@ -846,27 +846,23 @@ const help = (_param, _print = true) => {
 	const	withAdditional = (diff >= 0);
 	var	addMore = '';
 
-	if(diff >= 5 && DEFAULT_COMMENT)
+	if(DEFAULT_COMMENT)
 	{
-		addMore = '// ..';
+		if(diff >= 3)
+		{
+			addMore = '// ';
+		}
+		else if(diff >= 2)
+		{
+			addMore = '//';
+		}
 	}
-	else if(diff >= 4 && DEFAULT_COMMENT)
+
+	if((diff - addMore.length) >= 2)
 	{
-		addMore = '//..';
+		addMore += '..';
 	}
-	else if(diff >= 3)
-	{
-		addMore = '// ';
-	}
-	else if(diff >= 2)
-	{
-		addMore = '//';
-	}
-	else if(diff >= 1)
-	{
-		addMore = '.';
-	}
-	
+
 	for(const item of GETOPT_LONG)
 	{
 		if(item)
