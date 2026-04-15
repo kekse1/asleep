@@ -80,7 +80,9 @@ I'm also not sure about it... maybe in the **future**.
 <br><br>
 
 ## Usage
-See **`--help / -? / -h`**!<br>
+See **`--help / -? / -h`**!
+
+<br>
 
 Basically, call this script with one or multiple parameter(s) with time(s)
 that'll get parsed (see `Math.time.parse()`). It just "waits" for the end.
