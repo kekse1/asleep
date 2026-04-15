@@ -972,14 +972,16 @@ const start = () => {
 
 	if(typeof param.offset === 'string')
 	{
-		param.offset = Math.int(result *
-			Number(param.offset.slice(0, -1)) / 100);
+		param.offset = Math.int(result * Number(
+			param.offset.slice(0, -1)) / 100);
 	}
-	else if(typeof param.offset === 'number')
+	
+	if(typeof param.offset === 'number')
 	{
-		param.offset = Math.min(
-			param.offset,
-			result);
+		param.offset = Math.max(0,
+			Math.min(
+				param.offset,
+				result));
 	}
 
 	if(!(param.stream = console.ttyStream))
