@@ -46,7 +46,8 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## Example screenshot
-This is an example screenshot (v**2.3.0**):
+This is an example screenshot (v**2.3.0**, so a bit older release..
+the latest/current one had some more changes in it...):
 
 ![Example Screenshot](./img/screenshot.v2.3.0.png)
 
