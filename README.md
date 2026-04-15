@@ -46,10 +46,9 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## Example screenshot
-This is an example screenshot (v**2.1.1**); which is **not** the newest version
-(with more accurate Date/Time outputs and other improvements).
+This is an example screenshot (v**2.3.0**):
 
-![Example Screenshot](./img/screenshot.png)
+![Example Screenshot](./img/screenshot.v2.3.1.png)
 
 <br>
 
