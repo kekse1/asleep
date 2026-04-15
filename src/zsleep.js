@@ -916,8 +916,7 @@ const startTimeout = (_millisec, _param) => {
 		width, line;
 	const	getTime = () => Math.min(rest, maxTime);
 	const	getValue = (_time = getRuntime()) => Math.min(1, _time / _millisec);
-	const	getPercent = (_value = getValue()) => Math.round(
-			(_value * 100), PRECISION);
+	const	getPercent = (_value = getValue()) => Math.round(_value * 100, PRECISION);
 	const	percentStringLength = getPercentStringLength(PRECISION, false);
 	const	getPercentString = (_value = getPercent()) => (_value.toFixed(PRECISION).
 			padStart(percentStringLength, ' ') + '%');
@@ -1122,7 +1121,7 @@ const start = () => {
 	{
 		console.info('         String: ' + param.result);
 		console.info('   Milliseconds: ' + result.toString());//.toLocaleString());
-		console.info('        Seconds: ' + (result / 1000, PRECISION).toFixed(PRECISION));
+		console.info('        Seconds: ' + (result / 1000).toFixed(PRECISION));
 		console.info('           Time: ' + Math.time.render(result));
 		
 		const real = (result - param.offset);
