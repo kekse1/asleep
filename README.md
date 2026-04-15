@@ -27,7 +27,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-04-15**\] New minor update (w/ more improvements), v**2.3.4**;
+* \[**2026-04-15**\] New minor update(s) (w/ many good improvements), v**2.4.0**;
 * \[**2026-04-15**\] See `DEFAULT_ANSI`, v**2.2.8**;
 * \[**2026-04-14**\] See `DEFAULT_FIX`, v**2.2.7**;
 * \[**2026-04-09**\] New parameter `-S / --string` (w/ `#` => `/`), v**2.2.6**;
@@ -75,7 +75,16 @@ I'm also not sure about it... maybe in the **future**.
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.3.4**](src/zsleep.js) (updated **2026-04-15**);
+* [Version v**2.4.0**](src/zsleep.js) (updated **2026-04-15**);
+
+Just to be sure I'm also leaving the original previous version [v**2.3.4**](src/zsleep.ORIG.js)
+here; .. if you encounter bugs in the latest/current one (because there are some more changes
+in it - that's also why I inreased the minor version again).
+
+<br>
+
+### Bugs
+If you find any, please [contact me](#contact)! THANK YOU!
 
 <br><br>
 
@@ -124,9 +133,9 @@ value (e.g. `5m-0.5m`)):
 
 > [!NOTE]
 > For best efficiency I'm using (at least one) `setTimeout()` (a big main loop would be worse);
-> Since the maximum amount of time is limitted (see my `Math.time.MAX_TIMEOUT`, which is
-> `(((2 ** 32) / 2) - 1)`), I also implemented kinda 'workaround' for it, so the theoretical
-> limit is practically (much) higher.
+> Since the maximum amount of time is limitted (see my (`global`) `MAX_TIME`, which is in
+> JavaScript always `(((2 ** 32) / 2) - 1)`); so I also implemented some 'workaround' for it,
+> so the theoretical limit is practically (much) higher.
 
 <br>
 
@@ -180,7 +189,6 @@ I'm exporting the maths from my `Math.time` extensions:
 * `Math.time(_item)`
 * `Math.time.parse(_value, _timeout)`
 * `Math.time.render(_value, _millisec, _long, _sep)`
-* `Math.time.MAX_TIMEOUT`
 
 Additionally, since I needed 'em here, this `Math` extensions:
 
@@ -200,7 +208,16 @@ And this:
 * `Date.prototype.toString(_locale, _options)`
 * `Date.currentLocale`
 
+Global namespace:
+
+* `MAX_TIME`
+
 <br>
+
+At this moment I'm too lazy too search for any other export I'm maybe doing.
+So look for yourself if needed at all (TODO?).
+
+<br><br>
 
 ### My really tiny `getopt` interpretation
 Because I really wanted to eliminate any dependency, I decided to use my own,

@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.0';
+	VERSION = '2.3.4';
 
 //
 const
@@ -19,21 +19,13 @@ const
 	DEFAULT_STRING = '/',
 	DEFAULT_FIX = true,
 	DEFAULT_ANSI = true,
-	DEFAULT_MIN = 92,
-	DEFAULT_REFRESH = 1000;
-
-//
-const
-	MAX_TIME = (((2 ** 32) / 2) - 1); // please do not change.. it's the javascript default maximum for `set{Timeout,Interval}()`;
+	DEFAULT_MIN = 94;
 
 //
 const GETOPT_LONG = [
-	'verbose',
-	'',
+	'show',
 	'print',
 	'progress',
-	'',
-	'refresh',
 	'',
 	'seconds',
 	'',
@@ -52,44 +44,41 @@ const GETOPT_LONG = [
 ];
 
 const GETOPT_SHORT = {
-	'v': 'verbose',
+	'x': 'show',
 	'p': 'print',
 	'P': 'progress',
-	'i': 'refresh',
 	's': 'seconds',
 	'n': 'precision',
 	'o': 'offset',
 	'S': 'string',
-	'c': 'color',
-	'I': 'info',
-	'C': 'copyright',
-	'V': 'version',
+	'C': 'color',
+	'i': 'info',
+	'c': 'copyright',
+	'v': 'version',
 	'?': 'help',
 	'h': 'help'
 };
 
 const GETOPT_VALUES = [
-	'precision',
-	'refresh',
 	'offset',
+	'precision',
 	'string',
 	'color'
 ];
 
 const GETOPT_HELP = {
-	'verbose': 'alias for *both* `-pP` (see below)',
-	'print': 'show time informations',
-	'progress': 'show progress bar',
-	'refresh': 'progress bar refresh rate (0..' + MAX_TIME + ' ms)',
-	'seconds': 'show pure seconds in the progress',
-	'precision': 'rounding values w/ integer (>=0)',
-	'offset': 'starting point (string/number/percentage)',
-	'string': 'progress bar sub-string; `#` or `/`?',
-	'color': 'still TODO (throws exception);',
-	'info': 'only a short about this application',
-	'copyright': 'the authors name.. /me.',
-	'version': 'the current version number',
-	'help': 'shows this help information'
+	'show': ' \t\t\t// alias to enable *both* `-pP`',
+	'print': ' \t\t\t// show time informations',
+	'progress': ' \t\t\t// show progress bar',
+	'seconds': ' \t\t\t// show pure seconds in the progress',
+	'precision': ' \t// rounding values w/ integer [ 0 .. ]',
+	'offset': ' \t// starting point (string/number/percentage)',
+	'string': ' \t// progress bar sub-string; `#` or `/`?',
+	'color': ' \t// still TODO (throws exception);',
+	'info': ' \t\t\t// only a short about this application',
+	'copyright': ' \t\t\t// here\'s my name..',
+	'version': ' \t\t\t// the current version number',
+	'help': ' \t\t\t// shows this help information'
 };
 
 //
@@ -97,9 +86,6 @@ var PRECISION =
 	DEFAULT_PRECISION;
 
 //
-Reflect.defineProperty(global, 'MAX_TIME',
-	{ get: () => MAX_TIME });
-
 const time = Math.time = (_value) => {
 	if(typeof _value === 'string')
 	{
@@ -108,6 +94,8 @@ const time = Math.time = (_value) => {
 
 	return Math.time.render(_value);
 };
+
+Reflect.defineProperty(Math.time, 'MAX_TIMEOUT', { get: () => (((2 ** 32) / 2) - 1) });
 
 (() => {
 	Math.time.unit = [
@@ -430,6 +418,10 @@ Reflect.defineProperty(String.prototype, 'repeat', { value: function(_count = 2)
 }});
 
 //
+const getPercentStringLength =
+	(_prec = PRECISION, _sign = false) => (3 + (_prec ? 1 : 0) + _prec + (_sign ? 1 : 0));
+
+//
 const getParameter = () => {
 	const	{ long, short } = getParameter.getMaps(),
 		argv = [ ... process.argv.slice(2) ],
@@ -438,17 +430,11 @@ const getParameter = () => {
 		stop = false,
 		done = false,
 		err;
-
+	
 	const getValue = (_key, _index, _exit) => {
 		if(_key.length === 1)
 		{
 			_key = short.get(_key);
-		}
-		
-		switch(_key)
-		{
-			case 'color':
-				throw new Error('[TODO] The --color is not yet finished/planned..');
 		}
 
 		var temp = argv[_index + 1];
@@ -466,12 +452,8 @@ const getParameter = () => {
 		{
 			if(temp !== null && temp.length > 0) switch(temp.toLowerCase())
 			{
-				case 'on': case 'yes': case 'true':
-					argv.splice(_index + 1, 1);
-					return true;
-				case 'off': case 'no': case 'false':
-					argv.splice(_index + 1, 1);
-					return false;
+				//case 'on': case 'yes': case 'true': return true;
+				case 'off': case 'no': case 'false': return false;
 			}
 			
 			return true;
@@ -503,15 +485,6 @@ const getParameter = () => {
 				{
 					return temp;
 				}
-				break;
-			case 'refresh':
-				if(!localError)
-				{
-					return temp;
-				}
-				break;
-			case 'color':
-				throw new Error('TODO');
 				break;
 		}
 		
@@ -629,7 +602,38 @@ const getParameter = () => {
 }
 
 getParameter.apply = (_param) => {
-	//
+	if(_param.color)
+	{
+		throw new Error('TODO');
+	}
+	
+	if(_param.info)
+	{
+		info();
+		return process.exit();
+	}
+	
+	if(_param.version)
+	{
+		version();
+	}
+
+	if(_param.copyright)
+	{
+		copyright();
+	}
+	
+	if(_param.copyright || _param.version)
+	{
+		return process.exit();
+	}
+	
+	if(_param.help)
+	{
+		help();
+		return process.exit();
+	}
+	
 	if(typeof _param.print === 'undefined')
 	{
 		_param.print = false;
@@ -640,31 +644,11 @@ getParameter.apply = (_param) => {
 		_param.progress = false;
 	}
 	
-	if(typeof _param.verbose === 'boolean')
+	if(typeof _param.show === 'boolean')
 	{
-		_param.print = _param.progress = _param.verbose;
-	}
-
-	if(_param.progress)
-	{
-		if(!('refresh' in _param))
-		{
-			_param.refresh = DEFAULT_REFRESH;
-		}
-		
-		_param.refresh = Math.min(Math.max(
-			0, _param.refresh), MAX_TIME);
-	}
-	else
-	{
-		_param.refresh = 0;
+		_param.print = _param.progress = _param.show;
 	}
 	
-	if(!(_param.stream = console.ttyStream))
-	{
-		_param.progress = false;
-	}
-
 	if(!('offset' in _param))
 	{
 		_param.offset = 0;
@@ -672,15 +656,14 @@ getParameter.apply = (_param) => {
 
 	if('precision' in _param)	
 	{
-		_param.precision = Math.abs(
-			Math.int(_param.precision));
+		_param.precision = PRECISION =
+			Math.abs(Math.int(_param.precision));
 	}
 	else
 	{
-		_param.precision = DEFAULT_PRECISION;
+		_param.precision = PRECISION =
+			DEFAULT_PRECISION;
 	}
-	
-	PRECISION = _param.precision;
 	
 	if(typeof _param.seconds !== 'boolean')
 	{
@@ -692,35 +675,6 @@ getParameter.apply = (_param) => {
 		_param.string = DEFAULT_STRING;
 	}
 
-	//
-	if(_param.info)
-	{
-		info(_param);
-		return process.exit();
-	}
-	
-	if(_param.version)
-	{
-		version(_param);
-	}
-
-	if(_param.copyright)
-	{
-		copyright(_param);
-	}
-	
-	if(_param.copyright || _param.version)
-	{
-		return process.exit();
-	}
-	
-	if(_param.help)
-	{
-		help(_param, true);
-		return process.exit();
-	}
-
-	//	
 	return _param;
 };
 
@@ -744,139 +698,73 @@ getParameter.getMaps = () => {
 };
 
 //
-const HELP_SPACE = 2;
+const help = () => {
+	const { long, short } =
+		getParameter.getMaps();
+	info(); console.log();
 
-const help = (_param, _print = true) => {
-	const { long, short } = getParameter.getMaps();
-	
-	if(_print)
+	var max = 0; long.forEach((_value, _key) => {
+		if(_value.length > max)
+			max = _value.length;
+	}); max = ((max * 5) - 3);
+
+	const getShorts = (_long) => (('-' +
+		long.get(_long).join(' / -')).
+			padStart(max, ' '));
+
+	var width, additional; const stream = console.ttyStream; if(stream)
 	{
-		info(_param);
-		console.log();
+		additional = ((width = stream.
+			columns) >= DEFAULT_MIN);
 	}
-
-	const getShorts = (_long) => ('-' + long.get(_long).join(' / -'));
-	const helpSpace = ' '.repeat(HELP_SPACE);
-	const paramString = '< param >';
-	const paramSpace = ' '.repeat(paramString.length);
-	const consoleWidth = (_param.stream ? _param.stream.columns : 0);
-
-	const	max = { long: 0, short: 0, text: 0, start: 0 },
-		longs = {}, shorts = {}, params = {}, texts = {};
-	var	len, str;
+	else
+	{
+		//?? e.g. w/ *file* (pipe) output.. better *do* show! ;-)
+		additional = true;
+		width = 0;
+	}
 	
-	for(const item of GETOPT_LONG)
+	var add = ''; for(const item of GETOPT_LONG)
 	{
 		if(!item)
 		{
+			console.log();
 			continue;
 		}
 		
-		if((len = item.length) > max.long)
+		if(additional)
 		{
-			max.long = len;
-		}
-
-		if((len = (str = getShorts(item)).length) > max.short)
-		{
-			max.short = len;
-		}
-		
-		longs[item] = item;
-		shorts[item] = str;
-
-		if(GETOPT_HELP[item] && (len = (str = GETOPT_HELP[item]).length) > max.text)
-		{
-			max.text = len;
-		}
-		
-		texts[item] = (str || '');
-	}
-
-	const	start = {}, text = {};
-	var	str;
-
-	for(const item of GETOPT_LONG)
-	{
-		if(item)
-		{
-			str = helpSpace + shorts[item].padStart(max.short) +
-				helpSpace + '--' + item.padEnd(max.long);
-			
-			if(GETOPT_VALUES.includes(item))
+			if(typeof GETOPT_HELP[item] === 'string' && GETOPT_HELP[item])
 			{
-				str += helpSpace + paramString;
+				add = GETOPT_HELP[item];
 			}
 			else
 			{
-				str += helpSpace + paramSpace;
+				add = '';
 			}
-			
-			if((len = str.length) > max.start)
-			{
-				max.start = len;
-			}
-			
-			start[item] = str;
-			text[item] = (GETOPT_HELP[item] || '');
-		}
-		else
-		{
-			start[item] = '';
-			text[item] = '';
-		}
-	}
-
-	const	lines = [];
-	const	diff = ((consoleWidth - max.start - HELP_SPACE) - max.text);
-	const	withAdditional = (diff >= 0);
-	const	addSign = ((diff >= 3) ? ' //' : '');
-	const	addSpace = (diff >= 4 ? ' ' : '');
-	var	lineIndex = 0;
-	
-	for(const item of GETOPT_LONG)
-	{
-		if(item)
-		{
-			str = start[item];
-			
-			if(withAdditional)
-			{
-				str += helpSpace + addSign + addSpace +
-					text[item].padStart(max.text, '.');
-			}
-		}
-		else
-		{
-			str = '';
 		}
 		
-		lines[lineIndex++] = str;
-	}
-
-	if(!withAdditional && consoleWidth > 0)
-	{
-		lines.push('', 'Additional help information available..', 'Your terminal is too small ' +
-			'(w/ ' + consoleWidth + ' cols)', 'At least (' + (-diff) + ') columns more necessary.');
-	}
-
-	const result = lines.join('\n');
-	
-	if(_print)
-	{
-		console.log(result);
+		console.log('  \t' + getShorts(item) +
+			' / ' + '--' + item + (GETOPT_VALUES.includes(item) ?
+				'\t <param>' : '') + add);
 	}
 	
-	return result;
+	console.log();
+
+	if(!additional)
+	{
+		console.warn('There\'s additional help information available. ...\n' +
+			'Please enlarge your console to minimum width (' + DEFAULT_MIN + ').');
+		if(width > 0) console.warn('\t ... your current width is exactly (' + width + ').');
+	}
 };
 
 //
-const info = (_param) => {
-	copyright(_param); console.log(); version(_param); };
-const copyright = (_param) => console.log('Copyright (c) ' +
+const info = () => { copyright(); console.log(); version(); };
+const copyright = () => console.log('Copyright (c) ' +
 	'Sebastian Kucharczyk <kuchen@kekse.biz>\n' +
 	'https://kekse.biz/  https://github.com/kekse1/zsleep/');
-const version = (_param) => console.log('`zsleep` v' + VERSION);
+const version = () => console.log('`zsleep` v' + VERSION);
 
 //
 import readline from 'node:readline';
@@ -886,178 +774,204 @@ const showCursor = (_stream) => _stream.write(String.fromCodePoint(27) + '[?25h'
 const hideCursor = (_stream) => _stream.write(String.fromCodePoint(27) + '[?25l');
 
 //
-const getPercentStringLength =
-	(_prec = PRECISION, _sign = false) => (3 +
-		(_prec ? 1 : 0) + _prec + (_sign ? 1 : 0));
-
 const startTimeout = (_millisec, _param) => {
-	//
 	if(DEFAULT_ANSI && _param.stream)
 	{
 		hideCursor(_param.stream);
 	}
-
-	//
-	const	maxTime = MAX_TIME;
-	var	rest = _millisec, time = 0, last, now,
-		timeout = null, interval = null,
-		value = 0, percentString,
-		start = null, runtime = 0,
-		width, line;
-	const	getTime = () => Math.min(rest, maxTime);
-	const	getValue = (_time = getRuntime()) => Math.min(1, _time / _millisec);
-	const	getPercent = (_value = getValue()) => Math.round(
-			(_value * 100), PRECISION);
-	const	percentStringLength = getPercentStringLength(PRECISION, false);
-	const	getPercentString = (_value = getPercent()) => (_value.toFixed(PRECISION).
-			padStart(percentStringLength, ' ') + '%');
-	const	getRuntime = () => (Date.now() - start);
-
-	//
-	const startProgressTimeout = () => {
-		if(interval !== null) return interval;
-		return interval = setTimeout(() => {
-			interval = null; setImmediate(
-				() => drawProgress(false));
-		}, _param.refresh); };
 	
-	const update = () => (percentString = getPercentString((
-		value = getValue(runtime = getRuntime())) * 100));
+	const	max_timeout = Math.time.MAX_TIMEOUT;
+	var	runtime = _param.offset, timeout,
+		last = Date.now(), now, progress,
+		rest = (_millisec - _param.offset),
+		ended = false, progressCount = 0;
 
-	const drawProgress = (_finish = false) => {
-		line = ' ';
-		update();
+	const	percentLength = getPercentStringLength(
+			PRECISION, false);
+	var	progressRuntime = _param.offset,
+		progressWidth,
+		progressLast,
+		progressNow;
+
+	const draw = (_value = 1) => {
+		if(!(progressWidth = _param.stream.columns))
+		{
+			return false;
+		}
+
+		if(!ended)
+		{
+			if(!timeout)
+			{
+				return false;
+			}
+			
+			if(_value < 0)
+			{
+				_value = 0;
+			}
+			else if(_value > 1)
+			{
+				_value = 1;
+			}
+		}
+		else
+		{
+			_value = 1;
+		}
+		
+		if(_value === 1)
+		{
+			progressRuntime = _millisec;
+		}
+
+		var line = ' ';
 		
 		if(_param.seconds)
 		{
-			line += percentString + '   ' + (runtime / 1000).toFixed(PRECISION) + 's   ';
+			const seconds = (progressRuntime / 1000);
+			line += Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
+				percentLength, ' ') + '%   ' + seconds.toFixed(PRECISION) + 's  ';
 		}
 		else
 		{
-			line += percentString + '   ' + Math.time.render(runtime, false, false, ' ') + '   ';
+			line += Math.round(_value * 100, 2).toFixed(PRECISION).padStart(
+				percentLength, ' ') + '%   ' + Math.time.render(progressRuntime,
+					false, false, ' ') + '  ';
 		}
-		
-		line = line.substr(0, _param.stream.columns);
 
-		if((width = (_param.stream.columns - line.length - 2)) >= 4)
+		progressWidth -= (line.length + 2);
+		line += '[';
+
+		var done = Math._round(_value * progressWidth);
+		var todo = (progressWidth - done);
+
+		var t = '', tt; for(var i = 0, j = line.length; i < done; ++i, ++j)
 		{
-			line += '[';
-			
-			var done = Math._round(value * width);
-			var todo = (width - done);
-
-			var t = ''; for(var i = 0, j = line.length; i < done; ++i, ++j)
-			{
-				t += _param.string[
-					((DEFAULT_FIX ? j : i) %
-						_param.string.length)];
-			}
-			
-			line += t + '-'.repeat(todo) + ']';
-			line = line.substr(0, _param.stream.columns);
+			tt = ((DEFAULT_FIX ? j : i) % _param.string.length);
+			t += _param.string[tt];
 		}
-
-		_param.stream.write(line + '\r');
 		
-		if(_finish)
+		line += t + '-'.repeat(todo) + ']';
+		line = line.substr(0, _param.stream.columns);
+		
+		if(progressCount++)
+		{
+			_param.stream.write('\r');
+		}
+		else if(_param.print)
 		{
 			_param.stream.write('\n');
 		}
-		else
-		{
-			startProgressTimeout();
-		}
+		
+		_param.stream.write(line + '\r');
+		return !ended;
 	};
 
-	//
-	const finish = (_fin, _sigInt = !!SIGINT) => {
-		last = now = null;
+	const endProgress = (_fin = null) => {
+		ended = true;
 		
-		if(_fin)
-		{
-			rest = 0; value = 1;
-			time = runtime = _millisec;
-		}
-		else
-		{
-			update();
-		}
-		
-		if(_param.progress)
-		{
-			drawProgress(true);
-		}
-	
-		if(timeout !== null)
+		if(timeout)
 		{
 			clearTimeout(timeout);
 			timeout = null;
 		}
-		
-		if(interval !== null)
-		{
-			clearTimeout(interval);
-			interval = null;
-		}
-		
-		if(_param.progress)
-		{
-			process.stdin.setRawMode(false);
-		}
-		
-		setImmediate(() => end(_fin !== false, runtime, _millisec, _param));
-	};
 
-	const startLocalTimeout = (_time = getTime()) => {
-		if(timeout !== null) return timeout;
-		return timeout = setTimeout(() => {
-			timeout = null;
-			handler(_time); }, _time); };
-	
-	const handler = (_time = 0) => {
-		now = Date.now();
-		time += (now - last);
-		last = now;
-		
-		if((rest -= _time) <= 0)
+		if(_fin)
 		{
-			finish(true, !!SIGINT);
+			runtime = _millisec;
 		}
 		else
 		{
-			startLocalTimeout(getTime());
+			runtime += (Date.now() - last);
 		}
+
+		if(_param.progress)
+		{
+			process.stdin.setRawMode(false);
+			
+			if(_fin)
+			{
+				draw(1);
+			}
+					
+			if(progress)
+			{
+				clearTimeout(progress);
+				progress = null;
+			}
+		}
+		
+		if(_param.print && _param.progress)
+		{
+			console.log();
+		}
+
+		setTimeout(() => end(_fin !== false, runtime, _millisec, _param));
 	};
+
+	const time = () => Math.min(
+		Math.time.MAX_TIMEOUT, rest);
 	
-	last = start = Date.now();
-	startLocalTimeout(getTime());
-	
-	//	
-	if(_param.progress)
+	const handler = (_time) => {
+		if((rest -= _time) <= 0)
+		{
+			endProgress(true);
+			return end(true, runtime, _millisec, _param);
+		}
+		
+		now = Date.now();
+		runtime += (now - last);
+		last = now;
+		
+		timeout = setTimeout(
+			() => handler(time()),
+				time());
+	};
+
+	timeout = setTimeout(
+		() => handler(time()),
+			time());
+
+	if(_param.progress && _param.stream)
 	{
 		const onKeypress = (_str, _key) => {
-			if(_key.ctrl && _key.name && _key.name === 'c')
+			if(_key.ctrl && _key.name === 'c')
 			{
-				setImmediate(() => {
-					process.stdin.off('keypress', onKeypress);
-					process.stdin.setRawMode(false);
-				});
-
-				finish(false, SIGINT = true);
+				SIGINT = true;
+				process.stdin.off('keypress', onKeypress);
+				process.stdin.setRawMode(false);
+				endProgress(false, true);
 			}
 		};
-		
+
 		readline.emitKeypressEvents(process.stdin);
 		process.stdin.on('keypress', onKeypress);
 		process.stdin.setRawMode(true);
+		
+		const interval = () => {
+			progressNow = Date.now();
+			progressRuntime += (progressNow - progressLast);
+			progressLast = progressNow;
+			
+			if(draw(Math.min(1, (progressRuntime / _millisec))))
+			{
+				setTimeout(interval, 1000);
+			}
+			else
+			{
+				endProgress(false, false);
+			}
+		};
 
-		_param.stream.write('\n');
-		drawProgress(false);
+		progressLast = Date.now(); interval();
 	}
 	else
 	{
-		process.once('SIGINT', () => finish(
-			false, SIGINT = true));
+		process.once('SIGINT', () => {
+			SIGINT = true;
+			endProgress(false, true);
+		});
 	}
 };
 
@@ -1098,7 +1012,11 @@ const start = () => {
 				result));
 	}
 
-	if(param.progress && result < 1000)
+	if(!(param.stream = console.ttyStream))
+	{
+		param.progress = false;
+	}
+	else if(param.progress && result < 1000)
 	{
 		param.progress = false;
 	}
@@ -1107,7 +1025,8 @@ const start = () => {
 	{
 		console.info('         String: ' + param.result);
 		console.info('   Milliseconds: ' + result.toString());//.toLocaleString());
-		console.info('        Seconds: ' + (result / 1000, PRECISION).toFixed(PRECISION));
+		console.info('        Seconds: ' + Math.round(
+			result / 1000, PRECISION).toFixed(PRECISION));
 		console.info('           Time: ' + Math.time.render(result));
 		
 		const real = (result - param.offset);
@@ -1188,16 +1107,11 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 	if(!_fin)
 	{
 		const diff = Math.max(0, (_millisec - _runtime));
-		
-		if(_param.print)
-		{
-			console.error(
-				'\n(aborted by SIGINT)\n        Runtime: ' + Math.time.render(_runtime) +
-				'\n       Real End: ' + new Date().toString(true) + '\n     Difference: ' +
-				Math.time.render(diff) + '\n   Milliseconds: ' + diff.toString() +//toLocaleString() +
-				'\n        Seconds: ' + (diff / 1000, PRECISION).toFixed(PRECISION) +
-				'\n        Percent: ' + (_runtime / _millisec * 100).toFixed(PRECISION) + '%');
-		}
+		if(_param.print) console.error(
+			'\n(aborted by SIGINT)\n        Runtime: ' + Math.time.render(_runtime) +
+			'\n       Real End: ' + new Date().toString(true) + '\n     Difference: ' +
+			Math.time.render(diff) + '\n   Milliseconds: ' + diff.toString() +//toLocaleString() +
+			'\n        Seconds: ' + Math.round(diff / 1000, PRECISION).toFixed(PRECISION));
 		
 		if(SIGINT)
 		{
