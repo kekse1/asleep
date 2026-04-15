@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.4';
+	VERSION = '2.4.6';
 
 //
 const
@@ -19,8 +19,14 @@ const
 	DEFAULT_STRING = '/',
 	DEFAULT_FIX = true,
 	DEFAULT_ANSI = true,
+	DEFAULT_COLOR = true,
 	DEFAULT_REFRESH = 1000,
 	DEFAULT_COMMENT = false;
+
+//
+const COLOR = { 'bracket': [ 220, 255, 0 ], bold: true,
+	done: { fg: [ 230, 200, 60 ], bg: null },
+	todo: { fg: [ 90, 160, 170 ], bg: null } };
 
 //
 const
@@ -72,8 +78,7 @@ const GETOPT_VALUES = [
 	'precision',
 	'refresh',
 	'offset',
-	'string',
-	'color'
+	'string'
 ];
 
 const GETOPT_HELP = {
@@ -85,7 +90,7 @@ const GETOPT_HELP = {
 	'precision': 'Rounding precision [ 0 .. ]',
 	'offset': 'If you\'d like another starting point',
 	'string': 'Progress bar string (e.g.`#` or `/\/`)',
-	'color': '*TODO* (will throw an Exception)',
+	'color': 'Progress bar colors (w/ ANSI Escape Sequences)',
 	'info': 'Short info about this application',
 	'copyright': '',//'FYI'
 	'version': '',//Your current version of this tool',
@@ -445,12 +450,6 @@ const getParameter = () => {
 			_key = short.get(_key);
 		}
 		
-		switch(_key)
-		{
-			case 'color':
-				throw new Error('[TODO] The --color is not yet finished/planned..');
-		}
-
 		var temp = argv[_index + 1];
 		
 		if(typeof temp === 'string')
@@ -510,9 +509,6 @@ const getParameter = () => {
 				{
 					return temp;
 				}
-				break;
-			case 'color':
-				throw new Error('TODO');
 				break;
 		}
 		
@@ -700,6 +696,15 @@ getParameter.apply = (_param) => {
 	if(typeof _param.seconds !== 'boolean')
 	{
 		_param.seconds = DEFAULT_SECONDS;
+	}
+	
+	if(!_param.stream)
+	{
+		_param.color = false;
+	}
+	else if(typeof _param.color !== 'boolean')
+	{
+		_param.color = DEFAULT_COLOR;
 	}
 
 	//
@@ -912,8 +917,14 @@ const version = (_param) => console.log('`zsleep` v' + VERSION);
 import readline from 'node:readline';
 
 //
-const showCursor = (_stream) => _stream.write(String.fromCodePoint(27) + '[?25h');
-const hideCursor = (_stream) => _stream.write(String.fromCodePoint(27) + '[?25l');
+const ESCAPE = String.fromCodePoint(27);
+const showCursor = () => (ESCAPE + '[?25h');
+const hideCursor = () => (ESCAPE + '[?25l');
+const none = () => (ESCAPE + '[0m');
+const bold = () => (ESCAPE + '[1m');
+const bg = (_r, _g, _b) => (ESCAPE + `[48;2;${_r};${_g};${_b}m`);
+const fg = (_r, _g, _b) => (ESCAPE + `[38;2;${_r};${_g};${_b}m`);
+
 
 //
 const getPercentStringLength =
@@ -962,22 +973,91 @@ const startTimeout = (_millisec, _param) => {
 		
 		line = line.substr(0, _param.stream.columns);
 
+		var txt;
+		
 		if((width = (_param.stream.columns - line.length - 2)) >= 4)
 		{
-			line += '[';
+			txt = '(';
+			
+			if(_param.color)
+			{
+				if(COLOR.bracket)
+				{
+					txt = fg(... COLOR.bracket) + txt;
+				}
+				
+				if(COLOR.bold)
+				{
+					txt = bold() + txt;
+				}
+				
+				txt += none();
+			}
+			
+			line += txt;
 			
 			var done = Math._round(value * width);
 			var todo = (width - done);
 
-			var t = ''; for(var i = 0, j = line.length; i < done; ++i, ++j)
+			txt = ''; for(var i = 0, j = line.length; i < done; ++i, ++j)
 			{
-				t += _param.string[
+				txt += _param.string[
 					((DEFAULT_FIX ? j : i) %
 						_param.string.length)];
 			}
 			
-			line += t + '-'.repeat(todo) + ']';
-			line = line.substr(0, _param.stream.columns);
+			if(_param.color)
+			{
+				if(COLOR.done.bg)
+				{
+					txt = bg(... COLOR.done.bg) + txt;
+				}
+				
+				if(COLOR.done.fg)
+				{
+					txt = fg(... COLOR.done.fg) + txt;
+				}
+				
+				txt += none();
+			}
+			
+			line += txt;
+			txt = '-'.repeat(todo);
+
+			if(_param.color)
+			{
+				if(COLOR.todo.bg)
+				{
+					txt = bg(... COLOR.todo.bg) + txt;
+				}
+				
+				if(COLOR.todo.fg)
+				{
+					txt = fg(... COLOR.todo.fg) + txt;
+				}
+
+				txt += none();
+			}
+
+			line += txt;
+			txt = ')';
+			
+			if(_param.color)
+			{
+				if(COLOR.bracket)
+				{
+					txt = fg(... COLOR.bracket) + txt;
+				}
+				
+				if(COLOR.bold)
+				{
+					txt = bold() + txt;
+				}
+				
+				txt += none();
+			}
+			
+			line += txt;
 		}
 
 		_param.stream.write(line + '\r');
@@ -1054,7 +1134,7 @@ const startTimeout = (_millisec, _param) => {
 
 	if(_param.cursor)
 	{
-		hideCursor(_param.stream);
+		_param.stream.write(hideCursor());
 	}
 	
 	if(_param.progress)
@@ -1210,7 +1290,7 @@ Reflect.defineProperty(Date.prototype, 'toString', { value: function(... _args)
 var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 	if(_param.cursor)
 	{
-		showCursor(_param.stream);
+		_param.stream.write(showCursor());
 	}
 	
 	if(_param.progress && !SIGINT)

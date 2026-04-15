@@ -27,6 +27,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
+* \[**2026-04-15**\] Now w/ `-c / --color` parameter support (for the progress bar), v**2.4.6**;
 * \[**2026-04-15**\] Last changes.. should be bug-less (and better) now, v**2.4.4**;
 * \[**2026-04-15**\] New minor update(s) (w/ many good improvements);
 * \[**2026-04-15**\] See `DEFAULT_ANSI`, v**2.2.8**;
@@ -48,36 +49,16 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 
 ## Example screenshot
 This is an example screenshot (v**2.3.0**, so a bit older release..
-the latest/current one had some more changes):
+the latest/current one had some more changes - and even COLORS):
 
 ![Example Screenshot](./img/screenshot.v2.3.0.png)
-
-<br>
-
-> [!NOTE]
-> Running **with_out_** any [ANSI Escape Sequence](https://github.com/kekse1/ansi.js/),
-> only using `\r` for the progress bar..
-
-I decided **not** to use any ANSI escape sequence for more compatibility, etc..
-
-If you **really** want some fancy colors and styles (maybe escpecially for the progress bar),
-please extend it or [let me know](#contact), so I'll maybe add an **`--ansi`** parameter, etc.
-
-<br>
-
-\[**update**\] Now with enabled `DEFAULT_ANSI` I'm using ONLY the sequences to show and hide
-your cursor. Totally optional (but enabled by default). If you do **not** want 'em, there's
-nevertheless another fix which prevents that the cursor hides some output or so.
-
-I'm also thinking about colored output (mostly for the progress bar), which looks nice, but
-I'm also not sure about it... maybe in the **future**.
 
 <br><br>
 
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**2.4.4**](src/zsleep.js) (updated **2026-04-15**);
+* [Version v**2.4.6**](src/zsleep.js) (updated **2026-04-15**);
 
 Just to be sure I'm also leaving the original previous version [v**2.3.4**](src/zsleep.OLD.js)
 here; .. if you encounter bugs in the latest/current one (because there are some more changes
