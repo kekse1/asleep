@@ -14,7 +14,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 ## Index
 * [News](#news)
 * [Example Screenshot](#example-screenshot)
-* [Source Code](#source-code)
+* [Download / Source Code](#download-source-code)
 * [Usage](#usage)
     * [Units](#units)
 * [Installation](#installation)
@@ -73,7 +73,7 @@ I'm also not sure about it... maybe in the **future**.
 
 <br><br>
 
-## Source Code
+## Download / Source Code
 **ZERO** dependencies.
 
 * [Version v**2.4.0**](src/zsleep.js) (updated **2026-04-15**);
