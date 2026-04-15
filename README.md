@@ -27,7 +27,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-04-15**\] New minor update (w/ more improvements), v**2.3.0**;
+* \[**2026-04-15**\] New minor update (w/ more improvements), v**2.3.1**;
 * \[**2026-04-15**\] See `DEFAULT_ANSI`, v**2.2.8**;
 * \[**2026-04-14**\] See `DEFAULT_FIX`, v**2.2.7**;
 * \[**2026-04-09**\] New parameter `-S / --string` (w/ `#` => `/`), v**2.2.6**;
@@ -76,7 +76,7 @@ I'm also not sure about it... maybe in the **future**.
 ## Source Code
 **ZERO** dependencies.
 
-* [Version v**2.3.0**](src/zsleep.js) (updated **2026-04-15**);
+* [Version v**2.3.1**](src/zsleep.js) (updated **2026-04-15**);
 
 <br><br>
 
@@ -135,7 +135,13 @@ See the `--help / -h / -?` output (now with additional infos).
 New in the `--offset / -o` parameter: now also w/ strings w/ `%` percent suffix,
 so it'll calculate the offset as a percentage of the real time to count.
 
-//TODO/...
+New also: the Boolean parameter types can be easily enabled w/ just the getopt KEY (without
+any parameter) - but now they can also have these values (for disabling it, mostly):
+
+* `yes`/`on`/`true`
+* `no`/`off`/`false`
+
+<br>//TODO/...
 
 <br><br>
 

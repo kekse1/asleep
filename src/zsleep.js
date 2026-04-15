@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.3.0';
+	VERSION = '2.3.1';
 
 //
 const
@@ -23,6 +23,7 @@ const
 
 //
 const GETOPT_LONG = [
+	'show',
 	'print',
 	'progress',
 	'',
@@ -43,6 +44,7 @@ const GETOPT_LONG = [
 ];
 
 const GETOPT_SHORT = {
+	'x': 'show',
 	'p': 'print',
 	'P': 'progress',
 	's': 'seconds',
@@ -65,6 +67,7 @@ const GETOPT_VALUES = [
 ];
 
 const GETOPT_HELP = {
+	'show': ' \t\t\t// alias to enable *both* `-pP`',
 	'print': ' \t\t\t// show time informations',
 	'progress': ' \t\t\t// show progress bar',
 	'seconds': ' \t\t\t// show pure seconds in the progress',
@@ -428,6 +431,12 @@ const getParameter = () => {
 		{
 			_key = short.get(_key);
 		}
+
+		if(typeof argv[_index + 1] === 'string' && argv[_index + 1]) switch(argv[_index + 1])
+		{
+			case 'on': case 'yes': case 'true': return true;
+			case 'off': case 'no': case 'false': return false;
+		}
 		
 		if(!GETOPT_VALUES.includes(_key))
 		{
@@ -447,7 +456,7 @@ const getParameter = () => {
 			throw err;
 		}
 
-		var localError = isNaN(temp);
+		const localError = isNaN(temp);
 		
 		switch(_key)
 		{
@@ -619,6 +628,11 @@ getParameter.apply = (_param) => {
 	if(typeof _param.progress === 'undefined')
 	{
 		_param.progress = false;
+	}
+	
+	if(typeof _param.show === 'boolean')
+	{
+		_param.print = _param.progress = _param.show;
 	}
 	
 	if(!('offset' in _param))
