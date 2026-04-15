@@ -717,8 +717,8 @@ const help = () => {
 		}
 		
 		console.log('  \t' + getShorts(item) +
-			' / ' + '--' + item + (GETOPT_VALUES.
-				includes(item) ? '\t <param>' : '') + add);
+			' / ' + '--' + item + (GETOPT_VALUES.includes(item) ?
+				'\t <param>' : '') + add);
 	}
 	
 	console.log();
