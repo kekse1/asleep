@@ -80,7 +80,7 @@ I'm also not sure about it... maybe in the **future**.
 <br><br>
 
 ## Usage
-See **`--help / -? / -h`**!
+See **`--help / -? / -h`**.
 
 <br>
 
