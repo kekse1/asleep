@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.0';
+	VERSION = '2.4.1';
 
 //
 const
@@ -19,7 +19,6 @@ const
 	DEFAULT_STRING = '/',
 	DEFAULT_FIX = true,
 	DEFAULT_ANSI = true,
-	DEFAULT_MIN = 92,
 	DEFAULT_REFRESH = 1000;
 
 //
