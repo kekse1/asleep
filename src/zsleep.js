@@ -54,7 +54,7 @@ const GETOPT_SHORT = {
 	'v': 'verbose',
 	'p': 'print',
 	'P': 'progress',
-	'i': 'refresh',
+	'r': 'refresh',
 	's': 'seconds',
 	'n': 'precision',
 	'o': 'offset',
