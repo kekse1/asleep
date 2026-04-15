@@ -497,7 +497,7 @@ const getParameter = () => {
 			case 'offset':
 				if(!localError)
 				{
-					return Math.max(0, Math.int(Number(temp)));
+					temp *= 1000;
 				}
 				else if(temp[temp.length - 1] === '%' && !isNaN(temp.slice(0, -1)))
 				{
