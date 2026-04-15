@@ -27,7 +27,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-04-15**\] New minor update (some more improvements), v**2.3.0**;
+* \[**2026-04-15**\] New minor update (w/ more improvements), v**2.3.0**;
 * \[**2026-04-15**\] See `DEFAULT_ANSI`, v**2.2.8**;
 * \[**2026-04-14**\] See `DEFAULT_FIX`, v**2.2.7**;
 * \[**2026-04-09**\] New parameter `-S / --string` (w/ `#` => `/`), v**2.2.6**;
