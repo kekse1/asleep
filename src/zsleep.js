@@ -960,11 +960,7 @@ const startTimeout = (_millisec, _param) => {
 
 		_param.stream.write(line + '\r');
 		
-		if(_finish)
-		{
-			_param.stream.write('\n');
-		}
-		else
+		if(!_finish)
 		{
 			startProgressTimeout();
 		}
@@ -1005,7 +1001,7 @@ const startTimeout = (_millisec, _param) => {
 		{
 			process.stdin.setRawMode(false);
 		}
-		
+
 		setImmediate(() => end(_fin !== false, runtime, _millisec, _param));
 	};
 
@@ -1053,7 +1049,11 @@ const startTimeout = (_millisec, _param) => {
 		process.stdin.on('keypress', onKeypress);
 		process.stdin.setRawMode(true);
 
-		_param.stream.write('\n');
+		if(_param.print)
+		{
+			_param.stream.write('\n');
+		}
+		
 		drawProgress(false);
 	}
 	else
@@ -1186,6 +1186,11 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 	{
 		showCursor(_param.stream);
 	}
+	
+	if(_param.progress && !SIGINT)
+	{
+		console.log();
+	}
 
 	if(!_fin)
 	{
@@ -1193,6 +1198,11 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 
 		if(_param.print)
 		{
+			if(_param.progress)
+			{
+				console.log();
+			}
+			
 			console.error(
 				'\n(aborted by SIGINT)\n        Runtime: ' + Math.time.render(_runtime) +
 				'\n       Real End: ' + new Date().toString(true) + '\n    DIFFERENCEs: ' +
