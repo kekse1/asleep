@@ -696,7 +696,7 @@ const help = () => {
 		width = 0;
 	}
 	
-	var t = ''; for(const item of GETOPT_LONG)
+	var add = ''; for(const item of GETOPT_LONG)
 	{
 		if(!item)
 		{
@@ -704,15 +704,21 @@ const help = () => {
 			continue;
 		}
 		
-		if(additional && typeof GETOPT_HELP[item] === 'string' && GETOPT_HELP[item])
+		if(additional)
 		{
-			t = GETOPT_HELP[item];
+			if(typeof GETOPT_HELP[item] === 'string' && GETOPT_HELP[item])
+			{
+				add = GETOPT_HELP[item];
+			}
+			else
+			{
+				add = '';
+			}
 		}
 		
 		console.log('  \t' + getShorts(item) +
 			' / ' + '--' + item + (GETOPT_VALUES.
-				includes(item) ?
-					'\t  <param>' : '') + t);
+				includes(item) ? '\t <param>' : '') + add);
 	}
 	
 	console.log();
