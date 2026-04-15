@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.3.2';
+	VERSION = '2.3.4';
 
 //
 const
@@ -139,7 +139,12 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 	const	add = (_value, _unit) => {
 		if(!_value)
 		{
-			return true;
+			if(!_unit)
+			{
+				return true;
+			}
+			
+			_value = '1';
 		}
 		
 		while(_value[_value.length - 1] === '.')
@@ -191,7 +196,7 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 		
 		if(_value[i] === '+' || _value[i] === ',')
 		{
-			if(value && !add(value, unit))
+			if(!add(value, unit))
 			{
 				return null;
 			}
@@ -267,8 +272,8 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 			unit += _value[i];
 		}
 	}
-	
-	if(value && !add(value, unit))
+
+	if((value || unit) && !add(value, unit))
 	{
 		return null;
 	}
@@ -1018,6 +1023,7 @@ const start = () => {
 
 	if(param.print)
 	{
+		console.info('         String: ' + param.result);
 		console.info('   Milliseconds: ' + result.toString());//.toLocaleString());
 		console.info('        Seconds: ' + Math.round(
 			result / 1000, PRECISION).toFixed(PRECISION));
