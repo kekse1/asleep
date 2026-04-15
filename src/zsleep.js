@@ -1111,7 +1111,8 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 			'\n(aborted by SIGINT)\n        Runtime: ' + Math.time.render(_runtime) +
 			'\n       Real End: ' + new Date().toString(true) + '\n     Difference: ' +
 			Math.time.render(diff) + '\n   Milliseconds: ' + diff.toString() +//toLocaleString() +
-			'\n        Seconds: ' + Math.round(diff / 1000, PRECISION).toFixed(PRECISION));
+			'\n        Seconds: ' + Math.round(diff / 1000, PRECISION).toFixed(PRECISION) +
+			'\n        Percent: ' + Math.round(_runtime / _millisec * 100, PRECISION) + '%');
 		
 		if(SIGINT)
 		{
