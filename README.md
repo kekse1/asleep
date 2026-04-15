@@ -48,7 +48,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 ## Example screenshot
 This is an example screenshot (v**2.3.0**):
 
-![Example Screenshot](./img/screenshot.v2.3.1.png)
+![Example Screenshot](./img/screenshot.v2.3.0.png)
 
 <br>
 
