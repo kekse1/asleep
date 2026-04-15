@@ -14,7 +14,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 ## Index
 * [News](#news)
 * [Example Screenshot](#example-screenshot)
-* [Download / Source Code](#download-source-code)
+* [Download / Source Code](#download--source-code)
 * [Usage](#usage)
     * [Units](#units)
 * [Installation](#installation)
@@ -101,7 +101,7 @@ Additionally you can also use `--print / -p` and/or `--progress / -P`.
 
 If you abort the timeout via **`SIGINT`** (using `<Ctrl>+<c>`), it'll
 return with exit code (1). Exit code (2) if time sum is negative. And
-the other ones can be found in the source code..
+the other ones can be found in the [source code](#download--source-code)..
 
 > [!TIP]
 > The time parser also accepts negative parts for **subtraction** (beneath
