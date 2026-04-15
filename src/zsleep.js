@@ -899,10 +899,11 @@ const startTimeout = (_millisec, _param) => {
 
 	//
 	const	maxTime = MAX_TIME;
-	var	rest = _millisec, time = 0, last, now,
+	const	offset = _param.offset;
+	var	rest = (_millisec - offset), time = offset, last, now,
 		timeout = null, interval = null,
 		value = 0, percentString,
-		start = null, runtime = 0,
+		start = null, runtime = offset,
 		width, line;
 	const	getTime = () => Math.min(rest, maxTime);
 	const	getValue = (_time = getRuntime()) => Math.min(1, _time / _millisec);
@@ -1029,7 +1030,8 @@ const startTimeout = (_millisec, _param) => {
 		}
 	};
 	
-	last = start = Date.now();
+	const realStart = Date.now();
+	last = start = (Date.now() - offset);
 	startLocalTimeout(getTime());
 	
 	//	
@@ -1188,14 +1190,14 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 	if(!_fin)
 	{
 		const diff = Math.max(0, (_millisec - _runtime));
-		
+
 		if(_param.print)
 		{
 			console.error(
 				'\n(aborted by SIGINT)\n        Runtime: ' + Math.time.render(_runtime) +
-				'\n       Real End: ' + new Date().toString(true) + '\n     Difference: ' +
+				'\n       Real End: ' + new Date().toString(true) + '\n    DIFFERENCEs: ' +
 				Math.time.render(diff) + '\n   Milliseconds: ' + diff.toString() +//toLocaleString() +
-				'\n        Seconds: ' + (diff / 1000, PRECISION).toFixed(PRECISION) +
+				'\n        Seconds: ' + (diff / 1000).toFixed(PRECISION) +
 				'\n        Percent: ' + (_runtime / _millisec * 100).toFixed(PRECISION) + '%');
 		}
 		
