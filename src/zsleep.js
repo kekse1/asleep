@@ -432,20 +432,29 @@ const getParameter = () => {
 			_key = short.get(_key);
 		}
 
-		if(typeof argv[_index + 1] === 'string' && argv[_index + 1]) switch(argv[_index + 1])
+		var temp = argv[_index + 1];
+		
+		if(typeof temp === 'string')
 		{
-			case 'on': case 'yes': case 'true': return true;
-			case 'off': case 'no': case 'false': return false;
+			temp = temp.trim();
+		}
+		else
+		{
+			temp = null;
 		}
 		
 		if(!GETOPT_VALUES.includes(_key))
 		{
+			if(temp !== null && temp.length > 0) switch(temp.toLowerCase())
+			{
+				case 'on': case 'yes': case 'true': return true;
+				case 'off': case 'no': case 'false': return false;
+			}
+			
 			return true;
 		}
 		
-		var temp = argv[_index + 1].trim();
-
-		if(typeof temp !== 'string' || temp.length === 0 || temp[0] === '-')
+		if(temp === null || temp.length === 0 || temp[0] === '-')
 		{
 			err = new Error('Missing value for parameter');
 			err.param = '--' + _key;
