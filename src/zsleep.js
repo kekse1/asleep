@@ -82,14 +82,14 @@ const GETOPT_VALUES = [
 ];
 
 const GETOPT_HELP = {
-	'verbose': 'Combinated `-pP` (otherwise invisible)',
+	'verbose': 'Combinated `-pP` (otherwise all invisible)',
 	'print': 'Show time counting infos',
 	'progress': 'Show progress bar',
-	'refresh': 'Refresh rate [ 0..' + MAX_TIME + ' ] millisec.',
+	'refresh': 'Refresh rate [ 0 .. ' + MAX_TIME + ' ] milliseconds',
 	'seconds': 'Plain seconds beside progress bar',
 	'precision': 'Rounding precision [ 0 .. ]',
 	'offset': 'If you\'d like another starting point',
-	'string': 'Progress bar string (e.g.`#` or `/\/`)',
+	'string': 'Progress bar string (e.g. `#` or `/\\`)',
 	'color': 'Progress bar colors (w/ ANSI Escape Sequences)',
 	'info': 'Short info about this application',
 	'copyright': '',//'FYI'
