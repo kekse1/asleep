@@ -21,7 +21,7 @@ const
 	DEFAULT_RAW = true,		// (true); recommended.
 	DEFAULT_CURSOR = true,		// (true); extra ansi escape.
 	DEFAULT_COLOR = true,		// (true);
-	DEFAULT_REFRESH = 400,		// (400); refresh rate (ms);
+	DEFAULT_REFRESH = 369,		// (369); refresh rate (ms);
 	DEFAULT_COMMENT = false;	// (false); 4 help() output.
 
 //
