@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.9';
+	VERSION = '2.4.10';
 
 //
 const
@@ -483,15 +483,15 @@ const getParameter = () => {
 	var	result = '',
 		stop = false,
 		done = false,
-		err;
+		err, i;
 
-	const getValue = (_key, _index, _exit) => {
+	const getValue = (_key, _exit) => {
 		if(_key.length === 1)
 		{
 			_key = short.get(_key);
 		}
 		
-		var temp = argv[_index + 1];
+		var temp = argv[i + 1];
 		
 		if(typeof temp === 'string')
 		{
@@ -507,10 +507,10 @@ const getParameter = () => {
 			if(temp !== null && temp.length > 0) switch(temp.toLowerCase())
 			{
 				case 'on': case 'yes': case 'true':
-					argv.splice(_index + 1, 1);
+					argv.splice(i + 1, 1);
 					return true;
 				case 'off': case 'no': case 'false':
-					argv.splice(_index + 1, 1);
+					argv.splice(i + 1, 1);
 					return false;
 			}
 			
@@ -576,7 +576,7 @@ const getParameter = () => {
 		return temp;
 	};
 	
-	for(var i = 0; i < argv.length; ++i)
+	for(i = 0; i < argv.length; ++i)
 	{
 		if(!(argv[i] = argv[i].trim()))
 		{
@@ -599,10 +599,8 @@ const getParameter = () => {
 				
 				if(long.has(argv[i]))
 				{
-					if((parameter[argv[i]] = getValue(argv[i], i, 102)) !== true)
-					{
-						++i;
-					}
+					parameter[argv[i]] =
+						getValue(argv[i], 102);
 				}
 				else
 				{
@@ -623,11 +621,8 @@ const getParameter = () => {
 					//
 					if(short.has(arg))
 					{
-						if((parameter[short.get(arg)] = getValue(
-							arg, i, 103)) !== true)
-						{
-							++i;
-						}
+						parameter[short.get(arg)] =
+							getValue(arg, 103);
 					}
 					else
 					{

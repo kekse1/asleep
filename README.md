@@ -27,6 +27,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
+* \[**2026-04-16**\] My tiny `getopt` is fixed, and more details, v**2.4.10**;
 * \[**2026-04-16**\] Last changes (and more colors), v**2.4.9**;
 * \[**2026-04-15**\] Now w/ `-c / --color` parameter support (for the progress bar), v**2.4.6**;
 * \[**2026-04-15**\] Last changes.. should be bug-less (and better) now, v**2.4.4**;
@@ -63,7 +64,7 @@ The latest/current one had some more changes (see screenshot above).
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**2.4.9**](src/zsleep.js) (updated **2026-04-16**);
+* [Version v**2.4.10**](src/zsleep.js) (updated **2026-04-16**);
 
 <br>
 
