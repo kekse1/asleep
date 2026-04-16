@@ -513,11 +513,11 @@ const getParameter = () => {
 			if(temp !== null && temp.length > 0) switch(temp.toLowerCase())
 			{
 				case 'on': case 'yes': case 'true':
-					argv.splice(i + 1, 1);
-					return true;
+					//argv.splice(i + 1, 1);
+					++i; return true;
 				case 'off': case 'no': case 'false':
-					argv.splice(i + 1, 1);
-					return false;
+					//argv.splice(i + 1, 1);
+					++i; return false;
 			}
 			
 			return true;
