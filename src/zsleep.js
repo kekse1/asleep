@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.6';
+	VERSION = '2.4.7';
 
 //
 const
@@ -18,7 +18,7 @@ const
 	DEFAULT_SEP = ', ',
 	DEFAULT_STRING = '/',
 	DEFAULT_FIX = true,
-	DEFAULT_ANSI = true,
+	DEFAULT_CURSOR = true,
 	DEFAULT_COLOR = true,
 	DEFAULT_REFRESH = 1000,
 	DEFAULT_COMMENT = false;
@@ -435,6 +435,45 @@ Reflect.defineProperty(String.prototype, 'repeat', { value: function(_count = 2)
 }});
 
 //
+//TODO/getopt parameter(s)s for locale w/ date-time-format(s), etc..!1
+//
+Reflect.defineProperty(Date, 'currentLocale', { get: () => Intl.
+	DateTimeFormat().resolvedOptions().locale });
+
+const _toString = Date.prototype.toString;
+Reflect.defineProperty(Date.prototype, '_toString', { value: _toString });
+Reflect.defineProperty(Date.prototype, 'toString', { value: function(... _args)
+{
+	if(_args.length === 0 || !_args[0])
+	{
+		return _toString.call(this);
+	}
+
+	const params = new Array(2);
+
+	if(typeof _args[0] === 'string' && _args[0].length > 0)
+	{
+		params[0] = _args.shift();
+	}
+	else
+	{
+		params[0] = Date.currentLocale;
+	}
+
+	const opts = {
+		weekday: 'long',
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit' };
+
+	params[1] = Object.assign(opts, _args.shift());
+	return this.toLocaleString(... params);
+}});
+
+//
 const getParameter = () => {
 	const	{ long, short } = getParameter.getMaps(),
 		argv = [ ... process.argv.slice(2) ],
@@ -671,7 +710,7 @@ getParameter.apply = (_param) => {
 
 	_param.cursor = false;
 
-	if(_param.stream && DEFAULT_ANSI)
+	if(_param.stream && DEFAULT_CURSOR)
 	{
 		_param.cursor = !!(_param.progress || _param.print);
 	}
@@ -1099,12 +1138,8 @@ const startTimeout = (_millisec, _param) => {
 			interval = null;
 		}
 		
-		if(_param.progress)
-		{
-			process.stdin.setRawMode(false);
-		}
-
-		setImmediate(() => end(_fin !== false, runtime, _millisec, _param));
+		setImmediate(() => end(_fin !== false,
+			runtime, _millisec, _param));
 	};
 
 	const startLocalTimeout = (_time = getTime()) => {
@@ -1136,18 +1171,13 @@ const startTimeout = (_millisec, _param) => {
 	{
 		_param.stream.write(hideCursor());
 	}
-	
+
 	if(_param.progress)
 	{
 		const onKeypress = (_str, _key) => {
 			if(_key.ctrl && _key.name && _key.name === 'c')
 			{
-				setImmediate(() => {
-					process.stdin.off('keypress', onKeypress);
-					process.stdin.setRawMode(false);
-				});
-
-				finish(false, SIGINT = true);
+				process.kill(process.pid, 'SIGINT');
 			}
 		};
 		
@@ -1162,11 +1192,9 @@ const startTimeout = (_millisec, _param) => {
 		
 		drawProgress(false);
 	}
-	else
-	{
-		process.once('SIGINT', () => finish(
-			false, SIGINT = true));
-	}
+
+	process.once('SIGINT', () => finish(
+		false, SIGINT = true));
 };
 
 const start = () => {
@@ -1248,46 +1276,27 @@ const start = () => {
 	}
 };
 
-//
-//TODO/getopt parameter(s)s for locale w/ date-time-format(s), etc..!1
-//
-Reflect.defineProperty(Date, 'currentLocale', { get: () => Intl.
-	DateTimeFormat().resolvedOptions().locale });
-
-const _toString = Date.prototype.toString;
-Reflect.defineProperty(Date.prototype, '_toString', { value: _toString });
-Reflect.defineProperty(Date.prototype, 'toString', { value: function(... _args)
-{
-	if(_args.length === 0 || !_args[0])
-	{
-		return _toString.call(this);
-	}
-
-	const params = new Array(2);
-
-	if(typeof _args[0] === 'string' && _args[0].length > 0)
-	{
-		params[0] = _args.shift();
-	}
-	else
-	{
-		params[0] = Date.currentLocale;
-	}
-
-	const opts = {
-		weekday: 'long',
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-		hour: '2-digit',
-		minute: '2-digit',
-		second: '2-digit' };
-
-	params[1] = Object.assign(opts, _args.shift());
-	return this.toLocaleString(... params);
-}});
-
 var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
+	const stop = () => {
+		if(SIGINT)
+		{
+			return process.kill(process.pid, 'SIGINT');
+		}
+		
+		if(_fin)
+		{
+			return process.exit(0);
+		}
+		
+		return process.exit(1);
+	};
+	
+	if(_param.progress)
+	{
+		process.stdin.removeAllListeners('keypress');
+		process.stdin.setRawMode(false);
+	}
+	
 	if(_param.cursor)
 	{
 		_param.stream.write(showCursor());
@@ -1298,7 +1307,7 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 		console.log();
 	}
 
-	if(!_fin)
+	if(_fin === false)
 	{
 		const diff = Math.max(0, (_millisec - _runtime));
 
@@ -1316,21 +1325,12 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 				'\n        Seconds: ' + (diff / 1000).toFixed(PRECISION) +
 				'\n        Percent: ' + (_runtime / _millisec * 100).toFixed(PRECISION) + '%');
 		}
-		
-		if(SIGINT)
-		{
-			process.kill(process.pid, 'SIGINT');
-		}
-
-		process.exit(1);
 	}
-
-	if(SIGINT)
+	
+	if(_fin !== null)
 	{
-		process.kill(process.pid, 'SIGINT');
+		return stop();
 	}
-
-	process.exit(0);
 };
 
 //

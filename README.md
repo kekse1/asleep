@@ -27,6 +27,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
+* \[**2026-04-16**\] Last changes, v**2.4.7**;
 * \[**2026-04-15**\] Now w/ `-c / --color` parameter support (for the progress bar), v**2.4.6**;
 * \[**2026-04-15**\] Last changes.. should be bug-less (and better) now, v**2.4.4**;
 * \[**2026-04-15**\] New minor update(s) (w/ many good improvements);
@@ -48,7 +49,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## Example screenshot
-And here's the screenshot for the newest/current version v**2.4.6**:
+And here's the screenshot for a newer version v**2.4.6**:
 
 ![Newest Screenshot](./img/screenshot.v2.4.6.png)
 
@@ -62,7 +63,7 @@ the latest/current one had some more changes - and even COLORS:
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**2.4.6**](src/zsleep.js) (updated **2026-04-15**);
+* [Version v**2.4.7**](src/zsleep.js) (updated **2026-04-16**);
 
 Just to be sure I'm also leaving the original previous version [v**2.3.4**](src/zsleep.OLD.js)
 here; .. if you encounter bugs in the latest/current one (because there are some more changes
