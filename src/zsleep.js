@@ -27,14 +27,9 @@ const
 const COLOR = { 'bracket': [ 220, 255, 0 ], bold: true,
 	done: { fg: [ 230, 200, 60 ], bg: null },
 	todo: { fg: [ 90, 160, 170 ], bg: null },
-	helpText: [ 130, 170, 220 ],
-	long: [ 150, 220, 30 ],
-	sigint: [ 240, 50, 10 ],
-	abort: [ 250, 170, 20 ],
-	short: [ 250, 210, 0 ],
-	param: [ 30, 200, 220 ]
-
-};
+	info: [ 130, 170, 220 ], param: [ 30, 200, 220 ],
+	long: [ 150, 220, 30 ], short: [ 250, 210, 0 ],
+	sigint: [ 240, 50, 10 ], abort: [ 250, 170, 20 ] };
 
 //
 const
@@ -928,7 +923,7 @@ const help = (_param, _print = true) => {
 
 			if(_param.color)
 			{
-				text[item] = ansi.fg(... COLOR.helpText) +
+				text[item] = ansi.fg(... COLOR.info) +
 					text[item] + ansi.reset();
 			}
 
