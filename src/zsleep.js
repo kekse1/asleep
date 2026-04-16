@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.8';
+	VERSION = '2.4.9';
 
 //
 const
@@ -21,8 +21,7 @@ const
 	DEFAULT_RAW = true,		// (true); recommended.
 	DEFAULT_CURSOR = true,		// (true); extra ansi escape.
 	DEFAULT_COLOR = true,		// (true);
-	DEFAULT_REFRESH = 369,		// (369); refresh rate (ms);
-	DEFAULT_COMMENT = false;	// (false); 4 help() output.
+	DEFAULT_REFRESH = 369;		// (369); refresh rate (ms);
 
 //
 const COLOR = { 'bracket': [ 220, 255, 0 ], bold: true,
@@ -31,7 +30,7 @@ const COLOR = { 'bracket': [ 220, 255, 0 ], bold: true,
 
 //
 const
-	MAX_TIME = (((2 ** 32) / 2) - 1); // please do not change.. it's the javascript default maximum for `set{Timeout,Interval}()`;
+	MAX_TIME = (((2 ** 32) / 2) - 1); // for vanilla .set{Timeout,Interval}(); ...
 
 //
 const GETOPT_LONG = [
@@ -808,7 +807,7 @@ getParameter.getMaps = () => {
 };
 
 //
-const HELP_SPACE = 1;
+const HELP_SPACE = 2;
 
 const help = (_param, _print = true) => {
 	const { long, short } = getParameter.getMaps();
@@ -821,9 +820,13 @@ const help = (_param, _print = true) => {
 
 	const getShorts = (_long) => ('-' + long.get(_long).join(' / -'));
 	const helpSpace = ' '.repeat(HELP_SPACE);
-	const paramString = '< param > ';
-	const paramSpace = ' '.repeat(paramString.length);
+	const paramSpace = ' '.repeat('< param >'.length);
 	const consoleWidth = (_param.stream ? _param.stream.columns : 0);
+
+	var paramString = 'param'; if(_param.color)
+		paramString = ansi.fg(255, 255, 0) +
+			paramString + ansi.reset();
+	paramString = '< ' + paramString + ' >';
 
 	const	max = { long: 0, short: 0, text: 0, start: 0 },
 		longs = {}, shorts = {}, params = {}, texts = {};
@@ -858,14 +861,29 @@ const help = (_param, _print = true) => {
 	}
 
 	const	start = {}, text = {};
-	var	str;
+	var	str, a, b;
 
 	for(const item of GETOPT_LONG)
 	{
 		if(item)
 		{
-			str = helpSpace + shorts[item].padStart(max.short) +
-				helpSpace + '--' + item.padEnd(max.long);
+			a = shorts[item].padStart(max.short, ' ');
+			b = '--' + item.padEnd(max.long, ' ');
+
+			str = helpSpace + a + ' ' + b;
+
+			if((len = str.length) > max.start)
+			{
+				max.start = len;
+			}
+
+			if(_param.color)
+			{
+				a = ansi.fg(30, 200, 220) + a + ansi.reset();
+				b = ansi.fg(150, 220, 30) + b + ansi.reset();
+			}
+
+			str = helpSpace + a + ' ' + b;
 			
 			if(GETOPT_VALUES.includes(item))
 			{
@@ -876,17 +894,7 @@ const help = (_param, _print = true) => {
 				str += helpSpace + paramSpace;
 			}
 			
-			if((len = str.length) > max.start)
-			{
-				max.start = len;
-			}
-			
 			start[item] = str;
-			
-			if(text[item] = (GETOPT_HELP[item] || ''))
-			{
-				text[item] = ' ' + text[item] + ' ';
-			}
 		}
 		else
 		{
@@ -898,23 +906,31 @@ const help = (_param, _print = true) => {
 	const	lines = []; var lineIndex = 0;
 	const	diff = ((consoleWidth - max.start - HELP_SPACE) - max.text);
 	const	withAdditional = (diff >= 0);
-	var	addMore = '';
+	var	addMore;
 
-	if(DEFAULT_COMMENT)
+	if(diff >= 2)
 	{
-		if(diff >= 3)
-		{
-			addMore = '// ';
-		}
-		else if(diff >= 2)
-		{
-			addMore = '//';
-		}
+		addMore = '  ';
+	}
+	else
+	{
+		addMore = '';
 	}
 
-	if((diff - addMore.length) >= 2)
+	if(withAdditional) for(const item of GETOPT_LONG)
 	{
-		addMore += '..';
+		if(item && (text[item] = (GETOPT_HELP[item] || '')))
+		{
+			text[item] = text[item].padStart(max.text, '.');
+
+			if(_param.color)
+			{
+				text[item] = ansi.fg(120, 180, 210) +
+					text[item] + ansi.reset();
+			}
+
+			text[item] = ' ' + text[item] + ' ';
+		}
 	}
 
 	for(const item of GETOPT_LONG)
@@ -967,13 +983,15 @@ import readline from 'node:readline';
 
 //
 const ESCAPE = String.fromCodePoint(27);
-const showCursor = () => (ESCAPE + '[?25h');
-const hideCursor = () => (ESCAPE + '[?25l');
-const none = () => (ESCAPE + '[0m');
-const bold = () => (ESCAPE + '[1m');
-const bg = (_r, _g, _b) => (ESCAPE + `[48;2;${_r};${_g};${_b}m`);
-const fg = (_r, _g, _b) => (ESCAPE + `[38;2;${_r};${_g};${_b}m`);
-
+const ansi = {
+	showCursor: () => (ESCAPE + '[?25h'),
+	hideCursor: () => (ESCAPE + '[?25l'),
+	reset: () => (ESCAPE + '[0m'),
+	bold: () => (ESCAPE + '[1m'),
+	faint: () => (ESCAPE + '[2m'),
+	bg: (_r, _g, _b) => (ESCAPE + `[48;2;${_r};${_g};${_b}m`),
+	fg: (_r, _g, _b) => (ESCAPE + `[38;2;${_r};${_g};${_b}m`)
+};
 
 //
 const getPercentStringLength =
@@ -1032,15 +1050,15 @@ const startTimeout = (_millisec, _param) => {
 			{
 				if(COLOR.bracket)
 				{
-					txt = fg(... COLOR.bracket) + txt;
+					txt = ansi.fg(... COLOR.bracket) + txt;
 				}
 				
 				if(COLOR.bold)
 				{
-					txt = bold() + txt;
+					txt = ansi.bold() + txt;
 				}
 				
-				txt += none();
+				txt += ansi.reset();
 			}
 			
 			line += txt;
@@ -1059,15 +1077,15 @@ const startTimeout = (_millisec, _param) => {
 			{
 				if(COLOR.done.bg)
 				{
-					txt = bg(... COLOR.done.bg) + txt;
+					txt = ansi.bg(... COLOR.done.bg) + txt;
 				}
 				
 				if(COLOR.done.fg)
 				{
-					txt = fg(... COLOR.done.fg) + txt;
+					txt = ansi.fg(... COLOR.done.fg) + txt;
 				}
 				
-				txt += none();
+				txt += ansi.reset();
 			}
 			
 			line += txt;
@@ -1077,15 +1095,15 @@ const startTimeout = (_millisec, _param) => {
 			{
 				if(COLOR.todo.bg)
 				{
-					txt = bg(... COLOR.todo.bg) + txt;
+					txt = ansi.bg(... COLOR.todo.bg) + txt;
 				}
 				
 				if(COLOR.todo.fg)
 				{
-					txt = fg(... COLOR.todo.fg) + txt;
+					txt = ansi.fg(... COLOR.todo.fg) + txt;
 				}
 
-				txt += none();
+				txt += ansi.reset();
 			}
 
 			line += txt;
@@ -1095,15 +1113,15 @@ const startTimeout = (_millisec, _param) => {
 			{
 				if(COLOR.bracket)
 				{
-					txt = fg(... COLOR.bracket) + txt;
+					txt = ansi.fg(... COLOR.bracket) + txt;
 				}
 				
 				if(COLOR.bold)
 				{
-					txt = bold() + txt;
+					txt = ansi.bold() + txt;
 				}
 				
-				txt += none();
+				txt += ansi.reset();
 			}
 			
 			line += txt;
@@ -1179,31 +1197,31 @@ const startTimeout = (_millisec, _param) => {
 
 	if(_param.cursor)
 	{
-		_param.stream.write(hideCursor());
+		_param.stream.write(ansi.hideCursor());
 	}
 
 	if(_param.progress)
 	{
-		if(DEFAULT_RAW)
-		{
-			const onKeypress = (_str, _key) => {
-				if(_key.ctrl && _key.name && _key.name === 'c')
-				{
-					process.kill(process.pid, 'SIGINT');
-				}
-			};
-			
-			readline.emitKeypressEvents(process.stdin);
-			process.stdin.on('keypress', onKeypress);
-			process.stdin.setRawMode(true);
-		}
-
 		if(_param.print)
 		{
 			_param.stream.write('\n');
 		}
 		
 		drawProgress(false);
+	}
+
+	if(DEFAULT_RAW && (_param.progress || _param.print))
+	{
+		const onKeypress = (_str, _key) => {
+			if(_key.ctrl && _key.name && _key.name === 'c')
+			{
+				process.kill(process.pid, 'SIGINT');
+			}
+		};
+
+		readline.emitKeypressEvents(process.stdin);
+		process.stdin.on('keypress', onKeypress);
+		process.stdin.setRawMode(true);
 	}
 
 	process.once('SIGINT', () => finish(
@@ -1312,12 +1330,12 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 	
 	if(_param.cursor)
 	{
-		_param.stream.write(showCursor());
+		_param.stream.write(ansi.showCursor());
 	}
 	
 	if(_param.progress && !SIGINT)
 	{
-		console.log();
+		//console.log();
 	}
 
 	if(_fin === false)
@@ -1326,18 +1344,38 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 
 		if(_param.print)
 		{
-			if(_param.progress)
+			if(_param.progress && SIGINT)
 			{
 				console.log();
 			}
 			
+			var sig = 'SIGINT', abort = 'aborted by',
+				open = '(', close = ')';
+
+			if(_param.color)
+			{
+				sig = ansi.fg(240, 50, 10) +
+					ansi.bold() + sig +
+					ansi.reset();
+				abort = ansi.fg(250, 170, 20) +
+					abort + ansi.reset();
+				open = ansi.faint() + open + ansi.reset();
+				close = ansi.faint() + close + ansi.reset();
+			}
+
 			console.error(
-				'\n(aborted by SIGINT)\n        Runtime: ' + Math.time.render(_runtime) +
-				'\n       Real End: ' + new Date().toString(true) + '\n    DIFFERENCEs: ' +
-				Math.time.render(diff) + '\n   Milliseconds: ' + diff.toString() +//toLocaleString() +
+				'\n' + open + abort + ' ' + sig + close + '\n        Runtime: ' +
+				Math.time.render(_runtime) + '\n       Real End: ' + new Date().
+				toString(true) + '\n\n     Difference: ' + Math.time.render(diff) +
+				'\n   Milliseconds: ' + diff.toString() +//toLocaleString() +
 				'\n        Seconds: ' + (diff / 1000).toFixed(PRECISION) +
-				'\n        Percent: ' + (_runtime / _millisec * 100).toFixed(PRECISION) + '%');
+				'\n        Percent: ' + (_runtime / _millisec * 100).
+				toFixed(PRECISION) + '%');
 		}
+	}
+	else if(_param.progress)
+	{
+		console.log();
 	}
 	
 	if(_fin !== null)
