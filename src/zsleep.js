@@ -27,12 +27,14 @@ const
 const COLOR = { 'bracket': [ 220, 255, 0 ], bold: true,
 	done: { fg: [ 230, 200, 60 ], bg: null },
 	todo: { fg: [ 90, 160, 170 ], bg: null },
-	helpParam: [ 255, 200, 0 ],
 	helpText: [ 130, 170, 220 ],
-	short: [ 30, 200, 220 ],
 	long: [ 150, 220, 30 ],
 	sigint: [ 240, 50, 10 ],
-	abort: [ 250, 170, 20 ] };
+	abort: [ 250, 170, 20 ],
+	short: [ 250, 210, 0 ],
+	param: [ 30, 200, 220 ]
+
+};
 
 //
 const
@@ -825,7 +827,7 @@ const help = (_param, _print = true) => {
 	const consoleWidth = (_param.stream ? _param.stream.columns : 0);
 
 	var paramString = 'param'; if(_param.color)
-		paramString = ansi.fg(... COLOR.helpParam) +
+		paramString = ansi.fg(... COLOR.param) +
 			paramString + ansi.reset();
 	paramString = '< ' + paramString + ' >';
 
