@@ -29,7 +29,7 @@ const COLOR = { 'bracket': [ 220, 255, 0 ], bold: true,
 	todo: { fg: [ 90, 160, 170 ], bg: null },
 	info: [ 130, 170, 220 ], param: [ 30, 200, 220 ],
 	long: [ 150, 220, 30 ], short: [ 250, 210, 0 ],
-	sigint: [ 240, 50, 10 ], abort: [ 250, 170, 20 ] };
+	sigint: [ 250, 90, 40 ], abort: [ 250, 170, 20 ] };
 
 //
 const
@@ -1354,8 +1354,8 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 			if(_param.color)
 			{
 				sig = ansi.fg(... COLOR.sigint) +
-					ansi.bold() + sig +
-					ansi.reset();
+					//ansi.bold() + sig +
+					sig + ansi.reset();
 				abort = ansi.fg(... COLOR.abort) +
 					abort + ansi.reset();
 				open = ansi.faint() + open + ansi.reset();
