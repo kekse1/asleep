@@ -11,18 +11,17 @@ const
 
 //
 const
-	DEFAULT_SECONDS = false,	// (false);
-	DEFAULT_MILLISEC = true,	// (true);
-	DEFAULT_PRECISION = 2,		// (2);
-	DEFAULT_LONG = true,		// (true); for math time rendering.
-	DEFAULT_SEP = ', ',		// `, `; also for time rendering.
-	DEFAULT_STRING = '/',		// `/`; for the progress bar.
-	DEFAULT_FIX = true,		// (true); not *that* important..
-	DEFAULT_RAW = true,		// (true); recommended.
-	DEFAULT_CURSOR = true,		// (true); extra ansi escape.
-	DEFAULT_COLOR = true,		// (true);
-	DEFAULT_REFRESH = 1000,		// (1000);
-	DEFAULT_COMMENT = false;	// (false);
+	DEFAULT_SECONDS = false,
+	DEFAULT_MILLISEC = true,
+	DEFAULT_PRECISION = 2,
+	DEFAULT_LONG = true,
+	DEFAULT_SEP = ', ',
+	DEFAULT_STRING = '/',
+	DEFAULT_FIX = true,
+	DEFAULT_CURSOR = true,
+	DEFAULT_COLOR = true,
+	DEFAULT_REFRESH = 1000,
+	DEFAULT_COMMENT = false;
 
 //
 const COLOR = { 'bracket': [ 220, 255, 0 ], bold: true,
@@ -1182,19 +1181,16 @@ const startTimeout = (_millisec, _param) => {
 
 	if(_param.progress)
 	{
-		if(DEFAULT_RAW)
-		{
-			const onKeypress = (_str, _key) => {
-				if(_key.ctrl && _key.name && _key.name === 'c')
-				{
-					process.kill(process.pid, 'SIGINT');
-				}
-			};
-			
-			readline.emitKeypressEvents(process.stdin);
-			process.stdin.on('keypress', onKeypress);
-			process.stdin.setRawMode(true);
-		}
+		const onKeypress = (_str, _key) => {
+			if(_key.ctrl && _key.name && _key.name === 'c')
+			{
+				process.kill(process.pid, 'SIGINT');
+			}
+		};
+		
+		readline.emitKeypressEvents(process.stdin);
+		process.stdin.on('keypress', onKeypress);
+		process.stdin.setRawMode(true);
 
 		if(_param.print)
 		{
@@ -1302,7 +1298,7 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 		return process.exit(1);
 	};
 	
-	if(_param.progress && DEFAULT_RAW)
+	if(_param.progress)
 	{
 		process.stdin.removeAllListeners('keypress');
 		process.stdin.setRawMode(false);
