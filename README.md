@@ -49,12 +49,12 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## Example screenshot
-And here's the screenshot for a newer version v**2.4.6**:
+And here's the screenshot of nearly the newest version v**2.4.6**.
 
 ![Newest Screenshot](./img/screenshot.v2.4.6.png)
 
-This is an example screenshot of v**2.3.0**, so a bit older release..
-the latest/current one had some more changes - and even COLORS:
+This is an example screenshot of v**2.3.0**, so a bit older release.
+The latest/current one had some more changes (see screenshot above).
 
 ![Example Screenshot](./img/screenshot.v2.3.0.png)
 
