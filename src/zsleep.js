@@ -965,6 +965,7 @@ const help = (_param, _print = true) => {
 	if(_print)
 	{
 		console.log(result);
+		console.log();
 	}
 	
 	return result;
