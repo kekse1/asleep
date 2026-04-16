@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.10';
+	VERSION = '2.4.11';
 
 //
 const
@@ -26,7 +26,13 @@ const
 //
 const COLOR = { 'bracket': [ 220, 255, 0 ], bold: true,
 	done: { fg: [ 230, 200, 60 ], bg: null },
-	todo: { fg: [ 90, 160, 170 ], bg: null } };
+	todo: { fg: [ 90, 160, 170 ], bg: null },
+	helpParam: [ 255, 200, 0 ],
+	helpText: [ 130, 170, 220 ],
+	short: [ 30, 200, 220 ],
+	long: [ 150, 220, 30 ],
+	sigint: [ 240, 50, 10 ],
+	abort: [ 250, 170, 20 ] };
 
 //
 const
@@ -819,7 +825,7 @@ const help = (_param, _print = true) => {
 	const consoleWidth = (_param.stream ? _param.stream.columns : 0);
 
 	var paramString = 'param'; if(_param.color)
-		paramString = ansi.fg(255, 255, 0) +
+		paramString = ansi.fg(... COLOR.helpParam) +
 			paramString + ansi.reset();
 	paramString = '< ' + paramString + ' >';
 
@@ -874,8 +880,8 @@ const help = (_param, _print = true) => {
 
 			if(_param.color)
 			{
-				a = ansi.fg(30, 200, 220) + a + ansi.reset();
-				b = ansi.fg(150, 220, 30) + b + ansi.reset();
+				a = ansi.fg(... COLOR.short) + a + ansi.reset();
+				b = ansi.fg(... COLOR.long) + b + ansi.reset();
 			}
 
 			str = helpSpace + a + ' ' + b;
@@ -920,7 +926,7 @@ const help = (_param, _print = true) => {
 
 			if(_param.color)
 			{
-				text[item] = ansi.fg(120, 180, 210) +
+				text[item] = ansi.fg(... COLOR.helpText) +
 					text[item] + ansi.reset();
 			}
 
@@ -1350,10 +1356,10 @@ var SIGINT = false; const end = (_fin, _runtime, _millisec, _param) => {
 
 			if(_param.color)
 			{
-				sig = ansi.fg(240, 50, 10) +
+				sig = ansi.fg(... COLOR.sigint) +
 					ansi.bold() + sig +
 					ansi.reset();
-				abort = ansi.fg(250, 170, 20) +
+				abort = ansi.fg(... COLOR.abort) +
 					abort + ansi.reset();
 				open = ansi.faint() + open + ansi.reset();
 				close = ansi.faint() + close + ansi.reset();
