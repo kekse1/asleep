@@ -86,7 +86,7 @@ const GETOPT_HELP = {
 	'print': 'Show time counting infos',
 	'progress': 'Show progress bar',
 	'refresh': 'Refresh rate [ 0 .. ' + MAX_TIME + ' ] milliseconds',
-	'seconds': 'Plain seconds beside progress bar',
+	'seconds': 'Plain seconds left to the progress bar',
 	'precision': 'Rounding precision [ 0 .. ]',
 	'offset': 'If you\'d like another starting point',
 	'string': 'Progress bar string (e.g. `#` or `/\\`)',
