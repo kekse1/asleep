@@ -94,7 +94,7 @@ const GETOPT_HELP = {
 	'info': 'Short info about this application',
 	'copyright': '',//'FYI'
 	'version': '',//Your current version of this tool',
-	'help': 'Print out this help page'
+	'help': 'Show *this* help page'
 };
 
 //
