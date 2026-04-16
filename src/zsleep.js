@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.7';
+	VERSION = '2.4.8';
 
 //
 const
@@ -21,8 +21,8 @@ const
 	DEFAULT_RAW = true,		// (true); recommended.
 	DEFAULT_CURSOR = true,		// (true); extra ansi escape.
 	DEFAULT_COLOR = true,		// (true);
-	DEFAULT_REFRESH = 1000,		// (1000);
-	DEFAULT_COMMENT = false;	// (false);
+	DEFAULT_REFRESH = 400,		// (400); refresh rate (ms);
+	DEFAULT_COMMENT = false;	// (false); 4 help() output.
 
 //
 const COLOR = { 'bracket': [ 220, 255, 0 ], bold: true,
@@ -299,6 +299,8 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 	return result;
 }});
 
+// man.. that's a bad one.
+// ... find my newest, better version @ https://kekse.biz/ ..
 Reflect.defineProperty(Math.time, 'render', { value: (_value, _millisec = DEFAULT_MILLISEC, _long = DEFAULT_LONG, _sep = DEFAULT_SEP) => {
 	if(typeof _value === 'bigint')
 	{
@@ -700,10 +702,10 @@ getParameter.apply = (_param) => {
 	}
 	else
 	{
-		_param.refresh = 0;
+		_param.refresh = null;
 		_param.string = '';
 	}
-	
+
 	if(!(_param.stream = console.ttyStream))
 	{
 		_param.progress = false;
@@ -1245,7 +1247,7 @@ const start = () => {
 				result));
 	}
 
-	if(param.progress && result < 1000)
+	if(param.progress && result < param.refresh)
 	{
 		param.progress = false;
 	}
