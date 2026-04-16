@@ -1,8 +1,8 @@
-<img src="https://kekse.biz/github.php?draw&override=github:zsleep" />
+<img src="https://kekse.biz/github.php?draw&override=github:asleep" />
 
 <br>
 
-# `zsleep`
+# **a**sleep
 
 My own, better `sleep` replacement (see `man 1 sleep`).
 
@@ -64,7 +64,7 @@ The latest/current one had some more changes (see screenshot above).
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**2.4.11**](src/zsleep.js) (updated **2026-04-16**);
+* [Version v**2.4.11**](src/asleep.js) (updated **2026-04-16**);
 
 <br>
 
@@ -145,11 +145,11 @@ I assume you've got **root** access to your Linux machine?
 
 You can install this script it in several ways. I'd recommend to do it this way.
 
-* Copy the script iself to `/usr/local/bin/zsleep`.
-* Add an alias like `alias sleep="zsleep -pP"`.
+* Copy the script iself to `/usr/local/bin/asleep`.
+* Add an alias like `alias sleep="asleep -pPc"`.
 
 For the alias you could, for instance, just set the `alias` command in a file like
-`/etc/profile.d/zsleep.sh`. It should (actually) automatically be called on login.
+`/etc/profile.d/asleep.sh`. It should (actually) automatically be called on login.
 
 The `-pP` parameters in the alias above are **optional**. But I like it that way! :-)
 
@@ -221,7 +221,7 @@ Any feature idea is welcome! If you have one, please [contact](#contact) me!
 
 # Contact
 
-<img src="https://kekse.biz/github.php?override=github:zsleep&draw&text=zsleep@kekse.biz&angle=6&size=24px&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
+<img src="https://kekse.biz/github.php?override=github:asleep&draw&text=asleep@kekse.biz&angle=6&size=24px&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
 
 # Copyright and License
 The Copyright is [(c) Sebastian Kucharczyk](./COPYRIGHT.txt),
