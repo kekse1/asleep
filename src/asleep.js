@@ -2,7 +2,7 @@
 
 /*
  * Copyright (c) Sebastian Kucharczyk <kuchen@kekse.biz>
- * https://kekse.biz/  https://github.com/kekse1/zsleep/
+ * https://kekse.biz/  https://github.com/kekse1/asleep/
  */
 
 //
@@ -974,8 +974,8 @@ const info = (_param) => {
 	copyright(_param); console.log(); version(_param); };
 const copyright = (_param) => console.log('Copyright (c) ' +
 	'Sebastian Kucharczyk <kuchen@kekse.biz>\n' +
-	'https://kekse.biz/  https://github.com/kekse1/zsleep/');
-const version = (_param) => console.log('`zsleep` v' + VERSION);
+	'https://kekse.biz/ https://github.com/kekse1/asleep/');
+const version = (_param) => console.log('`asleep` v' + VERSION);
 
 //
 import readline from 'node:readline';
