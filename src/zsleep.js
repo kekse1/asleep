@@ -773,8 +773,15 @@ getParameter.apply = (_param) => {
 		help(_param, true);
 		return process.exit();
 	}
+	
+	//
+	if(process.argv.length <= 2)
+	{
+		help(_param, true);
+		return process.exit(127);
+	}
 
-	//	
+	//
 	return _param;
 };
 
