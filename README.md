@@ -56,7 +56,8 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 </details>
 
 <details>
-<summary>🐭 And here's the screenshot of nearly the newest version, v2.4.6.</summary>
+<summary>🐭 And here's the screenshot of nearly the newest version, v2.4.6.
+Now here also visible: the progress (bar) itself (w/ enabled, new `--color`)!</summary>
 <img src="./img/screenshot.v2.4.6.png" alt="Screenshot of nearly the newest version" />
 </details>
 
