@@ -13,7 +13,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 
 ## Index
 * [News](#news)
-* [Example Screenshot](#example-screenshot)
+* [Example Screenshots](#example-screenshots)
 * [Download / Source Code](#download--source-code)
 * [Usage](#usage)
     * [Units](#units)
@@ -49,7 +49,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 
 <br><br><br>
 
-## Example screenshot
+## Example screenshots
 <details>
 <summary>🐭 Here's the newest `-? / -h / --help` screenshot, v**2.4.11*.</summary>
 <img src="./img/screenshot.v2.4.11.png" alt="Only the --help view" />
