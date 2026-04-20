@@ -67,6 +67,11 @@ The latest/current one had some more changes (see screenshot above).</summary>
 <img src="./img/screenshot.v2.3.0.png" alt="Oldest example screenshot" />
 </details>
 
+<details>
+<summary>🐭 This last one is the *oldest* screenshot of all, v2.1.1.</summary>
+<img src="./img/screenshot.v2.1.1.png" alt="The oldest screenshot" />
+</details>
+
 <br><br>
 
 ## Download / Source Code
