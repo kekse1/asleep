@@ -50,14 +50,21 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## Example screenshot
-And here's the screenshot of nearly the newest version v**2.4.6**.
+<details>
+<summary>🐭 Here's the newest `-? / -h / --help` screenshot, v**2.4.11*.</summary>
+<img src="./img/screenshot.v2.4.11.png" alt="Only the --help view" />
+</details>
 
-![Newest Screenshot](./img/screenshot.v2.4.6.png)
+<details>
+<summary>🐭 And here's the screenshot of nearly the newest version v**2.4.6**.</summary>
+<img src="./img/screenshot.v2.4.6.png" alt="Screenshot of nearly the newest version" />
+</details>
 
-This is an example screenshot of v**2.3.0**, so a bit older release.
-The latest/current one had some more changes (see screenshot above).
-
-![Example Screenshot](./img/screenshot.v2.3.0.png)
+<details>
+<summary>🐭 This is an example screenshot of v**2.3.0**, so a bit older release.
+The latest/current one had some more changes (see screenshot above).</summary>
+<img src="./img/screenshot.v2.3.0.png" alt="Oldest example screenshot" />
+</details>
 
 <br><br>
 
