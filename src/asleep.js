@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.11';
+	VERSION = '2.4.12';
 
 //
 const
@@ -123,8 +123,9 @@ const time = Math.time = (_value) => {
 		[ 60, 'seconds', 's' ],
 		[ 60, 'minutes', 'm' ],
 		[ 24, 'hours', 'h' ],
-		[ 7, 'days', 'd' ],
-		[ 4, 'weeks', 'w' ],
+		[ 30, 'days', 'd' ],
+		/*[ 7, 'days', 'd' ],
+		[ 4, 'weeks', 'w' ],*/
 		[ 12, 'months', 'o' ],
 		[ 0, 'years', 'y' ]
 	];
