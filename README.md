@@ -118,7 +118,6 @@ value (e.g. `5m-0.5m`)):
 * **`m`** **minutes**
 * **`h`** **hours**
 * **`d`** **days**
-* **`w`** **weeks**
 * **`o`** **months**
 * **`y`** **years**
 
