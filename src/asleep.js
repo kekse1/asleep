@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.12';
+	VERSION = '2.4.13';
 
 //
 const
@@ -319,10 +319,10 @@ Reflect.defineProperty(Math.time, 'render', { value: (_value, _millisec = DEFAUL
 	const orig = _value,
 		append = (_value, _unit) => {
 			if(_value < 1) return;
-			if(_long && (_value = Math.int(_value)) === 1 &&
+			if(_long && (_value = Math.trunc(_value)) === 1 &&
 				_unit[_unit.length - 1] === 's') _unit = _unit.slice(0, -1);
 			if(index === 0 && orig >= 1000 && !_millisec) return;
-			var res = Math.int(_value).toString();
+			var res = Math.trunc(_value).toString();
 			return (result = (res + _unit + _sep) + result); };
 	
 	const	unit = Math.time.unit;
@@ -356,11 +356,6 @@ Reflect.defineProperty(Math, 'round', { value: (_value, _prec = DEFAULT_PRECISIO
 	if(_prec <= 0) return (Math._round(_value) || 0);
 	const coefficient = Math.pow(10, _prec);
 	return ((Math._round(_value * coefficient) / coefficient) || 0);
-}});
-
-Reflect.defineProperty(Math, 'int', { value: (_value, _prec = 0, _inverse = false) => {
-	const a = (_value < 0); const b = (!!_inverse);
-	return (((((a&&b)||!(a||b)) ? Math.floor : Math.ceil)(_value, _prec)) || 0);
 }});
 
 Reflect.defineProperty(Math, 'sign', { value: (_item, _string = false) => {
@@ -724,7 +719,7 @@ getParameter.apply = (_param) => {
 	if('precision' in _param)	
 	{
 		_param.precision = Math.abs(
-			Math.int(_param.precision));
+			Math.trunc(_param.precision));
 	}
 	else
 	{
@@ -1253,7 +1248,7 @@ const start = () => {
 
 	if(typeof param.offset === 'string')
 	{
-		param.offset = Math.int(result * Number(
+		param.offset = Math.trunc(result * Number(
 			param.offset.slice(0, -1)) / 100);
 	}
 	
