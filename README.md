@@ -27,6 +27,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
+* \[**2026-06-17**\] Fixed a tiny bug in my integrated `getopt` module, v**2.4.14**;
 * \[**2026-05-14**\] Just discovered `Math.trunc()`, replacing my old `Math.int()`; v**2.4.13**.
 * \[**2026-04-23**\] Removed the **weeks** from my time calculation, v**2.4.12**;
 * \[**2026-04-16**\] My tiny `getopt` is fixed, and more details, v**2.4.11**;
@@ -79,7 +80,7 @@ The latest/current one had some more changes (see screenshot above).</summary>
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**2.4.11**](src/asleep.js) (updated **2026-04-16**);
+* [Version v**2.4.14**](src/asleep.js) (updated **2026-06-17**);
 
 <br>
 

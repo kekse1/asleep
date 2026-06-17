@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.13';
+	VERSION = '2.4.14';
 
 //
 const
@@ -515,7 +515,9 @@ const getParameter = () => {
 			
 			return true;
 		}
-		
+
+		++i;
+
 		if(temp === null || temp.length === 0 || temp[0] === '-')
 		{
 			err = new Error('Missing value for parameter');

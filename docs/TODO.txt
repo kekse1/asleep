@@ -1,7 +1,0 @@
-
-	# `sleep 4h --refresh 1000`
-
-		=> String: +4h+1000
-
-			# which is wrong!
-
