@@ -241,7 +241,9 @@ Any feature idea is welcome! If you have one, please [contact](#contact) me!
 
 # Contact
 
-<img src="https://kekse.biz/github.php?override=github:asleep&draw&text=asleep@kekse.biz&angle=6&size=24px&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
+<img src="https://kekse.biz/github.php?override=github:asleep&draw&text=asleep@kekse.biz&angle=6&size=38pt&fg=150,20,90&font=OpenSans&ro&readonly&h=64&v=16" />
+
+<br>
 
 # Copyright and License
 The Copyright is [(c) Sebastian Kucharczyk](./COPYRIGHT.txt),
