@@ -1,15 +1,15 @@
 <img src="https://kekse.biz/github.php?draw&override=github:asleep" />
 
-<br>
-
 # **a**sleep
 
 My own, better `sleep` replacement (see `man 1 sleep`).
 
+<br>
+
 Pure **Vanilla** JavaScript - with**out** any dependency (except the
 [Node.js](https://nodejs.org/) JavaScript interpreter).
 
-<br>
+<br><br>
 
 ## Index
 * [News](#news)
