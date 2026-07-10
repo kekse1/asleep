@@ -84,6 +84,12 @@ The latest/current one had some more changes (see screenshot above).</summary>
 
 <br>
 
+> [!TIP]
+> The code **really** runs without any **polyfill** or stuff.
+> This is contrarian to my common practice.. but.. **dunno**.
+
+<br><br>
+
 ### Bugs
 If you find any, please [contact me](#contact)! THANK YOU!
 
