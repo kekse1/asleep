@@ -18,6 +18,8 @@
 // ... ist hier aber noch nicht ganz vollstaendig alles!
 // ps: erlaubt auch '+', '-' sowie '*'! ^_^
 //
+// TEST CASES on the BOTTOM of this (temporary) file.
+//
 // basis, ungefaehr: `=(0)7[:38[:26[:999]]](am/pm)`
 //
 // for fixed time o'clock! ...
