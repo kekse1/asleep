@@ -213,6 +213,11 @@ const parseClock = (_data, _date) => {
 		}
 		else if(char === '*')
 		{
+			if(state === 0 && meridiem)
+			{
+				return null;
+			}
+
 			if(result[state])
 			{
 				return null;
@@ -293,7 +298,9 @@ const test = [
 	[ '+4pm',		false	],
 	[ '-4pm',		false	],
 	[ '4pm',		true	],
-	[ '-4',			true	]
+	[ '-4',			true	],
+	[ '*:-10:-80:*',	true	],
+	[ '*:-10:-80:*:am',	false	]
 ];
 
 //
