@@ -5,6 +5,9 @@
  * https://kekse.biz/ https://github.com/kekse1/asleep/
  */
 
+// see the BOTTOM of this file.
+const	RUN_TESTS = true;
+
 //
 // @ `asleep`
 //
@@ -277,41 +280,40 @@ parseClock.strLimit = new Array(
 			length) + 1); })();
 
 //
-// some test cases. 2nd (bool) is if it's expected to be successfull.
-//
-const test = [
-	[ '8pm',		true	],
-	[ '17',			true	],
-	[ '6:*::::',		true	],
-	[ '6:*:pm',		true	],
-	[ '25',			false	],
-	[ '28:45',		false	],
-	[ '10::59',		true	],
-	[ '10::61',		false	],
-	[ '12:23:42:250',	true	],
-	[ '=4:12pm',		true	],
-	[ '=',			false	],
-	[ '-1',			true	],
-	[ '2::8',		true	],
-	[ '2:*::8',		true	],
-	[ '2:*::*pm',		true	],
-	[ '+2',			true	],
-	[ '-6',			true	],
-	[ '+4pm',		false	],
-	[ '-4pm',		false	],
-	[ '4pm',		true	],
-	[ '-4',			true	],
-	[ '*:-10:-80:*',	true	],
-	[ '::::pm',		true	],
-	[ ':::::::pm',		true	],
-	[ '*:-10:-80:*::am',	false	]
-];
-
-//
-// enable to run the tests.
-//
-if(true)
+if(RUN_TESTS)
 {
+	//
+	// some test cases. 2nd (bool) is if it's expected to be successfull.
+	//
+	const test = [
+		[ '8pm',		true	],
+		[ '17',			true	],
+		[ '6:*::::',		true	],
+		[ '6:*:pm',		true	],
+		[ '25',			false	],
+		[ '28:45',		false	],
+		[ '10::59',		true	],
+		[ '10::61',		false	],
+		[ '12:23:42:250',	true	],
+		[ '=4:12pm',		true	],
+		[ '=',			false	],
+		[ '-1',			true	],
+		[ '2::8',		true	],
+		[ '2:*::8',		true	],
+		[ '2:*::*pm',		true	],
+		[ '+2',			true	],
+		[ '-6',			true	],
+		[ '+4pm',		false	],
+		[ '-4pm',		false	],
+		[ '4pm',		true	],
+		[ '-4',			true	],
+		[ '*:-10:-80:*',	true	],
+		[ '::::pm',		true	],
+		[ ':::::::pm',		true	],
+		[ '*:-10:-80:*::am',	false	]
+	];
+
+	//
 	for(var i = 0; i < test.length; ++i)
 	{
 		test[i] = [ ... test[i], parseClock(test[i][0]) ];
@@ -320,3 +322,4 @@ if(true)
 	console.dir(test, { depth: 666 });
 }
 
+//
