@@ -140,7 +140,7 @@ value (e.g. `5m-0.5m`)):
 
 <br>
 
-> [!INFO]
+> [!NOTE]
 > I'm currently **working on another feature**, see [`clock.js`](src/clock.js)!
 
 <br>
