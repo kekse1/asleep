@@ -273,27 +273,27 @@ parseClock.strLimit = new Array(
 // some test cases. 2nd (bool) is if it's expected to be successfull.
 //
 const test = [
-	[ '8pm',		true	],
-	[ '17',			true	],
-	[ '6:*::::',		true	],
-	[ '6:*:pm',		true	],
-	[ '25',			false	],
-	[ '28:45',		false	],
-	[ '10::59',		true	],
-	[ '10::61',		false	],
-	[ '12:23:42:250',	true	],
-	[ '=4:12pm',		true	],
-	[ '=',			false	],
-	[ '-1',			true	],
-	[ '2::8',		true	],
-	[ '2:*::8',		true	],
-	[ '2:*::*pm',		true	],
-	[ '+2',			true	],
-	[ '-6',			true	],
-	[ '+4pm',		false	],
-	[ '-4pm',		false	],
-	[ '4pm',		true	],
-	[ '-4',			true	]
+	[ '8pm',			true	],
+	[ '17',				true	],
+	[ '6:*::::',			true	],
+	[ '6:*:pm',			true	],
+	[ '25',				false	],
+	[ '28:45',			false	],
+	[ '10::59',			true	],
+	[ '10::61',			false	],
+	[ '12:23:42:250',		true	],
+	[ '=4:12pm',			true	],
+	[ '=',				false	],
+	[ '-1',				true	],
+	[ '2::8',			true	],
+	[ '2:*::8',			true	],
+	[ '2:*::*pm',			true	],
+	[ '+2',				true	],
+	[ '-6',				true	],
+	[ '+4pm',			false	],
+	[ '-4pm',			false	],
+	[ '4pm',			true	],
+	[ '-4',				true	]
 ];
 
 //
