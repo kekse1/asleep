@@ -18,6 +18,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 * [Download / Source Code](#download--source-code)
 * [Usage](#usage)
     * [Units](#units)
+* [Timer](#timer)
 * [Installation](#installation)
 * [Exports and Extensions](#exports-and-extensions)
     * [My really tiny `getopt` interpretation](#my-really-tiny-getopt-interpretation)
@@ -28,6 +29,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
+* \[**2026-07-15**\] Working on a nice feature currently. See [`clock.js`](src/clock.js);
 * \[**2026-06-17**\] Fixed a tiny bug in my integrated `getopt` module, v**2.4.14**;
 * \[**2026-05-14**\] Just discovered `Math.trunc()`, replacing my old `Math.int()`; v**2.4.13**.
 * \[**2026-04-23**\] Removed the **weeks** from my time calculation, v**2.4.12**;
@@ -138,11 +140,20 @@ value (e.g. `5m-0.5m`)):
 
 <br>
 
-> [!NOTE]
-> For best efficiency I'm using (at least one) `setTimeout()` (a big main loop would be worse);
-> Since the maximum amount of time is limitted (see my (`global`) `MAX_TIME`, which is in
-> JavaScript always `(((2 ** 32) / 2) - 1)`); so I also implemented some 'workaround' for it,
-> so the theoretical limit is practically (much) higher.
+> [!INFO]
+> I'm currently **working on another feature**, see [`clock.js`](src/clock.js)!
+
+<br>
+
+## Timer
+
+For best efficiency I'm using (at least one) `setTimeout()` (a big main loop
+ would be worse); Since the maximum amount of time is limitted (see my (`global`)
+`MAX_TIME`, which is in JavaScript always `(((2 ** 32) / 2) - 1)`); so I also
+implemented some 'workaround' for it, so the theoretical limit is practically
+(much) higher.
+
+And that's really better than consuming CPU time via loop or stuff! ;-)
 
 <br>
 
