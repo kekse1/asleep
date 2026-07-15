@@ -18,6 +18,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 * [Download / Source Code](#download--source-code)
 * [Usage](#usage)
     * [Units](#units)
+    	* [Clock](#clock)
 * [Timer](#timer)
 * [Installation](#installation)
 * [Exports and Extensions](#exports-and-extensions)
@@ -140,8 +141,18 @@ value (e.g. `5m-0.5m`)):
 
 <br>
 
-> [!NOTE]
-> I'm currently **working on another feature**, see [`clock.js`](src/clock.js)!
+#### Clock
+This is the latest feature, inspired by the `at` command: **clock** times of today or tomorrow!
+
+- [ ] [**`clock.js`**](./src/clock.js) (one more parser, and more);
+
+At the moment I'm **preparing** the [extensions](https://github.com/kekse1/radix/) in the new
+[**`clock.js`**](src/clock.js). It works fine right now, so I'll transfer this code to the
+main script SOON.
+
+> [!TIP]
+> You can see the current **test results** with **possible strings to parse**, etc.;
+> I just made a [**SCREENSHOT**](./img/clock.js.TEST.png)!
 
 <br>
 
