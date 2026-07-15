@@ -30,7 +30,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-07-15**\] Working on a nice feature currently. See [**Clock**](#clock)..
+* \[**2026-07-15**\] Integrated some more features; see the [**Clock**](#clock) section. v**3.0.0**!
 * \[**2026-06-17**\] Fixed a tiny bug in my integrated `getopt` module, v**2.4.14**;
 * \[**2026-05-14**\] Just discovered `Math.trunc()`, replacing my old `Math.int()`; v**2.4.13**.
 * \[**2026-04-23**\] Removed the **weeks** from my time calculation, v**2.4.12**;
@@ -84,7 +84,7 @@ The latest/current one had some more changes (see screenshot above).</summary>
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**2.4.14**](src/asleep.js) (updated **2026-06-17**);
+* [Version v**3.0.0**](src/asleep.mjs) (updated **2026-07-15**);
 
 <br>
 
@@ -118,7 +118,7 @@ the other ones can be found in the [source code](#download--source-code)..
 > floating points), e.g. `+4m-0.5m` (equals `210000` milliseconds, so
 > `3 minutes, 30 seconds`).
 
-<br>
+<br><br>
 
 ### Units
 As you can see in the script itself (look for the `Math.time.{parse,render}()` functions),
@@ -142,19 +142,17 @@ value (e.g. `5m-0.5m`)):
 <br>
 
 ### Clock
-This is the latest feature, inspired by the `at` command: **clock** times of today or tomorrow!
+This is the latest feature, inspired by the `at` command:
+**clock** times (for today or tomorrow time targets)!
 
-- [ ] [**`clock.js`**](./src/clock.js) (one more parser, and more);
+I developed it in the **backup** file [`clock.TEST.js`](src/clock.TEST.js),
+and there's also this [**screenshot**](img/clock.TEST.png) with the
+**TEST CASES** (so you can get a feeling for my **syntax**).
 
-At the moment I'm **preparing** the [extensions](https://github.com/kekse1/radix/) in the new
-[**`clock.js`**](src/clock.js). It works fine right now, so I'll transfer this code to the
-main script SOON.
+> [!NOTE]
+> **TODO** ist nur noch Syntax wie `@30s`! :-D
 
-> [!TIP]
-> You can see the current **test results** with **possible strings to parse**, etc.;
-> I just made a [**SCREENSHOT**](./img/clock.js.TEST.png).
-
-<br>
+<br><br>
 
 ## Timer
 
@@ -166,7 +164,7 @@ implemented some 'workaround' for it, so the theoretical limit is practically
 
 And that's really better than consuming CPU time via loop or stuff! ;-)
 
-<br>
+<br><br>
 
 ### Parameters
 See the `--help / -h / -?` output (now with additional infos).
@@ -213,32 +211,13 @@ for the server-side). So **maybe** you're also interested in my
 <br><br>
 
 ## Exports and Extensions
-I'm exporting the maths from my `Math.time` extensions:
+The script extends some global modules:
 
-* `Math.time(_item)`
-* `Math.time.parse(_value, _timeout)`
-* `Math.time.render(_value, _millisec, _long, _sep)`
-
-Additionally, since I needed 'em here, this `Math` extensions:
-
-* `Math.round(_value, _prec)`
-* `Math.sign(_item, _string)`
-
-Plus these ones:
-
-* `console.width`
-* `console.height`
-* `console.ttyStream`
-
-And this:
-
-* `String.prototype.repeat(_count)`
-* `Date.prototype.toString(_locale, _options)`
-* `Date.currentLocale`
-
-Global namespace:
-
-* `MAX_TIME`
+* `Math`
+* `console`
+* `String`
+* `Date`
+* `global`
 
 <br>
 

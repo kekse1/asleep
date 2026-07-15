@@ -10,43 +10,18 @@
 //
 const TESTING = true;
 
-//
-// @ `asleep`
-//
-// diese datei gilt der initialen implementation.
-// spaeter muss alles (aufbereitet!) into `asleep.js`!!
-//
-// dient dazu, dass bspw. mit `asleep =6pm` eine uhrzeit
-// angegeben werden kann, wo zusaetzlich auch die regulaeren
-// relativen zeit-diffs weiter zusaetzlich mit gelten..
-// 
-// ... ist hier aber noch nicht ganz vollstaendig alles!
-// ps: erlaubt auch '+', '-' sowie '*'! ^_^
-//
-// TEST CASES on the BOTTOM of this (temporary) file.
-//
-// basis, ungefaehr: `=(0)7[:38[:26[:999]]](am/pm)`
-//
-// for fixed time o'clock! ...
-// possibly additionally to regular
-// time differences (+/- vs. =); ..
-//
-// bedenke "wechselspiel"(!): es ist
-// moeglich, diese neuen '=' mit den
-// alten '+' etc. in einem string zu
-// mischen!! hier muss umgeschaltet
-// werden, mit teil-strings und/oder
-// .split(); oder so in der art..!!
-//
-// bestenfalls eine hoehere, globale
-// basis-funktion, die alles passend
-// aufteilt..?!!1 ;-D
-//
-
 /*
+ *
+ * TODO * fehlt nur noch syntax "@30s", etc...!!1 ;-D
+ *
+ *
  * WICHTIG! wenn in einem '=' *clock*-string auch '-' bzw. '+' vorkommen,
  * so muss dieser string am ende mit einem weiteren '=' terminiert werden!
  * .. sonst muss man davon ausgehen, dass '+' bzw. '-' als time-diff sind..
+ *
+ *	... e.g. `+36h-24h=+2,48h`
+ *
+ * TODO!??!????? verbessern!?
  */
 
 //
@@ -54,191 +29,13 @@ const TESTING = true;
 //
 Math.time = {};
 
-//
-const __prepareAndCleanClockString = (_data) => {
-	if(!(_data = _data.trim().toLowerCase()))
-		return null;
-	var c = 0; while(_data[_data.length - ++c] === '=');
-	if(--c) _data = _data.slice(0, -c).trim();
-	c = 0; while(_data[c++] === '=');
-	if(--c) _data = _data.substr(c).trim();
-	if(!(_data = _data.replace(/={2,}/g, '=').trim()))
-		return null;
-	return _data;
-};
-
-//
-Math.time.CLOCK = (_data, _date, _raw = false) => {
-	if(typeof _data !== 'string')
-	{
-		if(typeof _data === 'number')
-		{
-			return _data;
-		}
-
-		return null;
-	}
-	
-	const endsWith = ((_data = _data.trim()
-		)[_data.length - 1] === '=');
-
-	if((_data = __prepareAndCleanClockString(_data)) === null)
-	{
-		return null;
-	}
-
-	if(endsWith) _data += '=';
-
-	if(!_date)
-	{
-		_date = new Date();
-	}
-
-	const	strings = [ '', '' ], index = [];
-	var	count = 0, state = 0,
-		char, rest, min;
-
-	for(var i = 0; i < _data.length; ++i)
-	{
-		char = _data[i].toLowerCase();
-
-		switch(char)
-		{
-			case '=':
-				if(state === 1)
-				{
-					state = 0;
-				}
-				else if(++count > 1)
-				{
-					min = true;
-					
-					for(var j = i + 1; j < _data.length; ++j)
-					{
-						if(_data[j] !== '=')
-						{
-							min = false;
-							break;
-						}
-					}
-					
-					if(min)
-					{
-						break;
-					}
-					
-					return null;
-				}
-				state = 1;
-				break;
-			case ':':
-			case '*':
-			case 'a':
-			case 'p':
-			case 'm':
-				state = 1;
-				break;
-			case ',':
-			case ' ':
-			case '\t':
-				state = 0;
-				break;
-			case '+':
-			case '-':
-				/*
-				 * WICHTIG! wenn in einem '=' *clock*-string auch '-' bzw. '+' vorkommen,
-				 * so muss dieser string am ende mit einem weiteren '=' terminiert werden!
-				 * .. sonst muss man davon ausgehen, dass '+' bzw. '-' als time-diff sind..
-				 *
-				 *	... e.g. `+36h-24h=+2,48h`
-				 */
-				
-				if(state !== 0)
-				{
-					rest = _data.substr(1).indexOf('=');
-
-					if(rest === -1)
-					{
-						state = 0;
-					}
-
-					index[0] = _data.substr(1).indexOf(',');
-					index[1] = _data.substr(1).indexOf(' ');
-					index[2] = _data.substr(1).indexOf('\t');
-					
-					for(var j = index.length - 1; j >= 0; --j)
-					{
-						if(index[j] === -1)
-						{
-							index.splice(j, 1);
-						}
-					}
-					
-					if(index.length > 0 && (min = Math.min(... index)) < rest)
-					{
-						state = 0;
-					}
-				}
-
-				break;
-		}
-
-		strings[state] += char;
-	}
-
-	var result;
-
-	if(strings[0] && Math.time.parse)
-	{
-		if((result = Math.time.parse(strings[0])) === null)
-		{
-			return null;
-		}
-	}
-	else
-	{
-		result = 0;
-	}
-
-	if(strings[1] && Math.time.clock)
-	{
-		if((char = Math.time.clock(strings[1], _date)) === null)
-		{
-			return null;
-		}
-
-		var value = _date.getDate();
-
-		if(Math.time.clock.onNextDay(char, _date))
-		{
-			++value;
-		}
-
-		value = new Date(
-			_date.getFullYear(),
-			_date.getMonth(),
-			value, ... char);
-		result += (value.getTime() -
-			_date.getTime());
-	}
-
-	if(_raw)
-	{
-		return { result, strings, clock: char,
-			 DATE: Math.time.clock('**', _date),
-			 date: _date, now: _date.getTime() };
-	}
-
-	return result;
-};
-
 Math.time.clock = (_data, _date) => {
 	if(typeof _data !== 'string')
 	{
 		return null;
 	}
 
-	if((_data = __prepareAndCleanClockString(_data)) === null)
+	if((_data = __mathTimeClockPrepareAndCleanClockString(_data)) === null)
 	{
 		return null;
 	}
@@ -264,7 +61,7 @@ Math.time.clock = (_data, _date) => {
 			0, -2).trim();
 	}
 
-	if((_data = __prepareAndCleanClockString(_data)) === null)
+	if((_data = __mathTimeClockPrepareAndCleanClockString(_data)) === null)
 	{
 		return null;
 	}
@@ -459,6 +256,181 @@ Math.time.clock = (_data, _date) => {
 	return result;
 };
 
+//
+Math.time.clock.parse = (_data, _date, _raw = false) => {
+	if(typeof _data !== 'string')
+	{
+		if(typeof _data === 'number')
+		{
+			return _data;
+		}
+
+		return null;
+	}
+	
+	const endsWith = ((_data = _data.trim()
+		)[_data.length - 1] === '=');
+
+	if((_data = __mathTimeClockPrepareAndCleanClockString(_data)) === null)
+	{
+		return null;
+	}
+
+	if(endsWith) _data += '=';
+
+	if(!_date)
+	{
+		_date = new Date();
+	}
+
+	const	strings = [ '', '' ], index = [];
+	var	count = 0, state = 0,
+		char, rest, min;
+
+	for(var i = 0; i < _data.length; ++i)
+	{
+		char = _data[i].toLowerCase();
+
+		switch(char)
+		{
+			case '=':
+				/*
+				 * WICHTIG! wenn in einem '=' *clock*-string auch '-' bzw. '+' vorkommen,
+				 * so muss dieser string am ende mit einem weiteren '=' terminiert werden!
+				 * .. sonst muss man davon ausgehen, dass '+' bzw. '-' als time-diff sind..
+				 *
+				 *	... e.g. `+36h-24h=+2,48h`
+				 *
+				 * TODO!??!????? verbessern!?
+				 */
+				if(state === 1)
+				{
+					state = 0;
+				}
+				else if(++count > 1)
+				{
+					min = true;
+					
+					for(var j = i + 1; j < _data.length; ++j)
+					{
+						if(_data[j] !== '=')
+						{
+							min = false;
+							break;
+						}
+					}
+					
+					if(min)
+					{
+						break;
+					}
+					
+					return null;
+				}
+				state = 1;
+				break;
+			case ':':
+			case '*':
+			case 'a':
+			case 'p':
+			case 'm':
+				state = 1;
+				break;
+			case ',':
+			case ' ':
+			case '\t':
+				state = 0;
+				break;
+			case '+':
+			case '-':
+				/*
+				 * WICHTIG! wenn in einem '=' *clock*-string auch '-' bzw. '+' vorkommen,
+				 * so muss dieser string am ende mit einem weiteren '=' terminiert werden!
+				 * .. sonst muss man davon ausgehen, dass '+' bzw. '-' als time-diff sind..
+				 *
+				 *	... e.g. `+36h-24h=+2,48h`
+				 *
+				 * TODO!??!????? verbessern!?
+				 */
+				if(state !== 0)
+				{
+					rest = _data.substr(1).indexOf('=');
+
+					if(rest === -1)
+					{
+						state = 0;
+					}
+
+					index[0] = _data.substr(1).indexOf(',');
+					index[1] = _data.substr(1).indexOf(' ');
+					index[2] = _data.substr(1).indexOf('\t');
+					
+					for(var j = index.length - 1; j >= 0; --j)
+					{
+						if(index[j] === -1)
+						{
+							index.splice(j, 1);
+						}
+					}
+					
+					if(index.length > 0 && (min = Math.min(... index)) < rest)
+					{
+						state = 0;
+					}
+				}
+
+				break;
+		}
+
+		strings[state] += char;
+	}
+
+	var result;
+
+	if(strings[0] && Math.time.parse)
+	{
+		if((result = Math.time.parse(strings[0])) === null)
+		{
+			return null;
+		}
+	}
+	else
+	{
+		result = 0;
+	}
+
+	if(strings[1] && Math.time.clock)
+	{
+		if((char = Math.time.clock(strings[1], _date)) === null)
+		{
+			return null;
+		}
+
+		var value = _date.getDate();
+
+		if(Math.time.clock.onNextDay(char, _date))
+		{
+			++value;
+		}
+
+		value = new Date(
+			_date.getFullYear(),
+			_date.getMonth(),
+			value, ... char);
+		result += (value.getTime() -
+			_date.getTime());
+	}
+
+	if(_raw)
+	{
+		return { result, strings, clock: char,
+			 DATE: Math.time.clock('**', _date),
+			 date: _date, now: _date.getTime() };
+	}
+
+	return result;
+};
+
 Math.time.clock.getCurrent = (_unit, _date) => {
 	if(!_date)
 	{
@@ -496,11 +468,19 @@ Math.time.clock.onCurrentDay = (_clock, _date) => {
 		_date = new Date();
 	}
 	
-	for(var i = 0; i < _clock.length; ++i)
+	var curr; for(var i = 0; i < _clock.length; ++i)
 	{
-		if(_clock[i] < Math.time.clock.getCurrent(i, _date))
+		curr = Math.time.clock.
+			getCurrent(i, _date);
+
+		if(_clock[i] < curr)
 		{
 			return false;
+		}
+
+		if(_clock[i] !== curr)
+		{
+			break;
 		}
 	}
 
@@ -525,8 +505,17 @@ Reflect.defineProperty(Math.time.clock.LIMIT, 'int', {
 Reflect.defineProperty(Math.time.clock.LIMIT, 'str', {
 	get: () => [ ... __strLimit ] });
 
-//
-
+const __mathTimeClockPrepareAndCleanClockString = (_data) => {
+	if(!(_data = _data.trim().toLowerCase()))
+		return null;
+	var c = 0; while(_data[_data.length - ++c] === '=');
+	if(--c) _data = _data.slice(0, -c).trim();
+	c = 0; while(_data[c++] === '=');
+	if(--c) _data = _data.substr(c).trim();
+	if(!(_data = _data.replace(/={2,}/g, '=').trim()))
+		return null;
+	return _data;
+};
 
 //
 if(TESTING)
@@ -608,7 +597,7 @@ if(TESTING)
 		TEST[i][0] = '+36h-24h=' +
 			TEST[i][0] + ',48h==';
 		RESULT[i] = [ ... TEST[i], Math.time.
-			CLOCK(TEST[i][0]) ];
+			clock.parse(TEST[i][0]) ];
 		
 		if(TEST[i][1])
 		{
@@ -626,8 +615,10 @@ if(TESTING)
 	console.dir(RESULT, { depth: 777 });
 
 	//
-	console.dir({ [diffTest]: Math.time.CLOCK(diffTest, null, true) });
-	
+	console.dir({ [diffTest]:
+		Math.time.clock.parse(
+			diffTest, null, true) });
+
 	//
 	if(WRONG.length > 0)
 	{
