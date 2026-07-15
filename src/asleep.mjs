@@ -8,9 +8,6 @@
 
 /*
  * TODO * fehlt nur noch syntax "@30s", etc...!!1 ;-D
- *
- * TODO * sowie "+2(:)**"!!! ^_^
- *
  */
 
 //
@@ -499,21 +496,19 @@ Math.time.clock = (_data, _date) => {
 
 		if(char === ':')
 		{
-			if(state < 4)
+			if(_data[i + 1] === '*' && _data[i + 2] === '*')
 			{
-				if(result[state].length > __strLimit[state])
-				{
-					return null;
-				}
-
-				if(!checkInt())
-				{
-					return null;
-				}
+				continue;
 			}
-			else
+
+			if(result[state].length > __strLimit[state])
 			{
-				break parseLoop;
+				return null;
+			}
+
+			if(!checkInt())
+			{
+				return null;
 			}
 		}
 		else if(char === '+' || char === '-')
@@ -530,6 +525,23 @@ Math.time.clock = (_data, _date) => {
 			if(state === 0 && meridiem)
 			{
 				return null;
+			}
+
+			if(_data[i + 1] === '*')
+			{
+				if(!checkInt())
+				{
+					return null;
+				}
+
+				for(var j = state; j < 4; ++j)
+				{
+					result[j] = Math.time.
+						clock.getCurrent(
+							j, _date);
+				}
+
+				break;
 			}
 
 			if(result[state])
@@ -551,6 +563,11 @@ Math.time.clock = (_data, _date) => {
 		else
 		{
 			return null;
+		}
+
+		if(state > 3)
+		{
+			break;
 		}
 	}
 
