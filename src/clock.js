@@ -216,7 +216,8 @@ Math.time.clock = (_data, _date) => {
 
 		if(typeof result[state] === 'number')
 		{
-			return result[state++];
+			++state;
+			return true;
 		}
 
 		if(result[state].length === 0)
