@@ -151,6 +151,7 @@ and there's also this [**screenshot**](img/clock.TEST.png) with the
 
 > [!NOTE]
 > **TODO** ist nur noch Syntax wie `@30s`! :-D
+> ... sowie `+2(:)**`! ^_^
 
 <br><br>
 
