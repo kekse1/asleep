@@ -18,7 +18,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 * [Download / Source Code](#download--source-code)
 * [Usage](#usage)
     * [Units](#units)
-    	* [Clock](#clock)
+   	* [Clock](#clock)
 * [Timer](#timer)
 * [Installation](#installation)
 * [Exports and Extensions](#exports-and-extensions)
@@ -141,7 +141,7 @@ value (e.g. `5m-0.5m`)):
 
 <br>
 
-#### Clock
+### Clock
 This is the latest feature, inspired by the `at` command: **clock** times of today or tomorrow!
 
 - [ ] [**`clock.js`**](./src/clock.js) (one more parser, and more);
@@ -152,7 +152,7 @@ main script SOON.
 
 > [!TIP]
 > You can see the current **test results** with **possible strings to parse**, etc.;
-> I just made a [**SCREENSHOT**](./img/clock.js.TEST.png)!
+> I just made a [**SCREENSHOT**](./img/clock.js.TEST.png).
 
 <br>
 
