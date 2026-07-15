@@ -7,7 +7,7 @@
 
 //
 const
-	VERSION = '2.4.14';
+	VERSION = '2.5.0';
 
 //
 const
@@ -215,7 +215,7 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 			continue;
 		}
 		
-		if(_value[i] === '+' || _value[i] === ',')
+		if(_value[i] === '+' || _value[i] === ',' || _value[i] === ' ' || _value[i] === '\t')
 		{
 			if(!add(value, unit))
 			{
@@ -481,7 +481,6 @@ const getParameter = () => {
 		parameter = {};
 	var	result = '',
 		stop = false,
-		done = false,
 		err, i;
 
 	const getValue = (_key, _exit) => {
@@ -636,17 +635,6 @@ const getParameter = () => {
 			}
 			
 			continue;
-		}
-		
-		if(done)
-		{
-			continue;
-		}
-
-		if(argv[i][0] === '=' && !isNaN(argv[i] = argv[i].substr(1)))
-		{
-			result = Number(argv[i]);
-			done = true;
 		}
 		
 		if(argv[i][0] === '+' || argv[i][0] === '-')
@@ -973,7 +961,7 @@ const info = (_param) => {
 const copyright = (_param) => console.log('Copyright (c) ' +
 	'Sebastian Kucharczyk <kuchen@kekse.biz>\n' +
 	'https://kekse.biz/ https://github.com/kekse1/asleep/');
-const version = (_param) => console.log('`asleep` v' + VERSION);
+const version = (_param) => console.log('\t`asleep` v' + VERSION);
 
 //
 import readline from 'node:readline';
@@ -1229,14 +1217,7 @@ const start = () => {
 	var	result;
 	const	param = getParameter();
 
-	if(typeof param.result === 'number')
-	{
-		result = param.result;
-		param.print = !(param.sleep = false);
-		param.progress = false;
-		param.stream = null;
-	}
-	else if((result = Math.time.parse(param.result)) === null)
+	if((result = Math.time.parse(param.result)) === null)
 	{
 		const error = new Error('Unable to parse your argument.');
 		error.param = param.result;
