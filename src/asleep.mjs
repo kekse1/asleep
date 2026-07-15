@@ -12,7 +12,7 @@
 
 //
 const
-	VERSION = '3.0.0';
+	VERSION = '3.0.1';
 
 //
 const
@@ -397,18 +397,14 @@ Math.time.clock = (_data, _date) => {
 		_date = new Date();
 	}
 
-	const	result = [ '', '', '', '' ];
-
-	if(_data === '**')
+	if(_data.startsWith('**'))
 	{
-		for(var i = 0; i < 4; ++i)
-		{
-			result[i] = Math.time.clock.
-				getCurrent(i, _date);
-		}
-
-		return result;
+		return Math.time.clock.
+			getCurrent(null,
+				_date);
 	}
+
+	const	result = [ '', '', '', '' ];
 
 	const checkInt = () => {
 		if(state >= 4)
@@ -496,11 +492,6 @@ Math.time.clock = (_data, _date) => {
 
 		if(char === ':')
 		{
-			if(_data[i + 1] === '*' && _data[i + 2] === '*')
-			{
-				continue;
-			}
-
 			if(result[state].length > __strLimit[state])
 			{
 				return null;
@@ -529,7 +520,7 @@ Math.time.clock = (_data, _date) => {
 
 			if(_data[i + 1] === '*')
 			{
-				if(!checkInt())
+				if(result[state] !== '' && !checkInt())
 				{
 					return null;
 				}
@@ -778,13 +769,13 @@ Math.time.clock.getCurrent = (_unit, _date) => {
 		_date = new Date();
 	}
 
+	//zzzz
 	switch(_unit)
 	{
 		case 0: return _date.getHours();
 		case 1: return _date.getMinutes();
 		case 2: return _date.getSeconds();
 		case 3: return _date.getMilliseconds();
-		case 4: throw new Error('debug');
 	}
 	
 	if(typeof _unit === 'number')
