@@ -30,7 +30,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-07-15**\] Working on a nice feature currently. See [`clock.js`](src/clock.js);
+* \[**2026-07-15**\] Working on a nice feature currently. See [**Clock**](#clock);
 * \[**2026-06-17**\] Fixed a tiny bug in my integrated `getopt` module, v**2.4.14**;
 * \[**2026-05-14**\] Just discovered `Math.trunc()`, replacing my old `Math.int()`; v**2.4.13**.
 * \[**2026-04-23**\] Removed the **weeks** from my time calculation, v**2.4.12**;
