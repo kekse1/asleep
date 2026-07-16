@@ -5,3 +5,5 @@
 
 		# '@2**pm'
 
+	# replace new screenshot w/ `10s@2pm`
+
