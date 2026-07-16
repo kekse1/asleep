@@ -30,7 +30,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-07-15**\] Integrated some more features; see the [**Clock**](#clock) section. v**3.0.1**!
+* \[**2026-07-16**\] BEST! Now I'm supporting my new `@` syntax (smth. like the `at` command)! v**3.1.0**;
 * \[**2026-06-17**\] Fixed a tiny bug in my integrated `getopt` module, v**2.4.14**;
 * \[**2026-05-14**\] Just discovered `Math.trunc()`, replacing my old `Math.int()`; v**2.4.13**.
 * \[**2026-04-23**\] Removed the **weeks** from my time calculation, v**2.4.12**;
@@ -145,12 +145,9 @@ value (e.g. `5m-0.5m`)):
 This is the latest feature, inspired by the `at` command:
 **clock** times (for today or tomorrow time targets)!
 
-I developed it in the **backup** file [`clock.TEST.js`](src/clock.TEST.js),
-and there's also this [**screenshot**](img/clock.TEST.png) with the
+I developed it in the **backup** file [`clock.test.js`](src/clock.test.js),
+and there's also this [**screenshot**](img/clock.test.png) with the
 **TEST CASES** (so you can get a feeling for my **syntax**).
-
-> [!NOTE]
-> **TODO** ist nur noch Syntax wie `@30s`! :-D
 
 <br><br>
 
