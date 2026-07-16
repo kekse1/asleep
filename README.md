@@ -58,7 +58,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 
 ## Example screenshots
 <details>
-<summary>🐭 This syntax is now possible (as of v**3.1.0**). And it got even more features..</summary>
+<summary>🐭 This syntax is now possible (as of v<b>3.1.0</b>). And it got even more features..</summary>
 <img src="./img/screenshot.v3.1.0.png" alt="New possibilities.." />
 </details>
 
