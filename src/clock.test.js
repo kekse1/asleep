@@ -231,7 +231,6 @@ Math.time.clock = (_data, _date) => {
 	return result;
 };
 
-//
 Math.time.clock.parse = (_data, _date, _raw = false) => {
 	if(typeof _data !== 'string')
 	{
