@@ -58,7 +58,12 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 
 ## Example screenshots
 <details>
-<summary>🐭 Here's the newest screenshot w/ only the `--help` view, v2.4.11.</summary>
+<summary>🐭 This syntax is now possible (as of v**3.1.0**). And it got even more features..</summary>
+<img src="./img/screenshot.v3.1.0.png" alt="New possibilities.." />
+</details>
+
+<details>
+<summary>🐭 Here's the newest (now older) screenshot w/ only the `--help` view, v2.4.11.</summary>
 <img src="./img/screenshot.v2.4.11.png" alt="Only the --help view" />
 </details>
 
