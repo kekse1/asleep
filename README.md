@@ -80,7 +80,7 @@ The latest/current one had some more changes (see screenshot above).</summary>
 </details>
 
 <details>
-<summary>🐭 This last one is the *oldest* screenshot of all, v2.1.1.</summary>
+<summary>🐭 This last one is the *oldest* screenshot of all, v<b>2.1.1</b>.</summary>
 <img src="./img/screenshot.v2.1.1.png" alt="The oldest screenshot" />
 </details>
 
