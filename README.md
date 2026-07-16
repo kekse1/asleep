@@ -30,7 +30,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-07-16**\] BEST! Now I'm supporting my new `@` syntax (smth. like the `at` command)! v**3.1.0**;
+* \[**2026-07-16**\] BEST! Now I'm supporting my new `@` syntax (smth. like the `at` command)! v**3.1.1**;
 * \[**2026-06-17**\] Fixed a tiny bug in my integrated `getopt` module, v**2.4.14**;
 * \[**2026-05-14**\] Just discovered `Math.trunc()`, replacing my old `Math.int()`; v**2.4.13**.
 * \[**2026-04-23**\] Removed the **weeks** from my time calculation, v**2.4.12**;
@@ -58,8 +58,8 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 
 ## Example screenshots
 <details>
-<summary>🐭 This syntax is now possible (as of v<b>3.1.0</b>). And it got even more features..</summary>
-<img src="./img/screenshot.v3.1.0.png" alt="New possibilities.." />
+<summary>🐭 This syntax is now possible (as of v<b>3.1.1</b>). And it got even more features..</summary>
+<img src="./img/screenshot.v3.1.1.png" alt="New possibilities.." />
 </details>
 
 <details>
@@ -89,7 +89,7 @@ The latest/current one had some more changes (see screenshot above).</summary>
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**3.0.1**](src/asleep.mjs) (updated **2026-07-15**);
+* [Version v**3.1.1**](src/asleep.mjs) (updated **2026-07-16**);
 
 <br>
 
@@ -157,7 +157,7 @@ and there's also this [**screenshot**](img/clock.test.png) with the
 **TEST CASES** (so you can get a feeling for my **syntax**).
 
 Only one possible example (the easiest one) of the new `@` syntax is shown
-in my [latest screenshot](./img/screenshot.v3.1.0.png).
+in my [latest screenshot](./img/screenshot.v3.1.1.png).
 
 <br><br>
 
