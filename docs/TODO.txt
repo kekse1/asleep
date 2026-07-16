@@ -1,9 +1,0 @@
-
-	@ math.time.clock*: folgende sind noch "schlecht":
-
-		# '@2:**pm'
-
-		# '@2**pm'
-
-	# replace new screenshot w/ `10s@2pm`
-
