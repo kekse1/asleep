@@ -618,12 +618,10 @@ Math.time.clock.parse = (_data, _date, _raw = false) => {
 		strings[1] = _data.substr(atIndex + 1);
 	}
 
-	if(!(strings[0] = __mathTimeClockPrepareAndCleanClockString(strings[0])))
-	{
-		return 0;
-	}
-	
-	if(!(strings[1] = __mathTimeClockPrepareAndCleanClockString(strings[1])))
+	strings[0] = __mathTimeClockPrepareAndCleanClockString(strings[0]);
+	strings[1] = __mathTimeClockPrepareAndCleanClockString(strings[1]);
+
+	if(!(strings[0] || strings[1]))
 	{
 		return 0;
 	}
