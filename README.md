@@ -63,18 +63,18 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 </details>
 
 <details>
-<summary>🐭 Here's the newest (now older) screenshot w/ only the `--help` view, v2.4.11.</summary>
+<summary>🐭 Here's the newest (now older) screenshot w/ only the `--help` view, v<b>2.4.11</b>.</summary>
 <img src="./img/screenshot.v2.4.11.png" alt="Only the --help view" />
 </details>
 
 <details>
-<summary>🐭 And here's the screenshot of nearly the newest version, v2.4.6.
+<summary>🐭 And here's the screenshot of nearly the newest version, v<b>2.4.6</b>.
 Also visible this time: the progress (bar) itself (w/ enabled, new `--color`)!</summary>
 <img src="./img/screenshot.v2.4.6.png" alt="Screenshot of nearly the newest version" />
 </details>
 
 <details>
-<summary>🐭 This is an example screenshot of v2.3.0, so a bit older release.
+<summary>🐭 This is an example screenshot of v<b>2.3.0</b>, so a bit older release.
 The latest/current one had some more changes (see screenshot above).</summary>
 <img src="./img/screenshot.v2.3.0.png" alt="Oldest example screenshot" />
 </details>
@@ -155,6 +155,9 @@ This is the latest feature, inspired by the `at` command:
 I developed it in the **backup** file [`clock.test.js`](src/clock.test.js),
 and there's also this [**screenshot**](img/clock.test.png) with the
 **TEST CASES** (so you can get a feeling for my **syntax**).
+
+Only one possible example (the easiest one) of the new `@` syntax is shown
+in my [latest screenshot](./img/screenshot.v3.1.0.png).
 
 <br><br>
 
