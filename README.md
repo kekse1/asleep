@@ -133,6 +133,8 @@ value (e.g. `5m-0.5m`)):
 * **`o`** **months**
 * **`y`** **years**
 
+<br>
+
 > [!TIP]
 > **YES**; you can use **floating point numbers**, e.g. `0.5m` for 30 seconds.
 
