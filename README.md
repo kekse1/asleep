@@ -30,6 +30,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
+* \[**2026-07-18**\] Tiny fix in the new `Math.time.clock()` routine.. v**3.1.3**;
 * \[**2026-07-16**\] BEST! Now I'm supporting my new `@` syntax (smth. like the `at` command)! v**3.1.2**;
 * \[**2026-06-17**\] Fixed a tiny bug in my integrated `getopt` module, v**2.4.14**;
 * \[**2026-05-14**\] Just discovered `Math.trunc()`, replacing my old `Math.int()`; v**2.4.13**.
@@ -89,7 +90,7 @@ The latest/current one had some more changes (see screenshot above).</summary>
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**3.1.2**](src/asleep.mjs) (updated **2026-07-16**);
+* [Version v**3.1.3**](src/asleep.mjs) (updated **2026-07-18**);
 
 <br>
 
