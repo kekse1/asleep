@@ -381,14 +381,8 @@ Reflect.defineProperty(Math.time.clock.LIMIT, 'int', {
 Reflect.defineProperty(Math.time.clock.LIMIT, 'str', {
 	get: () => [ ... __strLimit ] });
 
-const __mathTimeClockPrepareAndCleanClockString = (_data) => {
-	if(!(_data = _data.trim().toLowerCase())) return '';
-	var c = 0; while(_data[_data.length - ++c] === '@');
-	if(--c) _data = _data.slice(0, -c).trim();
-	c = 0; while(_data[c++] === '@');
-	if(--c) _data = _data.substr(c).trim();
-	return _data;
-};
+const __mathTimeClockPrepareAndCleanClockString =
+	(_data) => _data.trim().toLowerCase();
 
 //
 if(TESTING)
