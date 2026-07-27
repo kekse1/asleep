@@ -1492,9 +1492,9 @@ const startTimeout = (_millisec, _param) => {
 
 			txt = ''; for(var i = 0, j = line.length; i < done; ++i, ++j)
 			{
-				txt += _param.string[
+				txt += _param.chars[
 					((DEFAULT_FIX ? j : i) %
-						_param.string.length)];
+						_param.chars.length)];
 			}
 			
 			if(_param.color)
