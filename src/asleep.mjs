@@ -8,7 +8,7 @@
 
 //
 const
-	VERSION = '3.2.0';
+	VERSION = '3.2.1';
 
 //
 const
@@ -1002,11 +1002,11 @@ const getParameter = () => {
 					}
 				}
 			}
-			
-			continue;
 		}
-		
-		result.push(argv[i]);
+		else
+		{
+			result.push(argv[i]);
+		}
 	}
 
 	if(result && (result = getParameter.getTime(result, true)) === null)
@@ -1677,10 +1677,9 @@ const start = () => {
 		console.info('        Seconds: ' + (result / 1000).toFixed(PRECISION));
 		console.info('           Time: ' + Math.time.render(result));
 		
-		const real = (result - param.offset);
 		console.log();
 		console.debug('          Start: ' + new Date().toString(true));
-		const end = (Date.now() + real);
+		const end = (Date.now() + result);
 		console.debug('            End: ' + new Date(end).toString(true));
 
 		if(param.offset > 0)
@@ -1688,7 +1687,7 @@ const start = () => {
 			console.log();
 			console.info('         Offset: ' + param.offset.toString());//toLocaleString());
 			console.info('    Offset time: ' + Math.time.render(param.offset));
-			console.info(' Effective time: ' + Math.time.render(real));
+			console.info(' Effective time: ' + Math.time.render(result - param.offset));
 		}
 	}
 

@@ -30,7 +30,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-07-27**\] Improved functionality a bit, v**3.2.0**;
+* \[**2026-07-27**\] Improved functionality a bit, and a fix. ... v**3.2.1**;
 * \[**2026-07-18**\] Tiny fix in the new `Math.time.clock()` routine.. v**3.1.3**;
 * \[**2026-07-16**\] BEST! Now I'm supporting my new `@` syntax (smth. like the `at` command)! v**3.1.2**;
 * \[**2026-06-17**\] Fixed a tiny bug in my integrated `getopt` module, v**2.4.14**;
@@ -91,7 +91,7 @@ The latest/current one had some more changes (see screenshot above).</summary>
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**3.2.0**](src/asleep.mjs) (updated **2026-07-27**);
+* [Version v**3.2.1**](src/asleep.mjs) (updated **2026-07-27**);
 
 <br>
 
