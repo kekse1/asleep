@@ -8,7 +8,7 @@
 
 //
 const
-	VERSION = '3.2.2';
+	VERSION = '3.2.1';
 
 //
 const
@@ -1685,13 +1685,9 @@ const start = () => {
 		if(param.offset > 0)
 		{
 			console.log();
-			console.info('         Offset: ' + param.offset.toLocaleString() +
-				' milliseconds (' + param.offset.toString() + ' ms)');
+			console.info('         Offset: ' + param.offset.toString());//toLocaleString());
 			console.info('    Offset time: ' + Math.time.render(param.offset));
-			console.info('   Offset clock: ' +
-				new Date(Date.now() + param.offset).toString(true));
-			console.info(' Effective time: ' + Math.
-				time.render(result - param.offset));
+			console.info(' Effective time: ' + Math.time.render(result - param.offset));
 		}
 	}
 

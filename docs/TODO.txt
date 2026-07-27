@@ -1,5 +1,0 @@
-
-	# evtl. die UHRZEIT von --offset auch anzeigen,
-
-		# .. statt nur(!) relative zeit-verschiebung..
-
