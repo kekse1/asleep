@@ -8,7 +8,7 @@
 
 //
 const
-	VERSION = '3.1.3';
+	VERSION = '3.2.0';
 
 //
 const
@@ -480,6 +480,11 @@ Math.time.clock = (_data, _date) => {
 	{
 		char = _data[i].toLowerCase();
 
+		if(char === '@')
+		{
+			continue;
+		}
+
 		if(char === ':')
 		{
 			if(!checkInt())
@@ -582,10 +587,7 @@ Math.time.clock.parse = (_data, _date, _raw = false) => {
 		return null;
 	}
 
-	if(!(_data = __mathTimeClockPrepareAndCleanClockString(_data)))
-	{
-		return 0;
-	}
+	_data = __mathTimeClockPrepareAndCleanClockString(_data);
 
 	if(!_date)
 	{
@@ -603,16 +605,11 @@ Math.time.clock.parse = (_data, _date, _raw = false) => {
 	else
 	{
 		strings[0] = _data.substr(0, atIndex);
-		strings[1] = _data.substr(atIndex + 1);
+		strings[1] = _data.substr(atIndex);
 	}
 
 	strings[0] = __mathTimeClockPrepareAndCleanClockString(strings[0]);
 	strings[1] = __mathTimeClockPrepareAndCleanClockString(strings[1]);
-
-	if(!(strings[0] || strings[1]))
-	{
-		return 0;
-	}
 
 	var result;
 
@@ -628,29 +625,29 @@ Math.time.clock.parse = (_data, _date, _raw = false) => {
 		result = 0;
 	}
 
-	if(strings[1] && Math.time.clock)
+	if(!strings[1])
 	{
-		const parsed = Math.time.clock(strings[1], _date);
-		
-		if(parsed === null)
-		{
-			return null;
-		}
-		
-		var value = _date.getDate();
-
-		if(Math.time.clock.isTomorrow(parsed, _date))
-		{
-			++value;
-		}
-
-		value = new Date(
-			_date.getFullYear(),
-			_date.getMonth(),
-			value, ... parsed);
-		result += (value.getTime() -
-			_date.getTime());
+		return result;
 	}
+
+	if((strings[1] = Math.time.clock(strings[1], _date)) === null)
+	{
+		return null;
+	}
+
+	var value = _date.getDate();
+
+	if(Math.time.clock.isTomorrow(strings[1], _date))
+	{
+		++value;
+	}
+
+	value = new Date(
+		_date.getFullYear(),
+		_date.getMonth(),
+		value, ... strings[1]);
+	result += (value.getTime() -
+		_date.getTime());
 
 	return result;
 };
@@ -724,14 +721,8 @@ Reflect.defineProperty(Math.time.clock.LIMIT, 'int', {
 Reflect.defineProperty(Math.time.clock.LIMIT, 'str', {
 	get: () => [ ... __strLimit ] });
 
-const __mathTimeClockPrepareAndCleanClockString = (_data) => {
-	if(!(_data = _data.trim().toLowerCase())) return '';
-	var c = 0; while(_data[_data.length - ++c] === '@');
-	if(--c) _data = _data.slice(0, -c).trim();
-	c = 0; while(_data[c++] === '@');
-	if(--c) _data = _data.substr(c).trim();
-	return _data;
-};
+const __mathTimeClockPrepareAndCleanClockString =
+	(_data) => _data.trim().toLowerCase();
 
 //
 Reflect.defineProperty(Math, '_round', { value: Math.round });
@@ -862,7 +853,7 @@ const getParameter = () => {
 	const	{ long, short } = getParameter.getMaps(),
 		argv = [ ... process.argv.slice(2) ],
 		parameter = {};
-	var	result = '',
+	var	result = [],
 		stop = false,
 		err, i;
 
@@ -944,8 +935,7 @@ const getParameter = () => {
 				err.param = '--' + _key;
 				if(long.get(_key).length)
 					err.param += ' / ' + ('-' +
-						long.get(_key).
-						join(' / -'));
+						long.get(_key).join(' / -'));
 				err.value = temp;
 				if(_exit) err.exit = _exit;
 				throw err;
@@ -1020,19 +1010,72 @@ const getParameter = () => {
 			continue;
 		}
 		
-		if(argv[i][0] === '+' || argv[i][0] === '-')
-		{
-			result += Math.sign(argv[i], true);
-		}
-		else
-		{
-			result += '+' + argv[i];
-		}
+		result.push(argv[i]);
+	}
+
+	if(result && (result = getParameter.getTime(result, true)) === null)
+	{
+		err = new Error('Your time/clock parameter(s) is/are wrong.');
+		err.exit = 104;
+		throw err;
 	}
 	
 	return getParameter.apply(
 		Object.assign(parameter, { result }));
 }
+
+getParameter.getTime = (_array, _throw = true) => {
+	const	items = [];
+	var	atCount = 0,
+		idx;
+
+	for(var i = 0; i < _array.length; ++i)
+	{
+		idx = _array[i].indexOf('@');
+
+		if(idx > -1)
+		{
+			if(++atCount > 1)
+			{
+				if(_throw)
+				{
+					const err = new Error('A clock parameter (`@`) may only be defined once.');
+					err.exit = 105;
+					throw err;
+				}
+
+				return null;
+			}
+
+			_array[i] = [
+				_array[i].substr(0, idx),
+				_array[i].substr(idx) ];
+
+			if(_array[i][0])
+			{
+				items.unshift(_array[i][0]);
+			}
+
+			items.push(_array[i][1]);
+		}
+		else
+		{
+			if(_array[i][0] === '+' || _array[i][0] === '-')
+			{
+				_array[i] = Math.sign(
+					_array[i], true);
+			}
+			else
+			{
+				_array[i] = '+' + _array[i];
+			}
+
+			items.unshift(_array[i]);
+		}
+	}
+
+	return Math.time.clock.parse(items.join(''));
+};
 
 getParameter.apply = (_param) => {
 	//

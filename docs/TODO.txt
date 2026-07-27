@@ -1,5 +1,5 @@
 
-	# `@2pm 10` sollte auch funktionieren, bspw.
+	# evtl. die UHRZEIT von --offset auch anzeigen,
 
-		# atm. muss `@` zum schluss sein..
+		# .. statt nur(!) relative zeit-verschiebung..
 
