@@ -710,11 +710,7 @@ Math.time.clock.isTomorrow = (... _args) => !Math.
 Reflect.defineProperty(Math.time.clock, 'LIMIT', { value: {} });
 
 const __intLimit = [ 24, 60, 60, 1000 ];
-const __strLimit = new Array(__intLimit.length);
-
-(() => { for(var i = 0; i < __strLimit.length; ++i)
-		__strLimit[i] = (((__intLimit[i] - 1).
-			toString().length) + 1); })();
+const __strLimit = [ 3, 3, 3, 4 ];
 
 Reflect.defineProperty(Math.time.clock.LIMIT, 'int', {
 	get: () => [ ... __intLimit ] });
