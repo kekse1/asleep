@@ -251,14 +251,13 @@ Math.time.clock.parse = (_data, _date, _raw = false) => {
 		return null;
 	}
 
-	_data = __mathTimeClockPrepareAndCleanClockString(_data);
-
 	if(!_date)
 	{
 		_date = new Date();
 	}
 
-	const strings = _data.split('@', 2);
+	const strings = (_data = __mathTimeClockPrepareAndCleanClockString(
+		_data)).split('@', 2);
 
 	if(strings.length === 2)
 	{

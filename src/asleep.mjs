@@ -8,7 +8,7 @@
 
 //
 const
-	VERSION = '3.2.3';
+	VERSION = '3.2.4';
 
 //
 const
@@ -587,14 +587,13 @@ Math.time.clock.parse = (_data, _date, _raw = false) => {
 		return null;
 	}
 
-	_data = __mathTimeClockPrepareAndCleanClockString(_data);
-
 	if(!_date)
 	{
 		_date = new Date();
 	}
 
-	const strings = _data.split('@', 2);
+	const strings = (_data = __mathTimeClockPrepareAndCleanClockString(
+		_data)).split('@', 2);
 
 	if(strings.length === 2)
 	{
@@ -607,7 +606,7 @@ Math.time.clock.parse = (_data, _date, _raw = false) => {
 	{
 		strings[1] = '';
 	}
-	
+
 	strings[0] = __mathTimeClockPrepareAndCleanClockString(strings[0]);
 	strings[1] = __mathTimeClockPrepareAndCleanClockString(strings[1]);
 
@@ -1117,15 +1116,15 @@ getParameter.apply = (_param) => {
 		_param.refresh = Math.min(Math.max(
 			0, _param.refresh), MAX_TIME);
 
-		if(typeof _param.string !== 'string' || _param.string.length === 0)
+		if(typeof _param.chars !== 'string' || _param.chars.length === 0)
 		{
-			_param.string = DEFAULT_STRING;
+			_param.chars = DEFAULT_STRING;
 		}
 	}
 	else
 	{
 		_param.refresh = null;
-		_param.string = '';
+		_param.chars = '';
 	}
 
 	if(!(_param.stream = console.ttyStream))
