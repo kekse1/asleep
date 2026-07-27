@@ -258,20 +258,20 @@ Math.time.clock.parse = (_data, _date, _raw = false) => {
 		_date = new Date();
 	}
 
-	const strings = new Array(2);
-	const atIndex = _data.indexOf('@');
-	
-	if(atIndex === -1)
+	const strings = _data.split('@', 2);
+
+	if(strings.length === 2)
 	{
-		strings[0] = _data;
-		strings[1] = '';
+		if(strings[1][0] !== '@')
+		{
+			strings[1] = '@' + strings[1];
+		}
 	}
 	else
 	{
-		strings[0] = _data.substr(0, atIndex);
-		strings[1] = _data.substr(atIndex);
+		strings[1] = '';
 	}
-
+	
 	strings[0] = __mathTimeClockPrepareAndCleanClockString(strings[0]);
 	strings[1] = __mathTimeClockPrepareAndCleanClockString(strings[1]);
 

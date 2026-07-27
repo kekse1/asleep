@@ -8,7 +8,7 @@
 
 //
 const
-	VERSION = '3.2.2';
+	VERSION = '3.2.3';
 
 //
 const
@@ -50,7 +50,7 @@ const GETOPT_LONG = [
 	'precision',
 	'offset',
 	'',
-	'string',
+	'chars',
 	'color',
 	'',
 	'info',
@@ -69,7 +69,7 @@ const GETOPT_SHORT = {
 	's': 'seconds',
 	'n': 'precision',
 	'o': 'offset',
-	'S': 'string',
+	'x': 'chars',
 	'c': 'color',
 	'I': 'info',
 	'C': 'copyright',
@@ -82,7 +82,7 @@ const GETOPT_VALUES = [
 	'precision',
 	'refresh',
 	'offset',
-	'string'
+	'chars'
 ];
 
 const GETOPT_HELP = {
@@ -93,7 +93,7 @@ const GETOPT_HELP = {
 	'seconds': 'Plain seconds left to the progress bar',
 	'precision': 'Rounding precision [ 0 .. ]',
 	'offset': 'If you\'d like another starting point',
-	'string': 'Progress bar string (e.g. `#` or `/\\`)',
+	'chars': 'Progress bar string (e.g. `#` or `/\\`)',
 	'color': 'Progress bar colors (w/ ANSI Escape Sequences)',
 	'info': 'Short info about this application',
 	'copyright': '',//'FYI'
@@ -594,20 +594,20 @@ Math.time.clock.parse = (_data, _date, _raw = false) => {
 		_date = new Date();
 	}
 
-	const strings = new Array(2);
-	const atIndex = _data.indexOf('@');
-	
-	if(atIndex === -1)
+	const strings = _data.split('@', 2);
+
+	if(strings.length === 2)
 	{
-		strings[0] = _data;
-		strings[1] = '';
+		if(strings[1][0] !== '@')
+		{
+			strings[1] = '@' + strings[1];
+		}
 	}
 	else
 	{
-		strings[0] = _data.substr(0, atIndex);
-		strings[1] = _data.substr(atIndex);
+		strings[1] = '';
 	}
-
+	
 	strings[0] = __mathTimeClockPrepareAndCleanClockString(strings[0]);
 	strings[1] = __mathTimeClockPrepareAndCleanClockString(strings[1]);
 
@@ -903,7 +903,7 @@ const getParameter = () => {
 		
 		switch(_key)
 		{
-			case 'string':
+			case 'chars':
 				return temp;
 			case 'offset':
 				if(!localError)
@@ -1009,18 +1009,28 @@ const getParameter = () => {
 		}
 	}
 
-	if(result && (result = getParameter.getTime(result, true)) === null)
+	if(result)
 	{
-		err = new Error('Your time/clock parameter(s) is/are wrong.');
-		err.exit = 104;
+		if((result = getParameter.getTime(result, true, true)) === null)
+		{
+			err = new Error('Your time/clock parameter(s) is/are wrong.');
+			err.exit = 104;
+			throw err;
+		}
+	}
+	else
+	{
+		err = new Error('Missing time/clock data!');
+		err.exit = 106;
 		throw err;
 	}
-	
+
 	return getParameter.apply(
-		Object.assign(parameter, { result }));
+		Object.assign(parameter,
+			result));
 }
 
-getParameter.getTime = (_array, _throw = true) => {
+getParameter.getTime = (_array, _original = true, _throw = true) => {
 	const	items = [];
 	var	atCount = 0,
 		idx;
@@ -1070,7 +1080,14 @@ getParameter.getTime = (_array, _throw = true) => {
 		}
 	}
 
-	return Math.time.clock.parse(items.join(''));
+	const result = Math.time.clock.parse(items.join(''));
+
+	if(_original)
+	{
+		return { result, string: items.join('') };
+	}
+
+	return result;
 };
 
 getParameter.apply = (_param) => {
@@ -1636,10 +1653,9 @@ const startTimeout = (_millisec, _param) => {
 };
 
 const start = () => {
-	var	result;
 	const	param = getParameter();
 
-	if((result = Math.time.clock.parse(param.result)) === null)
+	if(param.result === null)
 	{
 		const error = new Error('Unable to parse your argument.');
 		error.param = param.result;
@@ -1653,7 +1669,7 @@ const start = () => {
 
 	if(typeof param.offset === 'string')
 	{
-		param.offset = Math.trunc(result * Number(
+		param.offset = Math.trunc(param.result * Number(
 			param.offset.slice(0, -1)) / 100);
 	}
 	
@@ -1662,24 +1678,25 @@ const start = () => {
 		param.offset = Math.max(0,
 			Math.min(
 				param.offset,
-				result));
+				param.result));
 	}
 
-	if(param.progress && result < param.refresh)
+	if(param.progress && param.result < param.refresh)
 	{
 		param.progress = false;
 	}
 
 	if(param.print)
 	{
-		console.info('         String: ' + param.result);
-		console.info('   Milliseconds: ' + result.toString());//.toLocaleString());
-		console.info('        Seconds: ' + (result / 1000).toFixed(PRECISION));
-		console.info('           Time: ' + Math.time.render(result));
+		console.info('         String: ' + param.string);
+		console.info('   Milliseconds: ' + param.result.toLocaleString() +
+			' (' + param.result.toString() + ')');
+		console.info('        Seconds: ' + (param.result / 1000).toFixed(PRECISION));
+		console.info('           Time: ' + Math.time.render(param.result));
 		
 		console.log();
 		console.debug('          Start: ' + new Date().toString(true));
-		const end = (Date.now() + result);
+		const end = (Date.now() + param.result);
 		console.debug('            End: ' + new Date(end).toString(true));
 
 		if(param.offset > 0)
@@ -1691,15 +1708,17 @@ const start = () => {
 			console.info('   Offset clock: ' +
 				new Date(Date.now() + param.offset).toString(true));
 			console.info(' Effective time: ' + Math.
-				time.render(result - param.offset));
+				time.render(param.result - param.offset));
 		}
 	}
 
-	if(result > 0 && param.sleep)
+	if(param.result > 0 && param.sleep)
 	{
-		startTimeout(result, param);
+		startTimeout(
+			param.result,
+			param);
 	}
-	else if(result < 0)
+	else if(param.result < 0)
 	{
 		if(param.print)
 		{

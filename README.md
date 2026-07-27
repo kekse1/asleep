@@ -30,7 +30,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-07-27**\] Now **best**, w/ new [screenshot](#example-screenshots)! v**3.2.2**;
+* \[**2026-07-27**\] Now **best**, w/ new [screenshot](#example-screenshots)! v**3.2.3**;
 * \[**2026-07-27**\] Improved functionality a bit, and a fix. ... v**3.2.1**;
 * \[**2026-07-18**\] Tiny fix in the new `Math.time.clock()` routine.. v**3.1.3**;
 * \[**2026-07-16**\] BEST! Now I'm supporting my new `@` syntax (smth. like the `at` command)! v**3.1.2**;
@@ -61,7 +61,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 
 ## Example screenshots
 <details>
-<summary>🐭 The really latest/current version, v<b>3.2.2</b>!</summary>
+<summary>🐭 The really (almost..) latest/current version, v<b>3.2.2</b>!</summary>
 <img src="./img/screenshot.v3.2.2.png" alt="Latest/current one!" />
 </details>
 
@@ -97,7 +97,7 @@ The latest/current one had some more changes (see screenshot above).</summary>
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**3.2.2**](src/asleep.mjs) (updated **2026-07-27**);
+* [Version v**3.2.3**](src/asleep.mjs) (updated **2026-07-27**);
 
 <br>
 
