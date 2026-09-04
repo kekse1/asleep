@@ -14,7 +14,7 @@ const
 const
 	DEFAULT_SECONDS = false,	// (false);
 	DEFAULT_MILLISEC = true,	// (true);
-	DEFAULT_PRECISION = 2,		// (2);
+	DEFAULT_PRECISION = 3,		// (2);
 	DEFAULT_LONG = true,		// (true); for math time rendering.
 	DEFAULT_SEP = ', ',		// `, `; also for time rendering.
 	DEFAULT_STRING = '/',		// `/`; for the progress bar.
