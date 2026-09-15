@@ -8,7 +8,7 @@
 
 //
 const
-	VERSION = '3.2.4';
+	VERSION = '3.2.5';
 
 //
 const
@@ -169,21 +169,7 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 			_value = '1';
 		}
 		
-		while(_value[_value.length - 1] === '.')
-		{
-			_value = _value.slice(0, -1);
-		}
-
-		if(_value[0] === '.')
-		{
-			do
-			{
-				_value = _value.substr(1);
-			}
-			while(_value[0] === '.');
-
-			_value = '0.' + _value;
-		}
+		_value = Math.sign(_value, true);
 
 		if(Number.isNaN(_value = Number(_value)))
 		{
@@ -271,7 +257,8 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 		}
 		else if(unit)
 		{
-			if(isNaN(_value[i]))
+			if(!_value[i].isNumeric)
+			//if(isNaN(_value[i]))
 			{
 				unit += _value[i];
 			}
@@ -285,7 +272,8 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 				return null;
 			}
 		}
-		else if(!isNaN(_value[i]))
+		else if(_value[i].isNumeric)
+		//else if(!isNaN(_value[i]))
 		{
 			value += _value[i];
 		}
@@ -756,8 +744,14 @@ Reflect.defineProperty(Math, 'sign', { value: (_item, _string = false) => {
 	
 	if(_string)
 	{
-		return ((negative ? '-' : '+') +
-			_item.substr(i));
+		var sub = _item.substr(i);
+		
+		if(sub[0] === '.')
+		{
+			sub = '0.' + sub.substr(1);
+		}
+
+		return ((negative ? '-' : '+') + sub);
 	}
 	
 	return (negative ? '-' : '+');
@@ -843,6 +837,47 @@ Reflect.defineProperty(Date.prototype, 'toString', { value: function(... _args)
 	return this.toLocaleString(... params);
 }});
 
+Reflect.defineProperty(String.prototype, 'isNumeric', { get: function()
+{
+	var	string = this.valueOf(),
+		hadChar = false,
+		c = 0, byte;
+
+	while(string[0] === '-' || string[0] === '+')
+	{
+		++c;
+	}
+	
+	if(string.length === 0)
+	{
+		return null;
+	}
+	
+	if(c > 0)
+	{
+		string = string.substr(c);
+	}
+	
+	for(var i = 0; i < string.length; ++i)
+	{
+		if(string[i] === '.')
+		{
+			if(hadChar)
+			{
+				return false;
+			}
+			
+			hadChar = true;
+		}
+		else if((byte = string.charCodeAt(i)) < 48 || byte > 57)
+		{
+			return false;
+		}
+	}
+	
+	return true;
+}});
+
 //
 const getParameter = () => {
 	const	{ long, short } = getParameter.getMaps(),
@@ -898,7 +933,8 @@ const getParameter = () => {
 			throw err;
 		}
 
-		const localError = isNaN(temp);
+		//const localError = isNaN(temp);
+		const localError = !temp.isNumeric;
 		
 		switch(_key)
 		{
@@ -909,7 +945,8 @@ const getParameter = () => {
 				{
 					temp *= 1000;
 				}
-				else if(temp[temp.length - 1] === '%' && !isNaN(temp.slice(0, -1)))
+				//else if(temp[temp.length - 1] === '%' && !isNaN(temp.slice(0, -1)))
+				else if(temp[temp.length - 1] === '%' && temp.slice(0, -1).isNumeric)
 				{
 					return temp;
 				}
@@ -957,7 +994,7 @@ const getParameter = () => {
 			continue;
 		}
 		
-		if(!stop && argv[i][0] === '-')
+		if(!stop && argv[i][0] === '-' && !argv[i][1].isNumeric)
 		{
 			argv[i] = argv[i].substr(1);
 
