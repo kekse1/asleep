@@ -8,7 +8,7 @@
 
 //
 const
-	VERSION = '3.2.5';
+	VERSION = '3.2.6';
 
 //
 const
@@ -843,19 +843,19 @@ Reflect.defineProperty(String.prototype, 'isNumeric', { get: function()
 		hadChar = false,
 		c = 0, byte;
 
-	while(string[0] === '-' || string[0] === '+')
+	while(string[c] === '-' || string[c] === '+')
 	{
 		++c;
 	}
-	
-	if(string.length === 0)
-	{
-		return null;
-	}
-	
+
 	if(c > 0)
 	{
 		string = string.substr(c);
+	}
+
+	if(string.length === 0)
+	{
+		return null;
 	}
 	
 	for(var i = 0; i < string.length; ++i)

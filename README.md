@@ -30,7 +30,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br><br>
 
 ## News
-* \[**2026-09-15**\] Better and a bit more efficient time/value handling.. w/ fixed `getopt` part for negative time values! v**3.2.5**;
+* \[**2026-09-15**\] Better and a bit more efficient time/value handling.. w/ fixed `getopt` part for negative time values! v**3.2.6**;
 * \[**2026-07-27**\] Now **best**, w/ new [screenshot](#example-screenshots)! v**3.2.4**;
 * \[**2026-07-27**\] Improved functionality a bit, and a fix. ... v**3.2.1**;
 * \[**2026-07-18**\] Tiny fix in the new `Math.time.clock()` routine.. v**3.1.3**;
@@ -98,7 +98,7 @@ The latest/current one had some more changes (see screenshot above).</summary>
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**3.2.5**](src/asleep.mjs) (updated **2026-09-15**);
+* [Version v**3.2.6**](src/asleep.mjs) (updated **2026-09-15**);
 
 <br>
 
