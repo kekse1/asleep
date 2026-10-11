@@ -13,7 +13,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 <br><br>
 
 ## Index
-* [News](#news)
+<!--* [News](#news)-->
 * [Example Screenshots](#example-screenshots)
 * [Download / Source Code](#download--source-code)
 * [Usage](#usage)
@@ -29,6 +29,7 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 
 <br><br><br>
 
+<!--
 ## News
 * \[**2026-09-15**\] Better and a bit more efficient time/value handling.. w/ fixed `getopt` part for negative time values! v**3.2.6**;
 * \[**2026-07-27**\] Now **best**, w/ new [screenshot](#example-screenshots)! v**3.2.4**;
@@ -59,6 +60,8 @@ Pure **Vanilla** JavaScript - with**out** any dependency (except the
 * \[**2025-12-20**\] Now with splitted short arguments (e.g. `-Pp`); v**1.0.1**;
 
 <br><br><br>
+  -->
+<br><br>
 
 ## Example screenshots
 <details>
