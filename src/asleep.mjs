@@ -8,7 +8,7 @@
 
 //
 const
-	VERSION = '3.2.6';
+	VERSION = '3.2.7';
 
 //
 const
@@ -257,8 +257,7 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 		}
 		else if(unit)
 		{
-			if(!_value[i].isNumeric)
-			//if(isNaN(_value[i]))
+			if(!_value[i].isDecimal)
 			{
 				unit += _value[i];
 			}
@@ -272,8 +271,7 @@ Reflect.defineProperty(Math.time, 'parse', { value: (_value) => {
 				return null;
 			}
 		}
-		else if(_value[i].isNumeric)
-		//else if(!isNaN(_value[i]))
+		else if(_value[i].isDecimal)
 		{
 			value += _value[i];
 		}
@@ -837,7 +835,7 @@ Reflect.defineProperty(Date.prototype, 'toString', { value: function(... _args)
 	return this.toLocaleString(... params);
 }});
 
-Reflect.defineProperty(String.prototype, 'isNumeric', { get: function()
+Reflect.defineProperty(String.prototype, 'isDecimal', { get: function()
 {
 	var	string = this.valueOf(),
 		hadChar = false,
@@ -933,8 +931,7 @@ const getParameter = () => {
 			throw err;
 		}
 
-		//const localError = isNaN(temp);
-		const localError = !temp.isNumeric;
+		const localError = !temp.isDecimal;
 		
 		switch(_key)
 		{
@@ -945,8 +942,7 @@ const getParameter = () => {
 				{
 					temp *= 1000;
 				}
-				//else if(temp[temp.length - 1] === '%' && !isNaN(temp.slice(0, -1)))
-				else if(temp[temp.length - 1] === '%' && temp.slice(0, -1).isNumeric)
+				else if(temp[temp.length - 1] === '%' && temp.slice(0, -1).isDecimal)
 				{
 					return temp;
 				}
@@ -994,7 +990,7 @@ const getParameter = () => {
 			continue;
 		}
 		
-		if(!stop && argv[i][0] === '-' && !argv[i][1].isNumeric)
+		if(!stop && argv[i][0] === '-' && !argv[i][1].isDecimal)
 		{
 			argv[i] = argv[i].substr(1);
 

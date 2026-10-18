@@ -101,7 +101,7 @@ The latest/current one had some more changes (see screenshot above).</summary>
 ## Download / Source Code
 **ZERO** dependencies.
 
-* [Version v**3.2.6**](src/asleep.mjs) (updated **2026-09-15**);
+* [Version v**3.2.7**](src/asleep.mjs) (updated **2026-10-18**);
 
 <br>
 
